@@ -45,25 +45,25 @@ export const navItems: NavData[] = [
   },
   {
     name: 'Areas',
-    url: '/theme/colors',
+    url: '/masters/area',
     icon: 'fa fa-location-arrow'
   },
   {
     name: 'Members',
-    url: '/theme/typography',
+    url: '/masters/members',
     icon: 'fa fa-users'
   },{
     name: 'Users',
-    url: '/theme/typography',
+    url: '/masters/users',
     icon: 'fa fa-user'
   },{
     name: 'Trains',
-    url: '/theme/typography',
+    url: '/masters/trains',
     icon: 'fa fa-train'
   },
   {
     name: 'Offers',
-    url: '/theme/typography',
+    url: '/masters/offers',
     icon: 'fa fa-tags'
   },
   {
@@ -72,12 +72,17 @@ export const navItems: NavData[] = [
   },
   {
     name: 'Hotel`s Details',
-    url: '/theme/colors',
+    url: '/hotels/hotels',
     icon: 'fa fa-list'
   },
   {
     name: 'Hotel Bookings',
-    url: '/theme/typography',
+    url: '/hotels/booking',
+    icon: 'fa fa-key'
+  },
+  {
+    name: 'Hotel Details',
+    url: '/hotels/details',
     icon: 'fa fa-key'
   },
   {

@@ -9,6 +9,7 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
+
 export const routes: Routes = [
   {
     path: '',
@@ -53,7 +54,27 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: './views/dashboard/dashboard.module#DashboardModule'
-      }
+      },
+      {
+        path: 'busess',
+        loadChildren: './views/buses/buses.module#BusesModule'
+      },
+      {
+        path: 'cabs',
+        loadChildren: './views/cabs/cabs.module#CabsModule'
+      },
+      {
+        path: 'hotels',
+        loadChildren: './views/hotels/hotels.module#HotelsModule'
+      },
+      {
+        path: 'experiences',
+        loadChildren: './views/experiences/experiences.module#ExperiencesModule'
+      },
+      {
+        path: 'masters',
+        loadChildren: './views/masters/masters.module#MastersModule'
+      },
     ]
   },
   { path: '**', component: P404Component }
