@@ -6,3 +6,8 @@
 
 // If you want to add something do it here
 @import "custom";
+
+$ag-icons-path: "../node_modules/ag-grid-community/src/styles/ag-theme-balham/icons/";
+$odd-row-background-color: rgb(10, 169, 238);
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";

@@ -1,3 +1,87 @@
-<p>
-  areas works!
-</p>
+  <div class="row pb-2 mr-2">
+    <div class="col-md-1 col-3">
+    <select (change)="onPageSizeChanged()" class="row form-control pagination" [(ngModel)]="pagesize"  id="page-size">
+      <option value="10" selected="">10</option>
+      <option value="100">100</option>
+      <option value="500">500</option>
+      <option value="1000">1000</option>
+    </select>
+  </div>
+  <div class="col-md-1 col-3 text-nowrap"><button class="btn btn-info"  data-toggle="modal" (click)="modalAreaDetails.show()"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Add</button></div>
+  <div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" data-toggle="modal" (click)="modalAreaDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit</button></div>
+  <div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</button></div>
+  </div>
+
+  <!-- The Modal -->
+  <div bsModal #modalAreaDetails="bs-modal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Area Details</h4>
+            <button type="button" class="close" (click)="modalAreaDetails.hide()"><span aria-hidden="true">&times;</span></button>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form class="form-horizontal" [formGroup]="areaForm">
+                  <div class="row">
+                      <div class="col-12">
+                          <div class="form-group">
+                              <label for="areaname">Name:</label>
+                              <input type="text" class="form-control" id="areaname" name="areaname" [(ngModel)]="areaDetails[0].areaname" placeholder="Area Name">
+                            </div>
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-6">
+                          <div class="form-group">
+                              <label for="state">State:</label>
+                              <select class="form-control" id="state" name="state" formControlName="stateControl" [(ngModel)]="areaDetails[0].stateid">
+                                  <option selected disabled value="0">Select State</option>
+                              </select>
+                            </div>
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-6">
+                          <div class="form-group">
+                              <label for="city">City:</label>
+                              <select class="form-control" id="city" name="city" formControlName="cityControl" [(ngModel)]="areaDetails[0].cityid">
+                                  <option selected disabled value="0">Select City</option>
+                              </select>
+                            </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info"  (click)="modalAreaDetails.hide()">Save</button>
+            <button type="button" class="btn btn-secondary"  (click)="modalAreaDetails.hide()">Close</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+
+
+  <div class="row">
+  <ag-grid-angular 
+  #agGrid
+  style="width: 100%; height: 60vh;" 
+  class="ag-theme-balham"
+  [rowData]="rowData"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  rowSelection="multiple"
+  [floatingFilter]="true"
+  [animateRows]="true"
+  [enableRangeSelection]="true"
+  [pagination]="true"
+  [paginationPageSize]="paginationPageSize"
+  (gridReady)="onGridReady($event)"
+ [paginationNumberFormatter]="paginationNumberFormatter"
+  (selectionChanged)="onSelectionChanged($event)"
+  >
+</ag-grid-angular>
+</div>

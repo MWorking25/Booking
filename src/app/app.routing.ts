@@ -10,6 +10,7 @@ import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
 
+
 export const routes: Routes = [
   {
     path: '',
@@ -56,7 +57,7 @@ export const routes: Routes = [
         loadChildren: './views/dashboard/dashboard.module#DashboardModule'
       },
       {
-        path: 'busess',
+        path: 'buses',
         loadChildren: './views/buses/buses.module#BusesModule'
       },
       {
@@ -74,6 +75,14 @@ export const routes: Routes = [
       {
         path: 'masters',
         loadChildren: './views/masters/masters.module#MastersModule'
+      },
+      {
+        path: 'restraurants',
+        loadChildren: './views/retraurants/retraurants.module#RetraurantsModule'
+      },
+      {
+        path: 'reports',
+        loadChildren: './views/reports/reports.module#ReportsModule'
       },
     ]
   },

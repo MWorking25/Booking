@@ -6,7 +6,7 @@ import { DetailsComponent } from './details/details.component';
 import { BookingComponent } from './booking/booking.component';
 
 const routes: Routes = [
-  {path:'',component:ListComponent, data: {
+  {path:'list',component:ListComponent, data: {
     title: 'Experiences'
   }},
   {path:'booking',component:BookingComponent,data: {

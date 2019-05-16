@@ -5,7 +5,7 @@ import { ListComponent } from './list/list.component';
 import { BookingComponent } from './booking/booking.component';
 
 const routes: Routes = [
-  {path:'',component:ListComponent, data: {
+  {path:'list',component:ListComponent, data: {
     title: 'Buses'
   }},
   {path:'booking',component:BookingComponent,data: {

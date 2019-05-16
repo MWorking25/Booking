@@ -10,7 +10,7 @@ import { UsersComponent } from './users/users.component';
 const routes: Routes = [
   {path:'',redirectTo:'area',pathMatch:'full'},
   {path:'area',component:AreasComponent, data: {
-    title: 'Area'
+    title: 'Areas'
   }},
   {path:'members',component:MembersComponent,data: {
     title: 'Members'

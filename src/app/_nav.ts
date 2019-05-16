@@ -80,23 +80,23 @@ export const navItems: NavData[] = [
     url: '/hotels/booking',
     icon: 'fa fa-key'
   },
-  {
+ /*  {
     name: 'Hotel Details',
     url: '/hotels/details',
     icon: 'fa fa-key'
-  },
+  }, */
   {
     title: true,
     name: 'Experiences'
   },
   {
     name: 'Experience`s Details',
-    url: '/theme/colors',
+    url: '/experiences/list',
     icon: 'fa fa-list'
   },
   {
     name: 'Experience Bookings',
-    url: '/theme/typography',
+    url: '/experiences/booking',
     icon: 'fa fa-ticket'
   },
   {
@@ -105,12 +105,12 @@ export const navItems: NavData[] = [
   },
   {
     name: 'Buse`s Details',
-    url: '/theme/colors',
+    url: '/buses/list',
     icon: 'fa fa-list'
   },
   {
-    name: 'Buse Bookings',
-    url: '/theme/typography',
+    name: 'Buses Bookings',
+    url: '/buses/booking',
     icon: 'fa fa-ticket'
   },
   {
@@ -119,12 +119,12 @@ export const navItems: NavData[] = [
   },
   {
     name: 'Cab`s Details',
-    url: '/theme/colors',
+    url: '/cabs/list',
     icon: 'fa fa-list'
   },
   {
-    name: 'Cab Bookings',
-    url: '/theme/typography',
+    name: 'Cab`s Bookings',
+    url: '/cabs/booking',
     icon: 'fa fa-ticket'
   },
   {
@@ -134,12 +134,12 @@ export const navItems: NavData[] = [
   },
   {
     name: 'Restraurant`s Details',
-    url: '/theme/colors',
+    url: '/restraurants/list',
     icon: 'fa fa-list'
   },
   {
     name: 'Restraurant Orders',
-    url: '/theme/typography',
+    url: '/restraurants/orders',
     icon: 'fa fa-shopping-bag'
   },
   {
@@ -148,23 +148,28 @@ export const navItems: NavData[] = [
   },
   {
     name: 'Hotels',
-    url: '/theme/colors',
+    url: '/reports/hotels',
     icon: 'fa fa-building'
   },
   {
+    name: 'Experiences',
+    url: '/reports/experiences',
+    icon: 'fa fa-ship'
+  },
+  {
     name: 'Buses',
-    url: '/theme/typography',
+    url: '/reports/buses',
     icon: 'fa fa-bus'
   },
   {
     name: 'Cabs',
-    url: '/theme/typography',
+    url: '/reports/cabs',
     icon: 'fa fa-cab'
   },
   {
     name: 'Restraurants',
-    url: '/theme/typography',
-    icon: 'fa fa-coffee'
+    url: '/reports/restraurants',
+    icon: 'fa fa-cutlery'
   },
   
   /* {

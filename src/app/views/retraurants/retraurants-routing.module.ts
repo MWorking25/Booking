@@ -6,7 +6,7 @@ import { DetailsComponent } from './details/details.component';
 import { OrdersComponent } from './orders/orders.component';
 
 const routes: Routes = [
-  {path:'',component:ListComponent, data: {
+  {path:'list',component:ListComponent, data: {
     title: 'Restraurants'
   }},
   {path:'orders',component:OrdersComponent,data: {
