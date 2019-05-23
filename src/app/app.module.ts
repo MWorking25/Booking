@@ -1,14 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-
+import { HttpClientModule } from '@angular/common/http';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppComponent } from './app.component';
 
@@ -30,6 +31,7 @@ import {
   AppHeaderModule,
   AppFooterModule,
   AppSidebarModule,
+  
 } from '@coreui/angular';
 
 // Import routing module
@@ -45,6 +47,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     BrowserModule,
     AppRoutingModule,
     AppAsideModule,
+    HttpClientModule,
     AppBreadcrumbModule.forRoot(),
     AppFooterModule,
     AppHeaderModule,
@@ -53,7 +56,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     AppComponent,
@@ -66,7 +70,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  }],
+  },CookieService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

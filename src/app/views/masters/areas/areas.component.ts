@@ -21,8 +21,11 @@ export class AreasComponent implements OnInit {
   @ViewChild('agGrid') agGrid: AgGridNg2;
   @ViewChild('modalAreaDetails') public modalAreaDetails: ModalDirective;
 
-  areaDetails:AreaDetails[] = [{areaname:'',cityid:0,stateid:0}];
+  areaDetails:AreaDetails[] = [{areaname:'',countryid:0,cityid:0,stateid:0}];
 
+  countries : any;
+  states : any;
+  cities : any;
   rowData : any;
   pagesize = 10;
   gridApi:any;
@@ -84,10 +87,7 @@ export class AreasComponent implements OnInit {
       }
     }) */
 
-    this.areaForm = this.fb.group({
-      stateControl: [this.areaDetails[0].stateid],
-      cityControl: [this.areaDetails[0].cityid]
-    });
+  
     
     
     this.columnDefs = [
@@ -142,7 +142,30 @@ export class AreasComponent implements OnInit {
   };
 
 
-  }
+  this.getCountriesList();
+
+}
+
+getCountriesList()
+{ 
+  this._MastersService.getCountriesList().subscribe((res:any)=>{
+    this.countries = res;
+  });	
+}
+
+getStatesOnCountry(countryid)
+{ 
+  this._MastersService.getStatesListOnCountry(countryid).subscribe((res:any)=>{
+    this.states = res;
+  });	
+}
+
+getCitiesOnSate(stateid)
+{ 
+  this._MastersService.getCitiesListOnState(stateid).subscribe((res:any)=>{
+    this.cities = res;
+  });	
+}
 
   onPageSizeChanged(newageSize) {
     var value = this.pagesize;
@@ -167,5 +190,10 @@ export class AreasComponent implements OnInit {
       });
   }
 
+
+  SaveAreaDetails(areadetails)
+  {
+    console.log(areadetails.value);
+  }
 
 }

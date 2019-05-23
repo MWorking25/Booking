@@ -7,9 +7,9 @@
       <option value="1000">1000</option>
     </select>
   </div>
-  <div class="col-md-1 col-3 text-nowrap"><button class="btn btn-info"  data-toggle="modal" (click)="modalAreaDetails.show()"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Add</button></div>
-  <div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" data-toggle="modal" (click)="modalAreaDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit</button></div>
-  <div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</button></div>
+  <div class="col-md-1 col-3 text-nowrap"><a class="btn btn-info"  data-toggle="modal" (click)="modalAreaDetails.show()"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Add</a></div>
+  <div class="col-md-1 col-3  text-nowrap"><a class="btn btn-info" data-toggle="modal" (click)="modalAreaDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit</a></div>
+  <div class="col-md-1 col-3  text-nowrap"><a class="btn btn-info"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</a></div>
   </div>
 
   <!-- The Modal -->
@@ -25,27 +25,39 @@
           
           <!-- Modal body -->
           <div class="modal-body">
-            <form class="form-horizontal" [formGroup]="areaForm">
+            <form class="form-horizontal" #areaForm="ngForm">
                   <div class="row">
-                      <div class="col-12">
+                      <div class="col-6">
                           <div class="form-group">
                               <label for="areaname">Name:</label>
                               <input type="text" class="form-control" id="areaname" name="areaname" [(ngModel)]="areaDetails[0].areaname" placeholder="Area Name">
                             </div>
                       </div>
+                      <div class="col-6">
+                        <div class="form-group">
+                          <label for="state">Country:</label>
+                          <select class="form-control" id="country" name="country" [(ngModel)]="areaDetails[0].countryid" (change)="getStatesOnCountry(areaDetails[0].countryid)">
+                              <option selected disabled value="0">Select Country</option>
+                              <option *ngFor="let cntryObje of countries" value="{{cntryObje.id}}">{{cntryObje.name}}</option>
+                              
+                          </select>
+                        </div>
+                      </div>
                       <div class="col-12 col-md-6 col-lg-6">
                           <div class="form-group">
                               <label for="state">State:</label>
-                              <select class="form-control" id="state" name="state" formControlName="stateControl" [(ngModel)]="areaDetails[0].stateid">
+                              <select class="form-control" id="state" name="state"  [(ngModel)]="areaDetails[0].stateid" (change)="getCitiesOnSate(areaDetails[0].stateid)">
                                   <option selected disabled value="0">Select State</option>
+                                  <option *ngFor="let stateObje of states" value="{{stateObje.id}}">{{stateObje.name}}</option>
                               </select>
                             </div>
                       </div>
                       <div class="col-12 col-md-6 col-lg-6">
                           <div class="form-group">
                               <label for="city">City:</label>
-                              <select class="form-control" id="city" name="city" formControlName="cityControl" [(ngModel)]="areaDetails[0].cityid">
+                              <select class="form-control" id="city" name="city"  [(ngModel)]="areaDetails[0].cityid">
                                   <option selected disabled value="0">Select City</option>
+                                  <option *ngFor="let cityObje of cities" value="{{cityObje.id}}">{{cityObje.name}}</option>
                               </select>
                             </div>
                       </div>
@@ -55,8 +67,8 @@
           
           <!-- Modal footer -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-info"  (click)="modalAreaDetails.hide()">Save</button>
-            <button type="button" class="btn btn-secondary"  (click)="modalAreaDetails.hide()">Close</button>
+            <a class="btn btn-info"  (click)="SaveAreaDetails(areaForm);modalAreaDetails.hide()">Save</a>
+            <a class="btn btn-secondary"  (click)="modalAreaDetails.hide()">Close</a>
           </div>
           
         </div>
