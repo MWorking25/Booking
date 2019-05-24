@@ -9,7 +9,7 @@
   </div>
   <div class="col-md-1 col-3 text-nowrap"><a class="btn btn-info"  data-toggle="modal" (click)="modalAreaDetails.show()"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Add</a></div>
   <div class="col-md-1 col-3  text-nowrap"><a class="btn btn-info" data-toggle="modal" (click)="modalAreaDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit</a></div>
-  <div class="col-md-1 col-3  text-nowrap"><a class="btn btn-info"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</a></div>
+  <div class="col-md-1 col-3  text-nowrap"><a class="btn btn-info" (click)="DeleteAreaDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</a></div>
   </div>
 
   <!-- The Modal -->
@@ -27,6 +27,12 @@
           <div class="modal-body">
             <form class="form-horizontal" #areaForm="ngForm">
                   <div class="row">
+                      <div class="col-12">
+                          <div class="form-group d-none">
+                              <label for="areaname">id:</label>
+                              <input type="text" class="form-control" id="id" name="areaid" [(ngModel)]="areaDetails[0].id" placeholder="id">
+                            </div>
+                      </div>
                       <div class="col-6">
                           <div class="form-group">
                               <label for="areaname">Name:</label>

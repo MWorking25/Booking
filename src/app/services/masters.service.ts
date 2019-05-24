@@ -32,4 +32,25 @@ export class MastersService {
         }));
   }
 
+  getAreaslist(): Observable<any>
+  {
+        return this.http.get<any>('http://localhost:3800/api/unity/getAreaslist/',{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
+
+  SaveAreaDetails(areadetails): Observable<any>
+  {
+    return this.http.post('http://localhost:3800/api/unity/saveAreadetails/',areadetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));	
+  }
+
+  DeleteAreaDetails(areadetails): Observable<any>
+  {
+    return this.http.post('http://localhost:3800/api/unity/DeleteAreadetails/',areadetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));	
+  }
+
 }

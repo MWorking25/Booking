@@ -21,8 +21,9 @@ export class AreasComponent implements OnInit {
   @ViewChild('agGrid') agGrid: AgGridNg2;
   @ViewChild('modalAreaDetails') public modalAreaDetails: ModalDirective;
 
-  areaDetails:AreaDetails[] = [{areaname:'',countryid:0,cityid:0,stateid:0}];
+  areaDetails:AreaDetails[] = [{id:0,areaname:'',countryid:0,cityid:0,stateid:0}];
 
+  tableParams : any;
   countries : any;
   states : any;
   cities : any;
@@ -90,11 +91,9 @@ export class AreasComponent implements OnInit {
   
     
     
-    this.columnDefs = [
-      {headerName: 'Make', field: 'make', checkboxSelection: true,pinned: 'left'},
-      {headerName: 'Model', field: 'model' },
-      {headerName: 'Price', field: 'price' }
-  ];
+    this.columnDefs =[
+                        {headerName: 'Name', field: 'name', checkboxSelection: true,pinned: 'left'},
+                        {headerName: 'City', field: 'cityname' },{headerName: 'State', field: 'statename' },{headerName: 'Country', field: 'countryname' }],
   this.autoGroupColumnDef = {
     headerName: "Group",
     width: 200,
@@ -175,25 +174,91 @@ getCitiesOnSate(stateid)
 
   onSelectionChanged() {
     var selectedRows = this.gridApi.getSelectedRows();
-    console.log(selectedRows)
+     this.getStatesOnCountry(selectedRows[0].countryid);
+     this.getCitiesOnSate(selectedRows[0].stateid);
+     this.areaDetails = [{id:selectedRows[0].id,areaname:selectedRows[0].name,countryid:selectedRows[0].countryid,cityid:selectedRows[0].cityid,stateid:selectedRows[0].stateid}];
+  }
+
+  GetAreasList()
+  {
+    this._MastersService.getAreaslist().subscribe((res:any)=>{
+      if(res.status === 0)
+      {
+        this.rowData = [];
+      }
+      else{
+        this.rowData = res;
+      }
+    });	
   }
 
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    this.http
-      .get('https://api.myjson.com/bins/15psn9')
-      .subscribe(data => {
-        this.rowData = data;
-        params.api.paginationGoToPage(4);
-      });
+    this.GetAreasList();
+    
+    params.api.paginationGoToPage(4);
   }
 
 
   SaveAreaDetails(areadetails)
   {
-    console.log(areadetails.value);
+    this._MastersService.SaveAreaDetails(areadetails.value).subscribe((res:any)=>{
+      Swal.fire({
+        title: res.title,
+        text: res.message,
+        type: res.type,
+      }).then((result) => {
+        if(res.status === 1)
+        {
+          this.areaDetails = [{id:0,areaname:'',countryid:0,cityid:0,stateid:0}];
+          this.GetAreasList();
+        }
+      });
+    });
+  }
+
+  DeleteAreaDetails()
+  {
+
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover these records again!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+
+        this._MastersService.DeleteAreaDetails(this.gridApi.getSelectedRows()).subscribe((res:any)=>{
+          Swal.fire({
+            title: res.title,
+            text: res.message,
+            type: res.type,
+          }).then((result) => {
+            if(res.status === 1)
+            {
+              this.GetAreasList();
+            }
+          });
+        });
+      // For more information about handling dismissals please visit
+      // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    }) 
+
+
+
+   
   }
 
 }
