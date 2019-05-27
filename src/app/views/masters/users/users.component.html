@@ -1,3 +1,124 @@
-<p>
-  users works!
-</p>
+<div class="row pb-2 mr-2">
+    <div class="col-md-1 col-3">
+    <select (change)="onPageSizeChanged()" class="row form-control pagination" [(ngModel)]="pagesize"  id="page-size">
+      <option value="10" selected="">10</option>
+      <option value="100">100</option>
+      <option value="500">500</option>
+      <option value="1000">1000</option>
+    </select>
+  </div>
+  <div class="col-md-1 col-3 text-nowrap"><a class="btn btn-info"  data-toggle="modal" (click)="modalUserDetails.show()"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Add</a></div>
+  <div class="col-md-1 col-3  text-nowrap"><a class="btn btn-info" data-toggle="modal" (click)="modalUserDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit</a></div>
+  <div class="col-md-1 col-3  text-nowrap"><a class="btn btn-info" (click)="DeleteuserDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</a></div>
+  </div>
+
+  <!-- The Modal -->
+  <div bsModal #modalUserDetails="bs-modal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">User`s Details</h4>
+            <button type="button" class="close" (click)="modalUserDetails.hide()"><span aria-hidden="true">&times;</span></button>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form class="form-horizontal"  #usersForm="ngForm">
+                  <div class="row">
+                      <div class="col-12">
+                          <div class="form-group d-none">
+                              <label for="userid">id:</label>
+                              <input type="text" class="form-control" id="id" name="userid" [(ngModel)]="userDetails[0].id" placeholder="id">
+                            </div>
+                      </div>
+                      <div class="col-4">
+                         <div class="card">
+                            <img [src]="url" class="img-fluid">
+                            <button class="btn btn-primary" (click)="resetImage()">Remove</button>
+                         </div>
+                      </div>
+                      <div class="col-8">
+                        <div class="row">
+                            <div class="col-12 ">
+                                <div class="form-group">
+                                    <label for="areaname">Name:</label>
+                                    <input type="text" class="form-control" id="fullname" name="fullname" [(ngModel)]="userDetails[0].name" placeholder="Full Name">
+                                  </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="areaname">Email:</label>
+                                    <input type="text" class="form-control" id="email" name="email" [(ngModel)]="userDetails[0].email" placeholder="Email">
+                                  </div>
+                            </div>
+                        </div>
+                       
+                      </div>
+
+                      
+                    <div class="col-12">
+                    <div class="row">
+                      <div class="col-6">
+                          <div class="form-group">
+                              <label for="areaname">Mobile:</label>
+                              <input type="number" class="form-control" id="mobile" name="mobile" [(ngModel)]="userDetails[0].mobile" placeholder="Mobile">
+                            </div>
+                      </div>
+
+                      <div class="col-6">
+                          <div class="form-group">
+                              <label for="areaname">Role:</label>
+                              <select class="form-control" id="userRole" name="userRole" [(ngModel)]="userDetails[0].role">
+                                  <option selected disabled value="0">Select Role</option>
+                                  <option *ngFor="let roleObje of userRoles" value="{{roleObje}}">{{roleObje}}</option>
+                                  
+                              </select>
+                            </div>
+                      </div>
+                      
+                      <div class="col-6">
+                          <div class="form-group">
+                              <label for="areaname">Profile Pic:</label>
+                              <input type="file" #userProfile ng2FileSelect  [uploader]="uploader" (change)="onSelectFile($event)"/>
+                            </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+              </form>
+          </div>
+          
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <a class="btn btn-info"  (click)="SaveuserDetails(usersForm);modalUserDetails.hide()">Save</a>
+            <a class="btn btn-secondary"  (click)="modalUserDetails.hide()">Close</a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+
+<!-- 
+  <div class="row">
+  <ag-grid-angular 
+  #agGrid
+  style="width: 100%; height: 60vh;" 
+  class="ag-theme-balham"
+  [rowData]="rowData"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  rowSelection="multiple"
+  [floatingFilter]="true"
+  [animateRows]="true"
+  [enableRangeSelection]="true"
+  [pagination]="true"
+  [paginationPageSize]="paginationPageSize"
+  (gridReady)="onGridReady($event)"
+ [paginationNumberFormatter]="paginationNumberFormatter"
+  (selectionChanged)="onSelectionChanged($event)"
+  >
+</ag-grid-angular>
+</div> -->

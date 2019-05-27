@@ -4,6 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AgGridModule} from 'ag-grid-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import {FileUploadModule} from "ng2-file-upload"
 
 import { MastersRoutingModule } from './masters-routing.module';
 import { AreasComponent } from './areas/areas.component';
@@ -18,6 +19,7 @@ import { UsersComponent } from './users/users.component';
     CommonModule,
     MastersRoutingModule,
     HttpClientModule,
+    FileUploadModule,
     FormsModule,
     ReactiveFormsModule,
     AgGridModule.withComponents([]),

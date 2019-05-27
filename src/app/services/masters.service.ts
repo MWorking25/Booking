@@ -53,4 +53,17 @@ export class MastersService {
 					}));	
   }
 
+  SaveUserDetails(userDetails): Observable<any>
+  {
+    return this.http.post('http://localhost:3800/api/unity/saveUserDetails/',userDetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));	
+  }
+  SaveUserDetailsWIthoutPic(userDetails): Observable<any>
+  {
+    return this.http.post('http://localhost:3800/api/unity/SaveUserDetailsWIthoutPic/',userDetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));	
+  }
+
 }
