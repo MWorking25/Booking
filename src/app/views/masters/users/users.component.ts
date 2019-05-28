@@ -11,7 +11,7 @@ import { MastersService } from '../../../services/masters.service';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  userRoles = ["superadmin","admin"]
+  userRoles = ["Superadmin","Admin"]
 
   @ViewChild('userProfile')
   myInputVariable: ElementRef;
@@ -92,6 +92,10 @@ export class UsersComponent implements OnInit {
           type: res.type,
         }).then((result) => {
           if(res.status === 1)
+          {
+
+          }
+          else
           {
 
           }
