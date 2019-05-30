@@ -9,7 +9,7 @@
   </div>
   <div class="col-md-1 col-3 text-nowrap"><a class="btn btn-info"  data-toggle="modal" (click)="modalUserDetails.show()"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Add</a></div>
   <div class="col-md-1 col-3  text-nowrap"><a class="btn btn-info" data-toggle="modal" (click)="modalUserDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit</a></div>
-  <div class="col-md-1 col-3  text-nowrap"><a class="btn btn-info" (click)="DeleteuserDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</a></div>
+  <div class="col-md-1 col-3  text-nowrap"><a class="btn btn-info" (click)="DeleteUsersDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</a></div>
   </div>
 
   <!-- The Modal -->
@@ -43,13 +43,13 @@
                         <div class="row">
                             <div class="col-12 ">
                                 <div class="form-group">
-                                    <label for="areaname">Name:</label>
+                                    <label for="fullname">Name:</label>
                                     <input type="text" class="form-control" id="fullname" name="fullname" [(ngModel)]="userDetails[0].name" placeholder="Full Name">
                                   </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="areaname">Email:</label>
+                                    <label for="email">Email:</label>
                                     <input type="text" class="form-control" id="email" name="email" [(ngModel)]="userDetails[0].email" placeholder="Email">
                                   </div>
                             </div>
@@ -62,14 +62,14 @@
                     <div class="row">
                       <div class="col-6">
                           <div class="form-group">
-                              <label for="areaname">Mobile:</label>
+                              <label for="mobile">Mobile:</label>
                               <input type="number" class="form-control" id="mobile" name="mobile" [(ngModel)]="userDetails[0].mobile" placeholder="Mobile">
                             </div>
                       </div>
 
                       <div class="col-6">
                           <div class="form-group">
-                              <label for="areaname">Role:</label>
+                              <label for="userRole">Role:</label>
                               <select class="form-control" id="userRole" name="userRole" [(ngModel)]="userDetails[0].role">
                                   <option selected disabled value="0">Select Role</option>
                                   <option *ngFor="let roleObje of userRoles" value="{{roleObje}}">{{roleObje}}</option>
@@ -80,10 +80,21 @@
                       
                       <div class="col-6">
                           <div class="form-group">
-                              <label for="areaname">Profile Pic:</label>
+                              <label for="userProfile">Profile Pic:</label>
                               <input type="file" #userProfile ng2FileSelect  [uploader]="uploader" (change)="onSelectFile($event)"/>
                             </div>
                       </div>
+
+                      <div class="col-6">
+                        <div class="form-group">
+                            <label for="status">Status:</label>
+                            <select class="form-control" id="status" name="status" [(ngModel)]="userDetails[0].status">
+                                <option selected disabled value="0">Select</option>
+                                <option *ngFor="let statusobj of accessStatus" value="{{statusobj.value}}">{{statusobj.name}}</option>
+                                
+                            </select>
+                          </div>
+                    </div>
                     </div>
                     </div>
                   </div>
@@ -92,16 +103,14 @@
            
           <!-- Modal footer -->
           <div class="modal-footer">
-            <a class="btn btn-info"  (click)="SaveuserDetails(usersForm);modalUserDetails.hide()">Save</a>
+            <a class="btn btn-info" (click)="SaveuserDetails(usersForm);modalUserDetails.hide()">Save</a>
             <a class="btn btn-secondary"  (click)="modalUserDetails.hide()">Close</a>
           </div>
-          
         </div>
       </div>
     </div>
-    
-
-<!-- 
+  
+ 
   <div class="row">
   <ag-grid-angular 
   #agGrid
@@ -121,4 +130,4 @@
   (selectionChanged)="onSelectionChanged($event)"
   >
 </ag-grid-angular>
-</div> -->
+</div> 

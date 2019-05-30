@@ -11,3 +11,10 @@ $ag-icons-path: "../node_modules/ag-grid-community/src/styles/ag-theme-balham/ic
 $odd-row-background-color: rgb(10, 169, 238);
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

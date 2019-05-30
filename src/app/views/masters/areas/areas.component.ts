@@ -94,21 +94,7 @@ export class AreasComponent implements OnInit {
     this.columnDefs =[
                         {headerName: 'Name', field: 'name', checkboxSelection: true,pinned: 'left'},
                         {headerName: 'City', field: 'cityname' },{headerName: 'State', field: 'statename' },{headerName: 'Country', field: 'countryname' }],
-  this.autoGroupColumnDef = {
-    headerName: "Group",
-    width: 200,
-    field: "athlete",
-    valueGetter: function(params) {
-      if (params.node.group) {
-        return params.node.key;
-      } else {
-        return params.data[params.colDef.field];
-      }
-    },
-    headerCheckboxSelection: true,
-    cellRenderer: "agGroupCellRenderer",
-    cellRendererParams: { checkbox: true }
-  };
+
   this.defaultColDef = {
     // editable: true,
     enableRowGroup: true,
@@ -119,30 +105,15 @@ export class AreasComponent implements OnInit {
    
   };
 
-  this.sideBar = ["filters","columns"];
-  this.statusBar = {
-    statusPanels: [
-      {
-        statusPanel: "agTotalRowCountComponent",
-        align: "left"
-      },
-      { statusPanel: "agFilteredRowCountComponent" },
-      { statusPanel: "agSelectedRowCountComponent" },
-      { statusPanel: "agAggregationComponent" }
-    ]
-  };
+
   // this.rowSelection = "multiple";
   this.rowSelection = "single";
   this.rowGroupPanelShow = "always";
-  this.pivotPanelShow = "always";
   this.paginationPageSize = 10;
   this.paginationNumberFormatter = function(params) {
     return "[" + params.value.toLocaleString() + "]";
   };
-
-
   this.getCountriesList();
-
 }
 
 getCountriesList()
@@ -255,10 +226,6 @@ getCitiesOnSate(stateid)
         )
       }
     }) 
-
-
-
-   
   }
 
 }

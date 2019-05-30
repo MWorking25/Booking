@@ -53,6 +53,8 @@ export class MastersService {
 					}));	
   }
 
+ 
+
   SaveUserDetails(userDetails): Observable<any>
   {
     return this.http.post('http://localhost:3800/api/unity/saveUserDetails/',userDetails,{ withCredentials: true }).pipe(map(data => {
@@ -62,6 +64,21 @@ export class MastersService {
   SaveUserDetailsWIthoutPic(userDetails): Observable<any>
   {
     return this.http.post('http://localhost:3800/api/unity/SaveUserDetailsWIthoutPic/',userDetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));	
+  }
+
+
+  getUsersList(): Observable<any>
+  {
+        return this.http.get<any>('http://localhost:3800/api/unity/getUsersList/',{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
+
+  DeleteUsersDetails(usersdetails): Observable<any>
+  {
+    return this.http.post('http://localhost:3800/api/unity/DeleteUsersDetails/',usersdetails,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));	
   }

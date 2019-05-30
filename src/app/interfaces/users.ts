@@ -6,5 +6,5 @@ export interface Users {
     role:String;
     profilepic:String;
     status:Number;
-    createddate:String;
+    createddate:Date;
 }
