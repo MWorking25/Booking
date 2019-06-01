@@ -27,6 +27,7 @@ export class AreasComponent implements OnInit {
   countries : any;
   states : any;
   cities : any;
+  selectedRows : any;
   rowData : any;
   pagesize = 10;
   gridApi:any;
@@ -144,10 +145,13 @@ getCitiesOnSate(stateid)
 
 
   onSelectionChanged() {
-    var selectedRows = this.gridApi.getSelectedRows();
+    this.selectedRows = this.gridApi.getSelectedRows();
+    var selectedRows = this.selectedRows;
+    if (selectedRows.length > 0 ) {
      this.getStatesOnCountry(selectedRows[0].countryid);
      this.getCitiesOnSate(selectedRows[0].stateid);
      this.areaDetails = [{id:selectedRows[0].id,areaname:selectedRows[0].name,countryid:selectedRows[0].countryid,cityid:selectedRows[0].cityid,stateid:selectedRows[0].stateid}];
+    }
   }
 
   GetAreasList()
@@ -226,6 +230,40 @@ getCitiesOnSate(stateid)
         )
       }
     }) 
+  }
+
+
+  
+  VerifySelectedRows() {
+    if (this.selectedRows) {
+      if (this.selectedRows.length > 1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  VerifySelectedRowsAdd() {
+    if (this.selectedRows) {
+      if (this.selectedRows.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  VerifySelectedRowsDelete() {
+    if (!this.selectedRows) {
+      return true;
+    } else {
+      if (this.selectedRows.length <= 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
 }

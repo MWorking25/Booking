@@ -32,6 +32,13 @@ export class MastersService {
         }));
   }
 
+  getAreasOnCity(cityid): Observable<any>
+  {
+        return this.http.get<any>('http://localhost:3800/api/unity/getAreasOnCity/'+cityid,{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
+
   getAreaslist(): Observable<any>
   {
         return this.http.get<any>('http://localhost:3800/api/unity/getAreaslist/',{ withCredentials: true }).pipe(map(data => {

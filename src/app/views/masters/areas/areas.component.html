@@ -7,9 +7,9 @@
       <option value="1000">1000</option>
     </select>
   </div>
-  <div class="col-md-1 col-3 text-nowrap"><a class="btn btn-info"  data-toggle="modal" (click)="modalAreaDetails.show()"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Add</a></div>
-  <div class="col-md-1 col-3  text-nowrap"><a class="btn btn-info" data-toggle="modal" (click)="modalAreaDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit</a></div>
-  <div class="col-md-1 col-3  text-nowrap"><a class="btn btn-info" (click)="DeleteAreaDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</a></div>
+  <div class="col-md-1 col-3 text-nowrap"><button class="btn btn-info"  [disabled]="VerifySelectedRowsAdd()" data-toggle="modal" (click)="modalAreaDetails.show()"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Add</button></div>
+  <div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRows()"  data-toggle="modal" (click)="modalAreaDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit</button></div>
+  <div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info"  [disabled]="VerifySelectedRowsDelete()" (click)="DeleteAreaDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</button></div>
   </div>
 
   <!-- The Modal -->

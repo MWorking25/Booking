@@ -1,3 +1,78 @@
-<p>
-  details works!
-</p>
+<div class="row">
+    <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+        <div class="card">
+            <div class="card-header">General Details</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+                      <div class="form-group d-none">
+                        <label for="hotelid">id:</label>
+                        <input type="text" class="form-control" id="hotelid" name="hotelid" placeholder="id">
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-12 col-lg-4 col-xl-4">
+                      <div class="form-group">
+                        <label for="hotelname">Name:</label>
+                        <input type="text" class="form-control" id="hotelname" name="hotelname" placeholder="Name">
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-12 col-lg-4 col-xl-4">
+                      <div class="form-group">
+                        <label for="hoteladdress">Address Line 1:</label>
+                        <input type="text" class="form-control" id="addressline1" name="addressline1" placeholder="Address Line 1">
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-12 col-lg-4 col-xl-4">
+                      <div class="form-group">
+                        <label for="hoteladdress">Address Line 2:</label>
+                        <input type="text" class="form-control" id="addressline2" name="addressline2" placeholder="Address Line 2">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-6 col-lg-3 col-xl-3">
+                      <div class="form-group">
+                        <label for="state">Country:</label>
+                        <select class="form-control" id="country" name="country" [(ngModel)]="hotelDetails[0].countryid" (change)="getStatesOnCountry(hotelDetails[0].countryid)">
+                            <option selected disabled value="0">Select Country</option>
+                            <option *ngFor="let cntryObje of countries" value="{{cntryObje.id}}">{{cntryObje.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-6 col-lg-3 col-xl-3">
+                      <div class="form-group">
+                         <label for="state">State:</label>
+                              <select class="form-control" id="state" name="state" [(ngModel)]="hotelDetails[0].stateid" (change)="getCitiesOnSate(hotelDetails[0].stateid)">
+                                  <option selected disabled value="0">Select State</option>
+                                  <option *ngFor="let stateObje of states" value="{{stateObje.id}}">{{stateObje.name}}</option>
+                              </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-6 col-lg-3 col-xl-3">
+                      <div class="form-group">
+                        <label for="city">City:</label>
+                        <select class="form-control" id="city" name="city" [(ngModel)]="hotelDetails[0].cityid"  (change)="getAreasOnCity(hotelDetails[0].cityid)">
+                            <option selected disabled value="0">Select City</option>
+                            <option *ngFor="let cityObje of cities" value="{{cityObje.id}}">{{cityObje.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-6 col-lg-3 col-xl-3">
+                      <div class="form-group">
+                         <label for="state">Area:</label>
+                              <select class="form-control" id="state" name="state" [(ngModel)]="hotelDetails[0].areaid">
+                                  <option selected disabled value="0">Select State</option>
+                                  <option *ngFor="let areaObje of areas" value="{{areaObje.id}}">{{areaObje.name}}</option>
+                              </select>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

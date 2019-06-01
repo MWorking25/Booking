@@ -12,7 +12,7 @@ const routes: Routes = [
   {path:'booking',component:BookingsComponent,data: {
     title: 'Hotels Bookings'
   }},
-  {path:'details',component:DetailsComponent,data: {
+  {path:'details/:id',component:DetailsComponent,data: {
     title: 'Hotels Details'
   }}
 ];
