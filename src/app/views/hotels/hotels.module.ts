@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 import {AgGridModule} from 'ag-grid-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -20,7 +21,8 @@ import { BookingsComponent } from './bookings/bookings.component';
     FormsModule,
     ReactiveFormsModule,
     AgGridModule.withComponents([]),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    CollapseModule.forRoot(),
   ]
 })
 export class HotelsModule { }
