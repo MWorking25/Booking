@@ -8,6 +8,7 @@ import { HotelAminityTitle } from '../../../interfaces/hotel-aminity-title';
 import { HotelSubaminities } from '../../../interfaces/hotel-subaminities';
 import { HotelRooms } from '../../../interfaces/hotel-rooms';
 import { HotelsService } from '../../../services/hotels.service';
+import $ from 'jquery';
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -19,8 +20,13 @@ export class DetailsComponent implements OnInit {
   myInputVariable: ElementRef;
 
   url:any;
+  htmlContent:any;
+  roomindex:any;
+
   hotelDetails:HotelDetails[]=[{id:0,name:null,addressline1:null,addressline2:null,email:null,mobile1:null,mobile2:null,landline1:null,landline2:null,website:null,area:null,city:null,state:null,country:null,checkin_time:null,checkout_time:null,description:null,status:0,created_by:null,created_date:null,bannerimg:null,gstin:null}];
-  hotelRooms:any=[{id:null,room_type:null,rooms_count:null,description:null,price:null,discounted_price:null}];
+
+  hotelRooms:HotelRooms[]=[{id:0,hotelid:null,room_type:null,capacity:null,description:null,discounted_price:null,price:null,rooms_count:null,createdby:null,createddate:null}];
+
   countries:Observable<any>;
   states:Observable<any>;
   cities:Observable<any>;
@@ -99,12 +105,13 @@ getAreasOnCity(cityid)
 
 addNewRoom()
 {
-  this.hotelRooms.push({id:null,room_type:null,rooms_count:null,description:null,price:null,discounted_price:null});
+  if(this.hotelRooms[this.hotelRooms.length -1].room_type != null && this.hotelRooms[this.hotelRooms.length -1].price != null && this.hotelRooms[this.hotelRooms.length -1].rooms_count != null) 
+  this.hotelRooms.push({id:0,hotelid:this.hotelDetails[0].id,room_type:null,capacity:null,description:null,discounted_price:null,price:null,rooms_count:null,createdby:null,createddate:null});
 }
 
 RemoveRoom(roomdetails,index)
 {
-  if(roomdetails.id === null)
+  if(roomdetails.id === 0)
   {
     this.hotelRooms.splice(index,1);
   }
@@ -115,6 +122,33 @@ RemoveRoom(roomdetails,index)
 }
 
 
+VerifyForm()
+{
+  if(this.hotelDetails[0].name != null && this.hotelDetails[0].addressline1 != null && this.hotelDetails[0].email != null && this.hotelDetails[0].mobile1 != null && this.hotelDetails[0].state != null && this.hotelDetails[0].country != null)
+  {
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+
+VerifyHotelRooms()
+{
+
+
+    var roomsfilters = this.hotelRooms.filter((value)=>{
+        return (value.room_type == null || value.price == null || value.rooms_count == null)
+    });
+
+    if(roomsfilters.length > 0)
+    {
+      return true;
+    }
+    else{
+      return false;
+    }
+}
 saveHotelDetails(hoteldetails)
 {
   if (this.uploader.queue.length > 0) {
@@ -133,6 +167,12 @@ saveHotelDetails(hoteldetails)
 uploadFile(data: FormData) {
 
   this._hotelsService.SaveHotelDetails(data).subscribe((res: any) => {
+    if(res.hotelid > 0) 
+    {
+      this.hotelDetails[0].id = res.hotelid;
+      this.hotelRooms[0].hotelid = res.hotelid;
+    }
+
     Swal.fire({
       title: res.title,
       text: res.message,
@@ -141,7 +181,7 @@ uploadFile(data: FormData) {
       if (res.status === 1) {
 
       } else {
-        location.reload();
+        //location.reload();
       }
     });
   });
@@ -149,7 +189,54 @@ uploadFile(data: FormData) {
 
 saveHoteldetailasWithoutPic(hoteldetails)
 {
-    console.log(hoteldetails)
+  this._hotelsService.SaveHotelDetails(hoteldetails).subscribe((res: any) => {
+    if(res.hotelid > 0) 
+    {
+      this.hotelDetails[0].id = res.hotelid;
+      this.hotelRooms[0].hotelid = res.hotelid;
+    }
+
+    Swal.fire({
+      title: res.title,
+      text: res.message,
+      type: res.type,
+    }).then((result) => {
+      if (res.status === 1) {
+
+      } else {
+        //location.reload();
+      }
+    });
+  });
+}
+
+
+SaveHotelRoomDetails()
+{
+  this._hotelsService.SaveHotelRoomDetails(this.hotelRooms).subscribe((res: any) => {
+    Swal.fire({
+      title: res.title,
+      text: res.message,
+      type: res.type,
+    }).then((result) => {
+      if (res.status === 1) {
+
+      } else {
+        //location.reload();
+      }
+    });
+  });
+}
+
+setTextinEditor(descriptiontxt,index)
+{
+  this.htmlContent = descriptiontxt;
+  this.roomindex = index;
+}
+
+RevertEditedText()
+{
+  this.hotelRooms[this.roomindex].description = this.htmlContent;
 }
 
 }

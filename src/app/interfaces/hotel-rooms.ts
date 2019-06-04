@@ -3,6 +3,7 @@ export interface HotelRooms {
     hotelid : Number
     room_type : String
     rooms_count : Number
+    capacity : Number
     description : String
     price : Number
     discounted_price : Number

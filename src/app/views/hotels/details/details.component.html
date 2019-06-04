@@ -8,21 +8,21 @@
                     <div class="col-md-12 col-12 col-lg-12 col-xl-12">
                       <div class="form-group d-none">
                         <label for="hotelid">id:</label>
-                        <input type="text" class="form-control" id="hotelid" name="hotelid" placeholder="id" [(ngModel)]="hotelDetails[0].id">
+                        <input type="text" class="form-control" id="hotelid" name="id" placeholder="id" [(ngModel)]="hotelDetails[0].id">
                       </div>
                     </div>
 
                     <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                       <div class="form-group">
-                        <label for="hotelname">Name:</label>
-                        <input type="text" class="form-control" id="hotelname" name="hotelname" placeholder="Name" [(ngModel)]="hotelDetails[0].name">
+                        <label for="hotelname"><sup class="text-danger">*</sup> Name:</label>
+                        <input type="text" class="form-control" id="hotelname" name="name" placeholder="Name" [(ngModel)]="hotelDetails[0].name" required>
                       </div>
                     </div>
 
                     <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                       <div class="form-group">
-                        <label for="addressline1">Address Line 1:</label>
-                        <input type="text" class="form-control" id="addressline1" name="addressline1" placeholder="Address Line 1" [(ngModel)]="hotelDetails[0].addressline1">
+                        <label for="addressline1"><sup class="text-danger">*</sup> Address Line 1:</label>
+                        <input type="text" class="form-control" id="addressline1" name="addressline1" placeholder="Address Line 1" [(ngModel)]="hotelDetails[0].addressline1" required>
                       </div>
                     </div>
 
@@ -35,8 +35,8 @@
 
                     <div class="col-md-6 col-6 col-lg-3 col-xl-3">
                       <div class="form-group">
-                        <label for="state">Country:</label>
-                        <select class="form-control" id="country" name="country" [(ngModel)]="hotelDetails[0].country" (change)="getStatesOnCountry(hotelDetails[0].country)">
+                        <label for="state"><sup class="text-danger">*</sup> Country:</label>
+                        <select class="form-control" id="country" name="country" [(ngModel)]="hotelDetails[0].country" (change)="getStatesOnCountry(hotelDetails[0].country)" required>
                             <option selected disabled value="0">Select Country</option>
                             <option *ngFor="let cntryObje of countries" value="{{cntryObje.id}}">{{cntryObje.name}}</option>
                         </select>
@@ -45,8 +45,8 @@
 
                     <div class="col-md-6 col-6 col-lg-3 col-xl-3">
                       <div class="form-group">
-                         <label for="state">State:</label>
-                              <select class="form-control" id="state" name="state" [(ngModel)]="hotelDetails[0].state" (change)="getCitiesOnSate(hotelDetails[0].state)">
+                         <label for="state"><sup class="text-danger">*</sup> State:</label>
+                              <select class="form-control" id="state" name="state" [(ngModel)]="hotelDetails[0].state" (change)="getCitiesOnSate(hotelDetails[0].state)" required>
                                   <option selected disabled value="0">Select State</option>
                                   <option *ngFor="let stateObje of states" value="{{stateObje.id}}">{{stateObje.name}}</option>
                               </select>
@@ -77,54 +77,55 @@
                       <div class="col-md-12 col-12 col-lg-12 col-xl-12">
                         <div class="form-group">
                           <label for="description">Description:</label>
-                          <textarea class="form-control" placeholder="Description" id="description" name="description" [(ngModel)]="hotelDetails[0].description"></textarea>
+
+                          <angular-editor id="description" name="description"  placeholder="Enter text here..." [(ngModel)]="hotelDetails[0].description"></angular-editor>
                         </div>
                       </div>
                       <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                         <div class="form-group">
-                          <label for="hotelemail">Email:</label>
-                          <input type="email" class="form-control" id="hotelemail" name="hotelemail" placeholder="Email" [(ngModel)]="hotelDetails[0].email">
+                          <label for="hotelemail"><sup class="text-danger">*</sup> Email:</label>
+                          <input type="email" class="form-control" id="hotelemail" name="email" placeholder="Email" [(ngModel)]="hotelDetails[0].email" required>
                         </div>
                       </div>
   
                       <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                         <div class="form-group">
-                          <label for="mobile1">Mobile No.:</label>
-                          <input type="number" class="form-control" id="mobile1" name="mobile1" placeholder="Mobile No." [(ngModel)]="hotelDetails[0].mobile1">
+                          <label for="mobile1"><sup class="text-danger">*</sup> Mobile No.:</label>
+                          <input type="text" pattern="\d*" class="form-control" id="mobile1" name="mobile1" placeholder="Mobile No." maxlength="10" [(ngModel)]="hotelDetails[0].mobile1" required>
                         </div>
                       </div>
   
                       <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                         <div class="form-group">
                           <label for="mobile2">Alt. Mobile No.:</label>
-                          <input type="number" class="form-control" id="mobile2" name="mobile2" placeholder="Alt. Mobile No." [(ngModel)]="hotelDetails[0].mobile2">
+                          <input type="text" pattern="\d*" class="form-control" id="mobile2" name="mobile2" maxlength="10" placeholder="Alt. Mobile No." [(ngModel)]="hotelDetails[0].mobile2">
                         </div>
                       </div>
                       <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                         <div class="form-group">
                           <label for="hotelwebsite">Website:</label>
-                          <input type="text" class="form-control" id="hotelwebsite" name="hotelwebsite" placeholder="Website" [(ngModel)]="hotelDetails[0].website">
+                          <input type="text" class="form-control" id="hotelwebsite" name="website" placeholder="Website" [(ngModel)]="hotelDetails[0].website">
                         </div>
                       </div>
   
                       <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                         <div class="form-group">
                           <label for="landline1">Landline No.:</label>
-                          <input type="number" class="form-control" id="landline1" name="landline1" placeholder="Landline No."  [(ngModel)]="hotelDetails[0].landline1">
+                          <input type="text" pattern="\d*" class="form-control" id="landline1" name="landline1" maxlength="10" placeholder="Landline No."  [(ngModel)]="hotelDetails[0].landline1">
                         </div>
                       </div>
   
                       <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                         <div class="form-group">
                           <label for="lanline2">Alt. Landline No.:</label>
-                          <input type="number" class="form-control" id="lanline2" name="lanline2" placeholder="Alt. Landline No."  [(ngModel)]="hotelDetails[0].landline2">
+                          <input type="text" pattern="\d*" class="form-control" id="lanline2" name="landline2" maxlength="10" placeholder="Alt. Landline No."  [(ngModel)]="hotelDetails[0].landline2">
                         </div>
                       </div>
   
                       <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                           <div class="form-group">
                               <label for="gstin">GSTIN:</label>
-                              <input type="number" class="form-control" id="gstin" name="gstin" placeholder="GSTIN"  [(ngModel)]="hotelDetails[0].gstin">
+                              <input type="text" class="form-control" id="gstin" name="gstin" placeholder="GSTIN"  [(ngModel)]="hotelDetails[0].gstin">
                             </div>
                       </div>
                       <div class="col-md-12 col-12 col-lg-8 col-xl-8">
@@ -132,7 +133,7 @@
                         <div class="col-md-12 col-12 col-lg-6 col-xl-6">
                           <div class="form-group">
                               <label for="userProfile">Profile Pic:</label>
-                              <input type="file" #bannerImage ng2FileSelect  [uploader]="uploader" (change)="onSelectFile($event)"/>
+                              <input type="file" #bannerImage ng2FileSelect name="bannerimg" [uploader]="uploader" (change)="onSelectFile($event)"/>
                               <br>
                               <small class="text-warning">*Image size should be 280X190(width/height) in pixels</small>
                             </div>
@@ -149,7 +150,7 @@
 
                     <div class="col-md-12 col-12 col-lg-12 col-xl-12">
                       <div class="col-md-4 col-4 col-lg-2 col-xl-2 ml-auto">
-                         <button class="btn btn-primary" (click)="saveHotelDetails(hotel)">Submit</button>
+                         <button class="btn btn-primary" [disabled]="VerifyForm()" (click)="saveHotelDetails(hotel)">Submit</button>
                       </div>
                     </div>
                   </form>
@@ -166,71 +167,61 @@
                         <table class="table">
                             <thead>
                                 <th>#</th>
-                                <th>Type</th>
-                                <th>Available Rooms</th>
+                                <th><sup class="text-danger">*</sup>Type</th>
+                                <th><sup class="text-danger">*</sup>Available Rooms</th>
+                                <th>Capacity</th>
                                 <th>Description</th>
-                                <th>Price</th>
+                                <th><sup class="text-danger">*</sup>Price</th>
                                 <th>Discounted Price</th>
                                 <th></th>
                             </thead>
                             <tbody>
                               <tr *ngFor="let _hotelRooms of hotelRooms;let i = index">
                                 <td>{{i +1}}</td>
-                                <td><input type="text" class="form-control" placeholder="Room Type" autofocus required></td>
-                                <td><input type="number" class="form-control" placeholder="Available Rooms"></td>
-                                <td><textarea class="form-control" placeholder="Description"></textarea></td>
-                                <td><input type="number" class="form-control" placeholder="Price"></td>
-                                <td><input type="number" class="form-control" placeholder="Discounted Price"></td>
-                                <td><button class="btn btn-danger" (click)="RemoveRoom(_hotelRooms,i)">Delete</button></td>
+                                <td><input type="text" class="form-control" placeholder="Room Type" [(ngModel)]="_hotelRooms.room_type" autofocus required></td>
+                                <td><input type="number" class="form-control" [(ngModel)]="_hotelRooms.rooms_count" placeholder="Available Rooms"></td>
+                                <td><input type="number" class="form-control" [(ngModel)]="_hotelRooms.capacity" placeholder="Capacity"></td>
+                                <td (click)="setTextinEditor(_hotelRooms.description,i);modalRoomDescription.show()"><div class="description"><div [innerHTML]="_hotelRooms.description || 'Description'"></div></div></td>
+                                <td><input type="number" class="form-control" [(ngModel)]="_hotelRooms.price" placeholder="Price"></td>
+                                <td><input type="number" class="form-control" [(ngModel)]="_hotelRooms.discounted_price" placeholder="Discounted Price"></td>
+                                <td><i (click)="RemoveRoom(_hotelRooms,i)" class="material-icons text-danger pointer">delete</i></td>
                               </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="col-4 col-md-4 col-lg-2 col-xl-2">
-                          <button class="btn btn-info" (click)="addNewRoom()">Add New</button>
+                          <button class="btn btn-info" *ngIf="hotelDetails[0].id != 0" (click)="addNewRoom()">Add New</button>
+                        </div>
+
+                        <div class="col-4 col-md-4 col-lg-2 col-xl-2 ml-auto">
+                          <button class="btn btn-primary" *ngIf="hotelDetails[0].id != 0" [disabled]="VerifyHotelRooms()" (click)="SaveHotelRoomDetails()">Submit</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-12 col-12 col-lg-12 col-xl-12">
-        <div class="card">
-          <div class="card-header" (click)="isCollapsedrooms = !isCollapsedrooms">Rooms</div>
-          <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)" [collapse]="isCollapsedrooms">
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <th>#</th>
-                                <th>Type</th>
-                                <th>Available Rooms</th>
-                                <th>Description</th>
-                                <th>Price</th>
-                                <th>Discounted Price</th>
-                                <th></th>
-                            </thead>
-                            <tbody>
-                              <tr *ngFor="let _hotelRooms of hotelRooms;let i = index">
-                                <td>{{i +1}}</td>
-                                <td><input type="text" class="form-control" placeholder="Room Type" autofocus required></td>
-                                <td><input type="number" class="form-control" placeholder="Available Rooms"></td>
-                                <td><textarea class="form-control" placeholder="Description"></textarea></td>
-                                <td><input type="number" class="form-control" placeholder="Price"></td>
-                                <td><input type="number" class="form-control" placeholder="Discounted Price"></td>
-                                <td><button class="btn btn-danger" (click)="RemoveRoom(_hotelRooms,i)">Delete</button></td>
-                              </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                        <div class="col-4 col-md-4 col-lg-2 col-xl-2">
-                          <button class="btn btn-info" (click)="addNewRoom()">Add New</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    
+
+
+    <div bsModal #modalRoomDescription="bs-modal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal body -->
+          <div class="modal-body">
+
+
+              <angular-editor placeholder="Enter text here..." [(ngModel)]="htmlContent"></angular-editor>
+          </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <a class="btn btn-info" (click)="RevertEditedText();modalRoomDescription.hide()">Save</a>
+            <a class="btn btn-secondary"  (click)="modalRoomDescription.hide()">Close</a>
+          </div>
         </div>
+      </div>
     </div>
+
+
 </div>

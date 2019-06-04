@@ -63,7 +63,7 @@
                       <div class="col-6">
                           <div class="form-group">
                               <label for="mobile">Mobile:</label>
-                              <input type="number" class="form-control" id="mobile" name="mobile" [(ngModel)]="userDetails[0].mobile" placeholder="Mobile">
+                              <input type="text" pattern="\d*" maxlength="10" class="form-control" id="mobile" name="mobile" [(ngModel)]="userDetails[0].mobile" placeholder="Mobile">
                             </div>
                       </div>
 

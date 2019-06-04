@@ -5,6 +5,9 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import {AgGridModule} from 'ag-grid-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
+// import { NgxEditorModule } from 'ngx-editor';
+
+import { AngularEditorModule } from '@sedlan/angular-edit';
 import {FileUploadModule} from "ng2-file-upload"
 import { HotelsRoutingModule } from './hotels-routing.module';
 import { DetailsComponent } from './details/details.component';
@@ -16,6 +19,7 @@ import { BookingsComponent } from './bookings/bookings.component';
   imports: [
     CommonModule,
     HotelsRoutingModule,
+    AngularEditorModule,
     HttpClientModule,
     FileUploadModule,
     FormsModule,

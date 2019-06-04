@@ -7,7 +7,30 @@
     <option value="1000">1000</option>
   </select>
 </div>
-<div class="col-md-1 col-3 text-nowrap"><button class="btn btn-info" [routerLink]="['/hotels/details',0]"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Add</button></div>
-<div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" (click)="modalHotelDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit</button></div>
-<div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" (click)="DeleteUsersDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</button></div>
+<div class="col-md-1 col-3 text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRowsAdd()"  [routerLink]="['/hotels/details',0]"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Add</button></div>
+<div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRows()"  (click)="modalHotelDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit</button></div>
+<div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRowsDelete()" (click)="DeleteUsersDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</button></div>
 </div>
+
+
+<div class="row">
+    <ag-grid-angular 
+    #agGrid
+    style="width: 100%; height: 60vh;" 
+    class="ag-theme-balham"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    rowSelection="multiple"
+    [floatingFilter]="true"
+    [animateRows]="true"
+    [enableRangeSelection]="true"
+    [pagination]="true"
+    [paginationPageSize]="paginationPageSize"
+    (gridReady)="onGridReady($event)"
+   [paginationNumberFormatter]="paginationNumberFormatter"
+    (selectionChanged)="onSelectionChanged($event)"
+    >
+  </ag-grid-angular>
+  </div> 
+

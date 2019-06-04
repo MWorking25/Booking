@@ -19,4 +19,18 @@ export class HotelsService {
 							return data;
 					}));
   }
+
+  SaveHotelRoomDetails(hotelRoomdetails): Observable<any>
+  {
+    return this.http.post('http://localhost:3800/api/unity/SaveHotelRoomDetails/',hotelRoomdetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
+
+  getHotelsList(): Observable<any>
+  {
+        return this.http.get<any>('http://localhost:3800/api/unity/HotelsList/',{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
 }
