@@ -49,6 +49,11 @@ export const navItems: NavData[] = [
     icon: 'fa fa-location-arrow'
   },
   {
+    name: 'Hotel Aminities',
+    url: '/masters/hotel-aminities',
+    icon: 'fa fa-bed'
+  },
+  {
     name: 'Members',
     url: '/masters/members',
     icon: 'fa fa-users'

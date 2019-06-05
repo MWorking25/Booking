@@ -1,0 +1,95 @@
+<div class="row pb-2 mr-2">
+  <div class="col-md-1 col-3">
+    <select (change)="onPageSizeChanged()" class="row form-control pagination" [(ngModel)]="pagesize" id="page-size">
+      <option value="10" selected="">10</option>
+      <option value="100">100</option>
+      <option value="500">500</option>
+      <option value="1000">1000</option>
+    </select>
+  </div>
+  <div class="col-md-1 col-3 text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRowsAdd()"
+      data-toggle="modal" (click)="modalAminityDetails.show()"><i class="fa fa-plus" aria-hidden="true"></i>
+      &nbsp;Add</button></div>
+  <div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRows()"
+      data-toggle="modal" (click)="modalAminityDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i>
+      &nbsp;Edit</button></div>
+  <div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRowsDelete()"
+      (click)="DeleteAminityDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</button></div>
+</div>
+
+
+
+<!-- The Modal -->
+<div bsModal #modalAminityDetails="bs-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Aminities Details</h4>
+        <button type="button" class="close" (click)="modalAminityDetails.hide()"><span
+            aria-hidden="true">&times;</span></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form class="form-horizontal" #aminitiesForm="ngForm">
+          <div class="row">
+            <div class="col-12">
+              <h5 class="medium-text">Icons</h5><sup>Select icon for Aminity</sup>
+            </div>
+            <div class="col-2 text-center aminities-icons" *ngFor="let _icon of icons" [innerHTML]="_icon.display">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 d-none">
+              <input name="id" [(ngModel)]="aminitiesDetails[0].id">
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="amenity">Title:</label>
+                <input type="text" class="form-control" id="amenity" name="amenity" placeholder="Title"
+                  [(ngModel)]="aminitiesDetails[0].amenity">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <h6> Aminities</h6>
+            </div>
+            <div class="col-12">
+              <ul>
+                <li *ngFor="let _aminities of aminitiesDetails[0].AminitiesList">
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="subamenity" placeholder="Aminity"
+                      [(ngModel)]="_aminities.name">
+                  </div>
+                </li>
+                <li style="list-style-type: none" title="Add Aminity"><i class="fa fa-plus-circle pointer aminities-icons" aria-hidden="true" (click)="AddAminity()"></i>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <a class="btn btn-info" (click)="SaveAreaDetails(areaForm);modalAminityDetails.hide()">Save</a>
+        <a class="btn btn-secondary" (click)="modalAminityDetails.hide()">Close</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <ag-grid-angular #agGrid style="width: 100%; height: 60vh;" class="ag-theme-balham" [rowData]="rowData"
+    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" rowSelection="multiple" [floatingFilter]="true"
+    [animateRows]="true" [enableRangeSelection]="true" [pagination]="true" [paginationPageSize]="paginationPageSize"
+    (gridReady)="onGridReady($event)" [paginationNumberFormatter]="paginationNumberFormatter"
+    (selectionChanged)="onSelectionChanged($event)">
+  </ag-grid-angular>
+</div>

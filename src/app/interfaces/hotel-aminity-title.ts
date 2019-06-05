@@ -1,9 +1,9 @@
+
+import { HotelSubaminities } from './hotel-subaminities';
 export interface HotelAminityTitle {
     id : Number
-    hotelid : Number
-    hotelroomid : Number
     amenity : String
     amenity_icon : String
+    AminitiesList:HotelSubaminities[],
     createdby : Number
-    createddate : Date
 }

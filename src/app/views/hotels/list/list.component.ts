@@ -14,6 +14,7 @@ export class ListComponent implements OnInit {
 
 
   selectedRows: any;
+  hotelid: number = 0;;
   rowData: any;
   pagesize = 10;
   gridApi: any;
@@ -160,10 +161,57 @@ export class ListComponent implements OnInit {
 
   onSelectionChanged() {
     this.selectedRows = this.gridApi.getSelectedRows();
-    var selectedRows = this.selectedRows;
-    if (selectedRows.length > 0) {
- 
+    if (this.selectedRows.length > 0) {
+      
+      this.hotelid =  this.selectedRows[0].id;
+
     }
+  }
+
+
+  DeleteHotelDetails()
+  {
+    
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Want to delete these records',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+
+    var hotelids = [];
+    this.selectedRows.map((value,index)=>{
+
+      hotelids.push(value.id);
+
+      if(index === this.selectedRows.length - 1)
+      {
+        this._hotelService.DeleteHotelDetails(hotelids).subscribe((res: any) => {
+          Swal.fire({
+            title: res.title,
+            text: res.message,
+            type: res.type,
+          }).then((result) => {
+            if (res.status === 1) {
+      
+            } else {
+              this.getHotelsList();
+            }
+          });
+        });
+      }
+    });
+  } else if (result.dismiss === Swal.DismissReason.cancel) {
+    Swal.fire(
+      'Cancelled',
+      'Your imaginary file is safe :)',
+      'error'
+    )
+  }
+  })
   }
 
 
