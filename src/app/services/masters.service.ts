@@ -85,7 +85,7 @@ export class MastersService {
 
   getAmintiesListList(): Observable<any>
   {
-        return this.http.get<any>('http://localhost:3800/api/unity/getAmintiesListList/',{ withCredentials: true }).pipe(map(data => {
+        return this.http.get<any>('http://103.252.7.5:3800/api/unity/getAmintiesListList/',{ withCredentials: true }).pipe(map(data => {
           return data;
         }));
   }

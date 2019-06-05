@@ -29,14 +29,14 @@ export class HotelsService {
 
   DeleteHotelDetails(hotelids): Observable<any>
   {
-    return this.http.post('http://localhost:3800/api/unity/DeleteHotelDetails/',hotelids,{ withCredentials: true }).pipe(map(data => {
+    return this.http.post('http://103.252.7.5:3800/api/unity/DeleteHotelDetails/',hotelids,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));
   }
 
   deleteRoomDetails(roomid): Observable<any>
   {
-    return this.http.get<any>('http://localhost:3800/api/unity/deleteRoomDetails/'+roomid,{ withCredentials: true }).pipe(map(data => {
+    return this.http.get<any>('http://103.252.7.5:3800/api/unity/deleteRoomDetails/'+roomid,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));
   }
@@ -50,7 +50,7 @@ export class HotelsService {
 
   getHotelDetails(hotelid): Observable<any>
   {
-        return this.http.get<any>('http://localhost:3800/api/unity/getHotelDetails/'+hotelid,{ withCredentials: true }).pipe(map(data => {
+        return this.http.get<any>('http://103.252.7.5:3800/api/unity/getHotelDetails/'+hotelid,{ withCredentials: true }).pipe(map(data => {
           return data;
         }));
   }
