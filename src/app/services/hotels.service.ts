@@ -27,9 +27,30 @@ export class HotelsService {
 					}));
   }
 
+  DeleteHotelDetails(hotelids): Observable<any>
+  {
+    return this.http.post('http://localhost:3800/api/unity/DeleteHotelDetails/',hotelids,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
+
+  deleteRoomDetails(roomid): Observable<any>
+  {
+    return this.http.get<any>('http://localhost:3800/api/unity/deleteRoomDetails/'+roomid,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
+
   getHotelsList(): Observable<any>
   {
         return this.http.get<any>('http://103.252.7.5:3800/api/unity/HotelsList/',{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
+
+  getHotelDetails(hotelid): Observable<any>
+  {
+        return this.http.get<any>('http://localhost:3800/api/unity/getHotelDetails/'+hotelid,{ withCredentials: true }).pipe(map(data => {
           return data;
         }));
   }

@@ -12,9 +12,10 @@ import { MembersComponent } from './members/members.component';
 import { TrainsComponent } from './trains/trains.component';
 import { OffersComponent } from './offers/offers.component';
 import { UsersComponent } from './users/users.component';
+import { HotelAminitiesComponent } from './hotel-aminities/hotel-aminities.component';
 
 @NgModule({
-  declarations: [AreasComponent, MembersComponent, TrainsComponent, OffersComponent, UsersComponent],
+  declarations: [AreasComponent, MembersComponent, TrainsComponent, OffersComponent, UsersComponent, HotelAminitiesComponent],
   imports: [
     CommonModule,
     MastersRoutingModule,

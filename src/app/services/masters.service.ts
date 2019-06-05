@@ -83,6 +83,13 @@ export class MastersService {
         }));
   }
 
+  getAmintiesListList(): Observable<any>
+  {
+        return this.http.get<any>('http://localhost:3800/api/unity/getAmintiesListList/',{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
+
   DeleteUsersDetails(usersdetails): Observable<any>
   {
     return this.http.post('http://103.252.7.5:3800/api/unity/DeleteUsersDetails/',usersdetails,{ withCredentials: true }).pipe(map(data => {

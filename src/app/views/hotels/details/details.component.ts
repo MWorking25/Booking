@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/observable';
 import Swal from 'sweetalert2';
 import { FileUploader } from "ng2-file-upload";
@@ -26,15 +27,19 @@ export class DetailsComponent implements OnInit {
   hotelDetails:HotelDetails[]=[{id:0,name:null,addressline1:null,addressline2:null,email:null,mobile1:null,mobile2:null,landline1:null,landline2:null,website:null,area:null,city:null,state:null,country:null,checkin_time:null,checkout_time:null,description:null,status:0,created_by:null,created_date:null,bannerimg:null,gstin:null}];
 
   hotelRooms:HotelRooms[]=[{id:0,hotelid:null,room_type:null,capacity:null,description:null,discounted_price:null,price:null,rooms_count:null,createdby:null,createddate:null}];
+  
 
   countries:Observable<any>;
   states:Observable<any>;
   cities:Observable<any>;
   areas:Observable<any>;
 
-  constructor(private _MastersService : MastersService,private _hotelsService:HotelsService) { }
+  constructor(private _MastersService : MastersService,private _hotelsService:HotelsService,private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+
+    var hotelid = this.activatedRoute.snapshot.paramMap.get('id');
+    this.getHotelDetails(hotelid);
     this.getCountriesList();
   }
 
@@ -64,7 +69,6 @@ export class DetailsComponent implements OnInit {
 
 
   isCollapsedGeneraldetails: boolean = false;
-  isCollapsedContactdetails: boolean = false;
   isCollapsedrooms: boolean = false;
 
   collapsed(event: any): void {
@@ -105,20 +109,59 @@ getAreasOnCity(cityid)
 
 addNewRoom()
 {
-  if(this.hotelRooms[this.hotelRooms.length -1].room_type != null && this.hotelRooms[this.hotelRooms.length -1].price != null && this.hotelRooms[this.hotelRooms.length -1].rooms_count != null) 
-  this.hotelRooms.push({id:0,hotelid:this.hotelDetails[0].id,room_type:null,capacity:null,description:null,discounted_price:null,price:null,rooms_count:null,createdby:null,createddate:null});
+  if(this.hotelRooms.length > 0)
+  {
+     if(this.hotelRooms[this.hotelRooms.length -1].room_type != null && this.hotelRooms[this.hotelRooms.length -1].price != null && this.hotelRooms[this.hotelRooms.length -1].rooms_count != null) 
+      {
+        this.hotelRooms.push({id:0,hotelid:this.hotelDetails[0].id,room_type:null,capacity:null,description:null,discounted_price:null,price:null,rooms_count:null,createdby:null,createddate:null});
+      }
+  }
+  else
+  {
+    this.hotelRooms.push({id:0,hotelid:this.hotelDetails[0].id,room_type:null,capacity:null,description:null,discounted_price:null,price:null,rooms_count:null,createdby:null,createddate:null});
+  }
 }
 
 RemoveRoom(roomdetails,index)
 {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'Want to delete these item',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, keep it'
+  }).then((result) => {
+    if (result.value) {
   if(roomdetails.id === 0)
   {
     this.hotelRooms.splice(index,1);
   }
   else
   {
-
+    this._hotelsService.deleteRoomDetails(roomdetails.id).subscribe((res:any)=>{
+        Swal.fire({
+          title: res.title,
+          text: res.message,
+          type: res.type,
+        }).then((result) => {
+          if (res.status === 1) {
+    
+          } else {
+            this.getHotelDetails(roomdetails.hotelid);
+          }
+        });
+     
+    });	
   }
+} else if (result.dismiss === Swal.DismissReason.cancel) {
+  Swal.fire(
+    'Cancelled',
+    'Your imaginary file is safe :)',
+    'error'
+  )
+}
+})
 }
 
 
@@ -181,7 +224,7 @@ uploadFile(data: FormData) {
       if (res.status === 1) {
 
       } else {
-        //location.reload();
+        this.getHotelDetails(res.hotelid);
       }
     });
   });
@@ -204,7 +247,7 @@ saveHoteldetailasWithoutPic(hoteldetails)
       if (res.status === 1) {
 
       } else {
-        //location.reload();
+        this.getHotelDetails(res.hotelid);
       }
     });
   });
@@ -222,7 +265,7 @@ SaveHotelRoomDetails()
       if (res.status === 1) {
 
       } else {
-        //location.reload();
+        this.getHotelDetails(res.hotelid);
       }
     });
   });
@@ -238,5 +281,20 @@ RevertEditedText()
 {
   this.hotelRooms[this.roomindex].description = this.htmlContent;
 }
+
+
+
+getHotelDetails(hotelid)
+{ 
+  this._hotelsService.getHotelDetails(hotelid).subscribe((res:any)=>{
+    this.url = 'http://localhost:3800/unity/uploads/'+res.hoteldetails[0].bannerimg;
+    this.getStatesOnCountry(res.hoteldetails[0].country);
+    this.getCitiesOnSate(res.hoteldetails[0].state);
+    this.getAreasOnCity(res.hoteldetails[0].city);
+    this.hotelDetails = res.hoteldetails;
+    this.hotelRooms = res.roomsdetails;
+  });	
+}
+
 
 }

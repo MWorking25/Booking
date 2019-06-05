@@ -94,7 +94,7 @@ export class AreasComponent implements OnInit {
     
     this.columnDefs =[
                         {headerName: 'Name', field: 'name', checkboxSelection: true,pinned: 'left'},
-                        {headerName: 'City', field: 'cityname' },{headerName: 'State', field: 'statename' },{headerName: 'Country', field: 'countryname' }],
+                        {headerName: 'City', field: 'cityname' },{headerName: 'State', field: 'statename' },{headerName: 'Country', field: 'countryname' }];
 
   this.defaultColDef = {
     // editable: true,

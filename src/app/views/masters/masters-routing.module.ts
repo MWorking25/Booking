@@ -6,11 +6,15 @@ import { MembersComponent } from './members/members.component';
 import { OffersComponent } from './offers/offers.component';
 import { TrainsComponent } from './trains/trains.component';
 import { UsersComponent } from './users/users.component';
+import { HotelAminitiesComponent } from './hotel-aminities/hotel-aminities.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'area',pathMatch:'full'},
   {path:'area',component:AreasComponent, data: {
     title: 'Areas'
+  }},
+  {path:'hotel-aminities',component:HotelAminitiesComponent,data: {
+    title: 'Hotel Aminities'
   }},
   {path:'members',component:MembersComponent,data: {
     title: 'Members'

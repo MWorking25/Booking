@@ -8,8 +8,8 @@
   </select>
 </div>
 <div class="col-md-1 col-3 text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRowsAdd()"  [routerLink]="['/hotels/details',0]"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Add</button></div>
-<div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRows()"  (click)="modalHotelDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit</button></div>
-<div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRowsDelete()" (click)="DeleteUsersDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</button></div>
+<div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRows()"   [routerLink]="['/hotels/details',hotelid]"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;Edit</button></div>
+<div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRowsDelete()" (click)="DeleteHotelDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</button></div>
 </div>
 
 
