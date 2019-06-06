@@ -9,53 +9,56 @@ import "rxjs/add/operator/map";
 })
 export class MastersService {
 
+  // serveruri = 'http://103.252.7.5:3800';
+  serveruri = 'http://localhost:3800';
+
   constructor(private http:HttpClient) { }
 
   getCountriesList(): Observable<any>
   {
-        return this.http.get<any>('http://103.252.7.5:3800/api/unity/getCountryList',{ withCredentials: true }).pipe(map(data => {
+        return this.http.get<any>(this.serveruri+'/api/unity/getCountryList',{ withCredentials: true }).pipe(map(data => {
         return data;
       }));
   }
   
   getStatesListOnCountry(countryid): Observable<any>
   {
-        return this.http.get<any>('http://103.252.7.5:3800/api/unity/getStatesOnCountries/'+countryid,{ withCredentials: true }).pipe(map(data => {
+        return this.http.get<any>(this.serveruri+'/api/unity/getStatesOnCountries/'+countryid,{ withCredentials: true }).pipe(map(data => {
           return data;
         }));
   }
 
   getCitiesListOnState(stateid): Observable<any>
   {
-        return this.http.get<any>('http://103.252.7.5:3800/api/unity/getCitiesOnStates/'+stateid,{ withCredentials: true }).pipe(map(data => {
+        return this.http.get<any>(this.serveruri+'/api/unity/getCitiesOnStates/'+stateid,{ withCredentials: true }).pipe(map(data => {
           return data;
         }));
   }
 
   getAreasOnCity(cityid): Observable<any>
   {
-        return this.http.get<any>('http://103.252.7.5:3800/api/unity/getAreasOnCity/'+cityid,{ withCredentials: true }).pipe(map(data => {
+        return this.http.get<any>(this.serveruri+'/api/unity/getAreasOnCity/'+cityid,{ withCredentials: true }).pipe(map(data => {
           return data;
         }));
   }
 
   getAreaslist(): Observable<any>
   {
-        return this.http.get<any>('http://103.252.7.5:3800/api/unity/getAreaslist/',{ withCredentials: true }).pipe(map(data => {
+        return this.http.get<any>(this.serveruri+'/api/unity/getAreaslist/',{ withCredentials: true }).pipe(map(data => {
           return data;
         }));
   }
 
   SaveAreaDetails(areadetails): Observable<any>
   {
-    return this.http.post('http://103.252.7.5:3800/api/unity/saveAreadetails/',areadetails,{ withCredentials: true }).pipe(map(data => {
+    return this.http.post(this.serveruri+'/api/unity/saveAreadetails/',areadetails,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));	
   }
 
   DeleteAreaDetails(areadetails): Observable<any>
   {
-    return this.http.post('http://103.252.7.5:3800/api/unity/DeleteAreadetails/',areadetails,{ withCredentials: true }).pipe(map(data => {
+    return this.http.post(this.serveruri+'/api/unity/DeleteAreadetails/',areadetails,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));	
   }
@@ -64,13 +67,13 @@ export class MastersService {
 
   SaveUserDetails(userDetails): Observable<any>
   {
-    return this.http.post('http://103.252.7.5:3800/api/unity/saveUserDetails/',userDetails,{ withCredentials: true }).pipe(map(data => {
+    return this.http.post(this.serveruri+'/api/unity/saveUserDetails/',userDetails,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));	
   }
   SaveUserDetailsWIthoutPic(userDetails): Observable<any>
   {
-    return this.http.post('http://103.252.7.5:3800/api/unity/SaveUserDetailsWIthoutPic/',userDetails,{ withCredentials: true }).pipe(map(data => {
+    return this.http.post(this.serveruri+'/api/unity/SaveUserDetailsWIthoutPic/',userDetails,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));	
   }
@@ -78,21 +81,21 @@ export class MastersService {
 
   getUsersList(): Observable<any>
   {
-        return this.http.get<any>('http://103.252.7.5:3800/api/unity/getUsersList/',{ withCredentials: true }).pipe(map(data => {
+        return this.http.get<any>(this.serveruri+'/api/unity/getUsersList/',{ withCredentials: true }).pipe(map(data => {
           return data;
         }));
   }
 
   getAmintiesListList(): Observable<any>
   {
-        return this.http.get<any>('http://103.252.7.5:3800/api/unity/getAmintiesListList/',{ withCredentials: true }).pipe(map(data => {
+        return this.http.get<any>(this.serveruri+'/api/unity/getAmintiesListList/',{ withCredentials: true }).pipe(map(data => {
           return data;
         }));
   }
 
   DeleteUsersDetails(usersdetails): Observable<any>
   {
-    return this.http.post('http://103.252.7.5:3800/api/unity/DeleteUsersDetails/',usersdetails,{ withCredentials: true }).pipe(map(data => {
+    return this.http.post(this.serveruri+'/api/unity/DeleteUsersDetails/',usersdetails,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));	
   }
