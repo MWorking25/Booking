@@ -11,6 +11,7 @@ import { RegisterComponent } from './views/register/register.component';
 
 
 
+
 export const routes: Routes = [
   {
     path: '',
@@ -80,6 +81,10 @@ export const routes: Routes = [
       {
         path: 'reports',
         loadChildren: './views/reports/reports.module#ReportsModule'
+      },
+      {
+        path: 'vehicalsonrent',
+        loadChildren: './views/vehicals-on-rent/vehicals-on-rent.module#VehicalsOnRentModule'
       },
     ]
   },
