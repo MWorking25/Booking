@@ -33,17 +33,20 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <form class="form-horizontal" #aminitiesForm="ngForm">
+        
           <div class="row">
             <div class="col-12">
               <h5 class="medium-text">Icons</h5><sup>Select icon for Aminity</sup>
             </div>
-            <div class="col-2 text-center aminities-icons" *ngFor="let _icon of icons" [innerHTML]="_icon.display">
+            <div class="col-2 text-center aminities-icons" *ngFor="let _icon of icons" (click)="setIconForAminity(_icon)" [innerHTML]="_icon.display">
             </div>
           </div>
           <div class="row">
             <div class="col-12 d-none">
               <input name="id" [(ngModel)]="aminitiesDetails[0].id">
+            </div>
+            <div class="col-12">
+              <label>Selected Icon:</label>  <h3 class="icon {{aminitiesDetails[0].amenity_icon}}"></h3>
             </div>
             <div class="col-12">
               <div class="form-group">
@@ -58,24 +61,27 @@
               <h6> Aminities</h6>
             </div>
             <div class="col-12">
-              <ul>
-                <li *ngFor="let _aminities of aminitiesDetails[0].AminitiesList">
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="subamenity" placeholder="Aminity"
-                      [(ngModel)]="_aminities.name">
-                  </div>
-                </li>
-                <li style="list-style-type: none" title="Add Aminity"><i class="fa fa-plus-circle pointer aminities-icons" aria-hidden="true" (click)="AddAminity()"></i>
-                </li>
-              </ul>
+              <div class="table-responsive">
+                <table class="table">
+                    <tr *ngFor="let _aminities of aminitiesDetails[0].AminitiesList">
+                        <td> <input type="text" class="form-control" placeholder="Aminity"
+                          [(ngModel)]="_aminities.name"></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="fa fa-plus-circle pointer aminities-icons" aria-hidden="true" (click)="AddAminity()"></i>
+                      </td>
+                    </tr>
+                </table>
+              </div>
             </div>
           </div>
-        </form>
+
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <a class="btn btn-info" (click)="SaveAreaDetails(areaForm);modalAminityDetails.hide()">Save</a>
+        <button class="btn btn-info" [disabled]="verifyAminities()" (click)="SaveAminityDetails();modalAminityDetails.hide()">Save</button>
         <a class="btn btn-secondary" (click)="modalAminityDetails.hide()">Close</a>
       </div>
 

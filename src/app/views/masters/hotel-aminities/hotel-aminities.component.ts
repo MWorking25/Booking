@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HotelAminityTitle } from '../../../interfaces/hotel-aminity-title';
 import { HotelSubaminities } from '../../../interfaces/hotel-subaminities';
+import Swal from 'sweetalert2';
 import { MastersService } from '../../../services/masters.service';
 
 @Component({
@@ -74,7 +75,7 @@ export class HotelAminitiesComponent implements OnInit {
       {headerName: 'Total Facilities', field: 'totalaminities' },
       {
         headerName: 'Date of Creation',
-        field: 'createddate',
+        field: 'creationdate',
         filter: 'agDateColumnFilter',
         filterParams: {
           comparator: function (filterLocalDateAtMidnight, cellValue) {
@@ -175,6 +176,47 @@ export class HotelAminitiesComponent implements OnInit {
         return false;
       }
     }
+  }
+
+  verifyAminities()
+  {
+    if(this.aminitiesDetails[0].amenity == null || this.aminitiesDetails[0].amenity == '')
+    return true;
+    else
+    return false;
+
+  }
+
+  setIconForAminity(aminity)
+  {
+    this.aminitiesDetails[0].amenity_icon = aminity.value;
+    this.icons.map((value,index)=>{
+      if(value.value == aminity.value)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    });
+  }
+
+  SaveAminityDetails()
+  {
+    this._mastersService.SaveAminityDetails(this.aminitiesDetails).subscribe((res:any)=>{
+      Swal.fire({
+        title: res.title,
+        text: res.message,
+        type: res.type,
+      }).then((result) => {
+        if(res.status === 1)
+        {
+          this.aminitiesDetails = [{id:0,amenity:null,amenity_icon:null,AminitiesList:[],createdby:null}];
+          this.getAmintiesListList();
+        }
+      });
+    });
   }
 
 }

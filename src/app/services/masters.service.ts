@@ -97,4 +97,11 @@ export class MastersService {
 					}));	
   }
 
+  SaveAminityDetails(aminitydetails): Observable<any>
+  {
+    return this.http.post('http://103.252.7.5:3800/api/unity/SaveAminityDetails/',aminitydetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));	
+  }
+
 }
