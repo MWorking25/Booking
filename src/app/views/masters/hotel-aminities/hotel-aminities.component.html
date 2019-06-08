@@ -11,7 +11,7 @@
       data-toggle="modal" (click)="modalAminityDetails.show()"><i class="fa fa-plus" aria-hidden="true"></i>
       &nbsp;Add</button></div>
   <div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRows()"
-      data-toggle="modal" (click)="modalAminityDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i>
+      data-toggle="modal" (click)="getAminityDetails();modalAminityDetails.show()"><i class="fa fa-pencil" aria-hidden="true"></i>
       &nbsp;Edit</button></div>
   <div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRowsDelete()"
       (click)="DeleteAminityDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</button></div>

@@ -287,12 +287,15 @@ RevertEditedText()
 getHotelDetails(hotelid)
 { 
   this._hotelsService.getHotelDetails(hotelid).subscribe((res:any)=>{
-    this.url = 'http://localhost:3800/unity/uploads/'+res.hoteldetails[0].bannerimg;
-    this.getStatesOnCountry(res.hoteldetails[0].country);
-    this.getCitiesOnSate(res.hoteldetails[0].state);
-    this.getAreasOnCity(res.hoteldetails[0].city);
-    this.hotelDetails = res.hoteldetails;
-    this.hotelRooms = res.roomsdetails;
+    if(res.hoteldetails.length > 0)
+    {
+      this.url = 'http://localhost:3800/unity/uploads/'+res.hoteldetails[0].bannerimg;
+      this.getStatesOnCountry(res.hoteldetails[0].country);
+      this.getCitiesOnSate(res.hoteldetails[0].state);
+      this.getAreasOnCity(res.hoteldetails[0].city);
+      this.hotelDetails = res.hoteldetails;
+      this.hotelRooms = res.roomsdetails;
+    }
   });	
 }
 

@@ -142,7 +142,7 @@ export const navItems: NavData[] = [
     icon: 'fa fa-list'
   },
   {
-    name: 'vehicals`s Bookings',
+    name: 'Vehicals`s Bookings',
     url: '/vehicalsonrent/booking',
     icon: 'fa fa-ticket'
   },

@@ -130,6 +130,55 @@ export class HotelAminitiesComponent implements OnInit {
   }
 
 
+  getAminityDetails()
+  {
+    this._mastersService.getAminityDetails(this.selectedRows [0].id).subscribe((res:any)=>{
+      if (res.status === 0) {
+        this.aminitiesDetails = [];
+      } else {
+        this.aminitiesDetails = res.master;
+        this.aminitiesDetails[0].AminitiesList = res.subaminities;
+      }
+      console.log(this.aminitiesDetails)
+    });
+  }
+
+  DeleteAminityDetails()
+  {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover these records again!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+
+        this._mastersService.DeleteAminityDetails(this.gridApi.getSelectedRows()).subscribe((res:any)=>{
+          Swal.fire({
+            title: res.title,
+            text: res.message,
+            type: res.type,
+          }).then((result) => {
+            if(res.status === 1)
+            {
+              this.getAmintiesListList();
+            }
+          });
+        });
+      // For more information about handling dismissals please visit
+      // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    }) 
+  }
+
   AddAminity()
   {
     if(this.aminitiesDetails[0].AminitiesList.length > 0)

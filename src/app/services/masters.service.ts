@@ -93,6 +93,13 @@ export class MastersService {
         }));
   }
 
+  getAminityDetails(aminityid): Observable<any>
+  {
+        return this.http.get<any>(this.serveruri+'/api/unity/getAmintiesDetails/'+aminityid,{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
+
   DeleteUsersDetails(usersdetails): Observable<any>
   {
     return this.http.post(this.serveruri+'/api/unity/DeleteUsersDetails/',usersdetails,{ withCredentials: true }).pipe(map(data => {
@@ -102,7 +109,14 @@ export class MastersService {
 
   SaveAminityDetails(aminitydetails): Observable<any>
   {
-    return this.http.post('http://103.252.7.5:3800/api/unity/SaveAminityDetails/',aminitydetails,{ withCredentials: true }).pipe(map(data => {
+    return this.http.post(this.serveruri+'/api/unity/SaveAminityDetails/',aminitydetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));	
+  }
+
+  DeleteAminityDetails(aminitydetails): Observable<any>
+  {
+    return this.http.post(this.serveruri+'/api/unity/DeleteAminityDetails/',aminitydetails,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));	
   }
