@@ -9,48 +9,52 @@ import "rxjs/add/operator/map";
 })
 export class HotelsService {
 
+
+  // serveruri = 'http://103.252.7.5:3800';
+  serveruri = 'http://localhost:3800';
+
   constructor(private http:HttpClient) { }
 
 
 
   SaveHotelDetails(hoteldetails): Observable<any>
   {
-    return this.http.post('http://103.252.7.5:3800/api/unity/SaveHotelDetails/',hoteldetails,{ withCredentials: true }).pipe(map(data => {
+    return this.http.post(this.serveruri+'/api/unity/SaveHotelDetails/',hoteldetails,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));
   }
 
   SaveHotelRoomDetails(hotelRoomdetails): Observable<any>
   {
-    return this.http.post('http://103.252.7.5:3800/api/unity/SaveHotelRoomDetails/',hotelRoomdetails,{ withCredentials: true }).pipe(map(data => {
+    return this.http.post(this.serveruri+'/api/unity/SaveHotelRoomDetails/',hotelRoomdetails,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));
   }
 
   DeleteHotelDetails(hotelids): Observable<any>
   {
-    return this.http.post('http://103.252.7.5:3800/api/unity/DeleteHotelDetails/',hotelids,{ withCredentials: true }).pipe(map(data => {
+    return this.http.post(this.serveruri+'/api/unity/DeleteHotelDetails/',hotelids,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));
   }
 
   deleteRoomDetails(roomid): Observable<any>
   {
-    return this.http.get<any>('http://103.252.7.5:3800/api/unity/deleteRoomDetails/'+roomid,{ withCredentials: true }).pipe(map(data => {
+    return this.http.get<any>(this.serveruri+'/api/unity/deleteRoomDetails/'+roomid,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));
   }
 
   getHotelsList(): Observable<any>
   {
-        return this.http.get<any>('http://103.252.7.5:3800/api/unity/HotelsList/',{ withCredentials: true }).pipe(map(data => {
+        return this.http.get<any>(this.serveruri+'/api/unity/HotelsList/',{ withCredentials: true }).pipe(map(data => {
           return data;
         }));
   }
 
   getHotelDetails(hotelid): Observable<any>
   {
-        return this.http.get<any>('http://103.252.7.5:3800/api/unity/getHotelDetails/'+hotelid,{ withCredentials: true }).pipe(map(data => {
+        return this.http.get<any>(this.serveruri+'/api/unity/getHotelDetails/'+hotelid,{ withCredentials: true }).pipe(map(data => {
           return data;
         }));
   }

@@ -134,6 +134,20 @@ export const navItems: NavData[] = [
   },
   {
     title: true,
+    name: 'Vehical on rent'
+  },
+  {
+    name: 'vehicals`s Details',
+    url: '/vehicalsonrent/vehicalonrent',
+    icon: 'fa fa-list'
+  },
+  {
+    name: 'vehicals`s Bookings',
+    url: '/vehicalsonrent/booking',
+    icon: 'fa fa-ticket'
+  },
+  {
+    title: true,
     name: 'Restraurants'
 	
   },
