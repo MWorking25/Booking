@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/observable';
 import Swal from 'sweetalert2';
-import { FileUploader } from "ng2-file-upload";
+import { FileUploader, FileLikeObject } from "ng2-file-upload";
 import { CabsNBusesService } from '../../../services/cabs-n-buses.service';
 @Component({
   selector: 'app-details',
@@ -12,19 +12,24 @@ import { CabsNBusesService } from '../../../services/cabs-n-buses.service';
 export class DetailsComponent implements OnInit {
 
   @ViewChild('coverImage')
+  @ViewChild('vehicalImages')
   myInputVariable: ElementRef;
 
   url:any;
+  urls:any;
   htmlContent:any;
+  required:boolean = false;
 
   vehicalDetails:any = [{id:0,company:null,model:null,passingno:null,cpacity:null,color:null,price:null,discounted_price:null,createdby:null}];
-  vehicalDocs:any[] = [{id:0,vehicalid:0,docname:null,docimg:null,createdby:null}];
+  vehicalDocs:any[] = [{id:0,vehicalid:0,docname:null,docimg:null,createdby:null,required:false}];
   constructor(private _CabsNBusesService:CabsNBusesService,private activatedRoute: ActivatedRoute) { }
 
   isCollapsedGeneraldetails:boolean = false;
+  isCollapsedvehicalImages:boolean = false;
   isCollapsedDocDetails:boolean = false;
   ngOnInit() {
-
+    var vehicalid = this.activatedRoute.snapshot.paramMap.get('id');
+    this.getVehicalDetails(vehicalid);
   }
 
   
@@ -130,27 +135,94 @@ saveVehicalDetailasWithoutPic(hoteldetails)
   });
 }
 
-addDocFile()
+
+RemoveDocument(vehicaldoc,index)
 {
-
-  this.vehicalDocs.push({id:0,vehicalid:0,docname:null,docimg:null,createdby:null});
-
- /*  if(this.vehicalDocs.length > 0)
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'Want to delete these item',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, keep it'
+  }).then((result) => {
+    if (result.value) {
+  if(vehicaldoc.id === 0)
   {
-    if(this.vehicalDocs[this.vehicalDocs.length - 1].docname != null && this.vehicalDocs[this.vehicalDocs.length - 1].docname != '')
-    {
-      this.vehicalDocs.push({id:0,vehicalid:0,docname:null,docimg:null,createdby:null});
-    }
+    this.vehicalDocs.splice(index,1);
   }
   else
   {
-    this.vehicalDocs.push({id:0,vehicalid:0,docname:null,docimg:null,createdby:null});
-  } */
+    this._CabsNBusesService.deleteVehicalDocDetails(vehicaldoc.id).subscribe((res:any)=>{
+        Swal.fire({
+          title: res.title,
+          text: res.message,
+          type: res.type,
+        }).then((result) => {
+          if (res.status === 1) {
+    
+          } else {
+            this.getVehicalDetails(vehicaldoc.vehicalid);
+          }
+        });
+     
+    });	
+  }
+} else if (result.dismiss === Swal.DismissReason.cancel) {
+  Swal.fire(
+    'Cancelled',
+    'Your imaginary file is safe :)',
+    'error'
+  )
+}
+})
+}
+
+getVehicalDetails(vehicalid)
+{
+  this._CabsNBusesService.getVehicalDetails(vehicalid).subscribe((res:any)=>{
+    if (res.status === 0) {
+      this.vehicalDetails = [];
+    } else {
+      this.vehicalDetails = res.vehicalDetails;
+      this.vehicalDocs = res.vehicalDocs;
+      this.urls = res.vehicalImages;
+    }
+  });
+}
+
+addDocFile(vehicaldocs)
+{
+    var i = this.vehicalDocs.length - 1;
+      var docobjkeys = "docname"+i;
+      for(var key in vehicaldocs.value)
+      {
+        if(String(key) == docobjkeys)
+        {
+          if(vehicaldocs.value[key] != null && vehicaldocs.value[key] != '')
+          {
+            if(this.uploader.queue[i])
+            {
+               this.vehicalDocs.push({id:0,vehicalid:0,docname:null,docimg:null,createdby:null});
+               this.vehicalDocs[i].required = false;
+               this.VerifyDocForm();
+            }
+            else
+            {
+              this.vehicalDocs[i].required = true;
+            }
+          }
+          else
+          {
+            this.vehicalDocs[i].required = true;
+          }
+        }
+      }
 }
 
 VerifyDocForm()
 {
-
+  
 }
 
 saveVehicalDocDetails(vehicalDocsDetails)
@@ -183,7 +255,7 @@ uploadVehicalDocs(data: FormData,j) {
         type: res.type,
       }).then((result) => {
         if (res.status === 1) {
-
+          this.uploader.clearQueue();
         } else {
           
         }
@@ -192,5 +264,68 @@ uploadVehicalDocs(data: FormData,j) {
   });
 }
 
+
+public onFileSelected(event: EventEmitter<File[]>) {
+  this.urls = [];
+    let files = event;
+    console.log(files)
+    if (files) {
+      for (let file in files) {
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.urls.push({coverpic:e.target.result});
+        }
+        reader.readAsDataURL(files[file]);
+      }
+    }
+}
+
+uploadVehicalImages(imagesupload)
+{
+  if (this.uploader.queue.length > 0) {
+    for (let j = 0; j < this.uploader.queue.length; j++) {
+      let data = new FormData();
+      let fileItem = this.uploader.queue[j]._file;
+      data.append('file', fileItem);
+      data.append('description',JSON.stringify({description:eval('imagesupload.value.description'+j) || null,vehicalid:this.vehicalDetails[0].id}));
+      this.uploadImages(data,this.uploader.queue.length);
+    }
+  }
+}
+counter : number = 0;
+uploadImages(formdata : FormData,imgslength)
+{
+
+    this._CabsNBusesService.uploadvehicalImages(formdata).subscribe((res: any) => {
+        this.counter = this.counter + 1; 
+        if(imgslength == this.counter)
+        {
+          Swal.fire({
+            title: res.title,
+            text: res.message,
+            type: res.type,
+          }).then((result) => {
+            if (res.status === 1) {
+              this.uploader.clearQueue();
+            } else {
+            
+            }
+           });
+        }
+    }); 
+}
+
+previewDocument(document,index)
+{
+  Swal.fire({
+    title: '',
+    imageUrl: document.docimg,
+    imageWidth: 500,
+    imageHeight: 500,
+  
+  }).then((result) => {
+    
+  });
+}
 
 }

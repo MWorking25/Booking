@@ -1,158 +1,222 @@
 <div class="row">
   <div class="col-md-12 col-12 col-lg-12 col-xl-12">
-      <div class="card">
-        <div class="card-header" (click)="isCollapsedGeneraldetails = !isCollapsedGeneraldetails">General Details</div>
-        <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)" [collapse]="isCollapsedGeneraldetails">
-            <form #vehical="ngForm">
-              <div class="row">
-                  <div class="col-md-12 col-12 col-lg-12 col-xl-12">
-                      <div class="form-group d-none">
-                        <label for="vehicalid">id:</label>
-                        <input type="text" class="form-control" id="vehicalid" name="id" placeholder="id" [(ngModel)]="vehicalDetails[0].id">
-                      </div>
-                    </div>
-                  <div class="col-md-12 col-12 col-lg-4 col-xl-4">
-                      <div class="form-group">
-                        <label for="company"><sup class="text-danger">*</sup> Company:</label>
-                        <input type="text" class="form-control" id="company" name="company" placeholder="Company" [(ngModel)]="vehicalDetails[0].company">
-                      </div>
-                    </div>
-                  <div class="col-md-12 col-12 col-lg-4 col-xl-4">
-                      <div class="form-group">
-                        <label for="model"><sup class="text-danger">*</sup> Model:</label>
-                        <input type="text" class="form-control" id="model" name="model" placeholder="Model" [(ngModel)]="vehicalDetails[0].model">
-                      </div>
-                    </div>
-                  <div class="col-md-12 col-12 col-lg-4 col-xl-4">
-                      <div class="form-group">
-                        <label for="passingno"><sup class="text-danger">*</sup> Passing No.:</label>
-                        <input type="text" class="form-control" id="passingno" name="passingno" placeholder="Passing No." [(ngModel)]="vehicalDetails[0].passingno">
-                      </div>
-                    </div>
-                  <div class="col-md-12 col-12 col-lg-4 col-xl-4">
-                      <div class="form-group">
-                        <label for="color">Colour:</label>
-                        <input type="text" class="form-control" id="color" name="color" placeholder="Colour" [(ngModel)]="vehicalDetails[0].color">
-                      </div>
-                    </div>
-
-                  <div class="col-md-12 col-12 col-lg-4 col-xl-4">
-                      <div class="form-group">
-                        <label for="cpacity"><sup class="text-danger">*</sup>Capacity:</label>
-                        <input type="text" class="form-control" id="cpacity" name="cpacity" placeholder="Capacity (Number of seats availabel)" [(ngModel)]="vehicalDetails[0].cpacity">
-                      </div>
-                    </div>
-
-                  <div class="col-md-12 col-12 col-lg-4 col-xl-4">
-                      <div class="form-group">
-                        <label for="time_period">Time Period:</label>
-                        <input type="text" class="form-control" id="time_period" name="time_period" placeholder="Time Period" [(ngModel)]="vehicalDetails[0].time_period">
-                      </div>
-                    </div>
-                  <div class="col-md-12 col-12 col-lg-3 col-xl-3">
-                      <div class="form-group">
-                        <label for="price"><sup class="text-danger">*</sup>Price:</label>
-                        <input type="number" class="form-control" id="price" name="price" placeholder="Price" [(ngModel)]="vehicalDetails[0].price">
-                      </div>
-                    </div>
-
-                  <div class="col-md-12 col-12 col-lg-3 col-xl-3">
-                      <div class="form-group">
-                        <label for="discounted_price">Discounted Price:</label>
-                        <input type="number" class="form-control" id="discounted_price" name="discounted_price" placeholder="Discounted Price" [(ngModel)]="vehicalDetails[0].discounted_price">
-                      </div>
-                    </div>
-                  <div class="col-md-6 col-6 col-lg-2 col-xl-2">
-                      <div class="form-group">
-                        <label for="cgst">CGST:</label>
-                        <input type="number" class="form-control" id="cgst" name="cgst" placeholder="CGST" [(ngModel)]="vehicalDetails[0].cgst">
-                      </div>
-                    </div>
-                  <div class="col-md-6 col-6 col-lg-2 col-xl-2">
-                      <div class="form-group">
-                        <label for="sgst">SGST:</label>
-                        <input type="number" class="form-control" id="sgst" name="sgst" placeholder="SGST" [(ngModel)]="vehicalDetails[0].sgst">
-                      </div>
-                    </div>
-                  <div class="col-md-6 col-6 col-lg-2 col-xl-2">
-                      <div class="form-group">
-                        <label for="igst">IGST:</label>
-                        <input type="number" class="form-control" id="igst" name="igst" placeholder="IGST" [(ngModel)]="vehicalDetails[0].igst">
-                      </div>
-                    </div>
-
-                    <div class="col-md-12 col-12 col-lg-12 col-xl-12">
-                      <div class="form-group">
-                        <label for="description">Description:</label>
-
-                        <angular-editor id="description" name="description"  placeholder="Enter text here..." [(ngModel)]="vehicalDetails[0].description"></angular-editor>
-                      </div>
-                    </div>                    
-
-                    <div class="col-md-12 col-12 col-lg-8 col-xl-8">
-                        <div class="row">
-                        <div class="col-md-12 col-12 col-lg-6 col-xl-6">
-                          <div class="form-group">
-                              <label for="userProfile">Cover Pic:</label>
-                              <input type="file" #coverImage ng2FileSelect name="coverImage" [uploader]="uploader" (change)="onSelectFile($event)"/>
-                              <br>
-                              <small class="text-warning">*Image size should be 280X190(width/height) in pixels</small>
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-12 col-lg-6 col-xl-6">
-                          <div class="card">
-                            <img [src]="url" class="img-fluid">
-                         </div>
-                         <button class="btn btn-warning" (click)="resetImage()">Remove</button>
-                        </div>
-                        </div>
-                      </div>
-                      <div class="col-md-12 col-12 col-lg-12 col-xl-12">
-                          <div class="col-md-4 col-4 col-lg-2 col-xl-2 ml-auto">
-                             <button class="btn btn-primary" [disabled]="VerifyForm()" (click)="saveVehicalDetails(vehical)">Submit</button>
-                          </div>
-                        </div>
+    <div class="card">
+      <div class="card-header" (click)="isCollapsedGeneraldetails = !isCollapsedGeneraldetails">General Details</div>
+      <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
+        [collapse]="isCollapsedGeneraldetails">
+        <form #vehical="ngForm">
+          <div class="row">
+            <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+              <div class="form-group d-none">
+                <label for="vehicalid">id:</label>
+                <input type="text" class="form-control" id="vehicalid" name="id" placeholder="id"
+                  [(ngModel)]="vehicalDetails[0].id">
               </div>
-            </form>
-        </div>
+            </div>
+            <div class="col-md-12 col-12 col-lg-4 col-xl-4">
+              <div class="form-group">
+                <label for="company"><sup class="text-danger">*</sup> Company:</label>
+                <input type="text" class="form-control" id="company" name="company" placeholder="Company"
+                  [(ngModel)]="vehicalDetails[0].company">
+              </div>
+            </div>
+            <div class="col-md-12 col-12 col-lg-4 col-xl-4">
+              <div class="form-group">
+                <label for="model"><sup class="text-danger">*</sup> Model:</label>
+                <input type="text" class="form-control" id="model" name="model" placeholder="Model"
+                  [(ngModel)]="vehicalDetails[0].model">
+              </div>
+            </div>
+            <div class="col-md-12 col-12 col-lg-4 col-xl-4">
+              <div class="form-group">
+                <label for="passingno"><sup class="text-danger">*</sup> Passing No.:</label>
+                <input type="text" class="form-control" id="passingno" name="passingno" placeholder="Passing No."
+                  [(ngModel)]="vehicalDetails[0].passingno">
+              </div>
+            </div>
+            <div class="col-md-12 col-12 col-lg-4 col-xl-4">
+              <div class="form-group">
+                <label for="color">Colour:</label>
+                <input type="text" class="form-control" id="color" name="color" placeholder="Colour"
+                  [(ngModel)]="vehicalDetails[0].color">
+              </div>
+            </div>
+
+            <div class="col-md-12 col-12 col-lg-4 col-xl-4">
+              <div class="form-group">
+                <label for="cpacity"><sup class="text-danger">*</sup>Capacity:</label>
+                <input type="text" class="form-control" id="cpacity" name="cpacity"
+                  placeholder="Capacity (Number of seats availabel)" [(ngModel)]="vehicalDetails[0].cpacity">
+              </div>
+            </div>
+
+            <div class="col-md-12 col-12 col-lg-4 col-xl-4">
+              <div class="form-group">
+                <label for="time_period">Time Period:</label>
+                <input type="text" class="form-control" id="time_period" name="time_period" placeholder="Time Period"
+                  [(ngModel)]="vehicalDetails[0].time_period">
+              </div>
+            </div>
+            <div class="col-md-12 col-12 col-lg-3 col-xl-3">
+              <div class="form-group">
+                <label for="price"><sup class="text-danger">*</sup>Price:</label>
+                <input type="number" class="form-control" id="price" name="price" placeholder="Price"
+                  [(ngModel)]="vehicalDetails[0].price">
+              </div>
+            </div>
+
+            <div class="col-md-12 col-12 col-lg-3 col-xl-3">
+              <div class="form-group">
+                <label for="discounted_price">Discounted Price:</label>
+                <input type="number" class="form-control" id="discounted_price" name="discounted_price"
+                  placeholder="Discounted Price" [(ngModel)]="vehicalDetails[0].discounted_price">
+              </div>
+            </div>
+            <div class="col-md-6 col-6 col-lg-2 col-xl-2">
+              <div class="form-group">
+                <label for="cgst">CGST:</label>
+                <input type="number" class="form-control" id="cgst" name="cgst" placeholder="CGST"
+                  [(ngModel)]="vehicalDetails[0].cgst">
+              </div>
+            </div>
+            <div class="col-md-6 col-6 col-lg-2 col-xl-2">
+              <div class="form-group">
+                <label for="sgst">SGST:</label>
+                <input type="number" class="form-control" id="sgst" name="sgst" placeholder="SGST"
+                  [(ngModel)]="vehicalDetails[0].sgst">
+              </div>
+            </div>
+            <div class="col-md-6 col-6 col-lg-2 col-xl-2">
+              <div class="form-group">
+                <label for="igst">IGST:</label>
+                <input type="number" class="form-control" id="igst" name="igst" placeholder="IGST"
+                  [(ngModel)]="vehicalDetails[0].igst">
+              </div>
+            </div>
+
+            <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+              <div class="form-group">
+                <label for="description">Description:</label>
+
+                <angular-editor id="description" name="description" placeholder="Enter text here..."
+                  [(ngModel)]="vehicalDetails[0].description"></angular-editor>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-12 col-lg-8 col-xl-8">
+              <div class="row">
+                <div class="col-md-12 col-12 col-lg-6 col-xl-6">
+                  <div class="form-group">
+                    <label for="userProfile">Cover Pic:</label>
+                    <input type="file" #coverImage ng2FileSelect name="coverImage" [uploader]="uploader"
+                      (change)="onSelectFile($event)" />
+                    <br>
+                    <small class="text-warning">*Image size should be 280X190(width/height) in pixels</small>
+                  </div>
+                </div>
+                <div class="col-md-12 col-12 col-lg-6 col-xl-6">
+                  <div class="card">
+                    <img [src]="url" class="img-fluid">
+                  </div>
+                  <button class="btn btn-warning" (click)="resetImage()">Remove</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+              <div class="col-md-4 col-4 col-lg-2 col-xl-2 ml-auto">
+                <button class="btn btn-primary" [disabled]="VerifyForm()"
+                  (click)="saveVehicalDetails(vehical)">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
   <div class="col-md-12 col-12 col-lg-12 col-xl-12" *ngIf="vehicalDetails[0].id > 0">
     <div class="card">
       <div class="card-header" (click)="isCollapsedDocDetails = !isCollapsedDocDetails">Documents Details</div>
-      <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)" [collapse]="isCollapsedDocDetails">
-          <form #vehicalDocuments="ngForm">
-              <div class="col-md-12 col-12 col-xl-12 col-lg-12">
-                <div class="table-responseive">
-                  <table class="table">
-                    <thead>
-                      <th>#</th>
-                      <th>Document Name</th>
-                      <th>Document Copy</th>
-                      <th></th>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let docs of vehicalDocs;let i = index">
-                          <td>{{i+1}}</td>
-                          <td><input type="text" class="form-control" name="docname{{i}}" placeholder="Document Name" [ngModel]="docs.docname"></td>
-                          <td><input type="file" ng2FileSelect name="coverImage{{i}}" [uploader]="uploader"/></td>
-                          <td></td>
-                        </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="col-md-12 col-12 col-lg-12 col-xl-12">
-                  <div class="col-md-4 col-4 col-lg-2 col-xl-2 mr-auto">
-                     <button class="btn btn-primary" (click)="addDocFile()">Add new Document</button>
-                  </div>
-                  <div class="col-md-4 col-4 col-lg-2 col-xl-2 ml-auto">
-                     <button class="btn btn-primary" [disabled]="VerifyDocForm()" (click)="saveVehicalDocDetails(vehicalDocuments)">Submit</button>
-                  </div>
-                </div>
-          </form>
-        </div>
+      <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
+        [collapse]="isCollapsedDocDetails">
+        <form #vehicalDocuments="ngForm">
+          <div class="col-md-12 col-12 col-xl-12 col-lg-12">
+            <div class="table-responseive">
+              <table class="table">
+                <thead>
+                  <th>#</th>
+                  <th>Document Name</th>
+                  <th>Document Copy</th>
+                  <th></th>
+                  <th></th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let docs of vehicalDocs;let i = index">
+                    <td>{{i+1}}</td>
+                    <td><input type="text" class="form-control" name="docname{{i}}" placeholder="Document Name"
+                        [ngModel]="docs.docname"><sup *ngIf="docs.required" class="text-danger">Required</sup></td>
+                    <td><input type="file" ng2FileSelect name="coverImage{{i}}" [uploader]="uploader" /><sup
+                        *ngIf="!uploader.queue[i] && docs.required" class="text-danger">Required</sup></td>
+                    <td><img class="img-fluid" [src]="docs.docimg" (click)="previewDocument(docs,i)" style="height: 75px;"> </td>
+                    <td><i (click)="RemoveDocument(docs,i)" class="material-icons text-danger pointer">delete</i></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+            <div class="col-md-6 col-6 col-lg-3 col-xl-3 mr-auto">
+              <button class="btn btn-primary" (click)="addDocFile(vehicalDocuments)">Add new Document</button>
+            </div>
+            <div class="col-md-4 col-4 col-lg-2 col-xl-2 ml-auto">
+              <button class="btn btn-primary" [disabled]="VerifyDocForm()"
+                (click)="saveVehicalDocDetails(vehicalDocuments)">Submit</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
+  </div>
+
+  <div class="col-md-12 col-12 col-lg-12 col-xl-12" *ngIf="vehicalDetails[0].id > 0">
+    <div class="card">
+      <div class="card-header" (click)="isCollapsedvehicalImages = !isCollapsedvehicalImages">Documents Details</div>
+      <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
+        [collapse]="isCollapsedvehicalImages">
+        <form #vehicalImages="ngForm">
+          <div class="col-12">
+            <div class="form-group">
+              <label>Select images for vehical:</label>
+
+              <input type="file" ng2FileSelect [uploader]="uploader" multiple
+                (onFileSelected)="onFileSelected($event)" />
+
+
+            </div>
+          </div>
+          <div class="col-12">
+            <ul class="row">
+              <li class="list col-4 col-md-4 col-xl-4 col-lg-4" style="float:left"
+                *ngFor="let _img of urls;let i =index">
+                <div class="row">
+                  <div class="col-12 col-md-12 col-lg-12">
+                    <img [src]="_img.coverpic" class="img-fluid img-thumbnail" style="height: 175px;width:auto;" />
+                  </div>
+                  <div class="col-12 col-md-12 col-lg-12 mb-1">
+                    <textarea class="form-control" name="description{{i}}" [(ngModel)]="_img.description"
+                      placeholder="Decription for this image"></textarea>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+              <div class="col-md-4 col-4 col-lg-2 col-xl-2 ml-auto">
+                <button class="btn btn-primary" [disabled]="VerifyDocForm()"
+                  (click)="uploadVehicalImages(vehicalImages)">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
-            

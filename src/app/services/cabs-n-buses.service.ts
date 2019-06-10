@@ -22,6 +22,20 @@ export class CabsNBusesService {
       }));
   }
 
+  deleteVehicalDocDetails(docid): Observable<any>
+  {
+        return this.http.get<any>(this.serveruri+'/api/unity/deleteVehicalDocDetails/'+docid,{ withCredentials: true }).pipe(map(data => {
+        return data;
+      }));
+  }
+
+  getVehicalDetails(vehicalid): Observable<any>
+  {
+        return this.http.get<any>(this.serveruri+'/api/unity/getVehicalDetails/'+vehicalid,{ withCredentials: true }).pipe(map(data => {
+        return data;
+      }));
+  }
+
 
   saveVehicalDetails(vehicalDetails): Observable<any>
   {
@@ -33,6 +47,13 @@ export class CabsNBusesService {
   uploadVehicalDocs(vehicalDetails): Observable<any>
   {
         return this.http.post(this.serveruri+'/api/unity/uploadVehicalDocs',vehicalDetails,{ withCredentials: true }).pipe(map(data => {
+        return data;
+      }));
+  }
+
+  uploadvehicalImages(vehicalDetails): Observable<any>
+  {
+        return this.http.post(this.serveruri+'/api/unity/uploadvehicalImages',vehicalDetails,{ withCredentials: true }).pipe(map(data => {
         return data;
       }));
   }
