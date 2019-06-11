@@ -51,6 +51,13 @@ export class CabsNBusesService {
       }));
   }
 
+  uploadDocsWithoutpic(vehicalDetails): Observable<any>
+  {
+        return this.http.post(this.serveruri+'/api/unity/uploadVehicalDocs',vehicalDetails,{ withCredentials: true }).pipe(map(data => {
+        return data;
+      }));
+  }
+
   uploadvehicalImages(vehicalDetails): Observable<any>
   {
         return this.http.post(this.serveruri+'/api/unity/uploadvehicalImages',vehicalDetails,{ withCredentials: true }).pipe(map(data => {

@@ -227,8 +227,8 @@ VerifyDocForm()
 
 saveVehicalDocDetails(vehicalDocsDetails)
 {
-  
- 
+  if(this.uploader.queue.length > 0)
+ {
     for (let j = 0; j < this.uploader.queue.length; j++) {
       let data = new FormData();
       let fileItem = this.uploader.queue[j]._file;
@@ -239,6 +239,15 @@ saveVehicalDocDetails(vehicalDocsDetails)
       data.append('vehicalDocDetails', JSON.stringify(vehicaldocDetails));
       this.uploadVehicalDocs(data,j);
     } 
+  }
+  else
+  {
+    for(var i = 0 ; i < this.vehicalDocs.length;i++)
+    {
+      this.uploadDocsWithoutpic(this.vehicalDocs[i],this.vehicalDocs.length);
+    }
+  
+  }
  
 }
 
@@ -248,6 +257,29 @@ uploadVehicalDocs(data: FormData,j) {
   this._CabsNBusesService.uploadVehicalDocs(data).subscribe((res: any) => {
    
     if(j === this.uploader.queue.length - 1)
+    {
+      Swal.fire({
+        title: res.title,
+        text: res.message,
+        type: res.type,
+      }).then((result) => {
+        if (res.status === 1) {
+          this.uploader.clearQueue();
+        } else {
+          
+        }
+      });
+    }
+  });
+}
+
+doccounter = 0;
+uploadDocsWithoutpic(data: FormData,datalength) {
+
+  this._CabsNBusesService.uploadDocsWithoutpic(data).subscribe((res: any) => {
+
+    this.doccounter = this.doccounter +1;
+    if(datalength == this.doccounter)
     {
       Swal.fire({
         title: res.title,
