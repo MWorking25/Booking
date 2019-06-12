@@ -15,13 +15,14 @@ export class DetailsComponent implements OnInit {
   @ViewChild('vehicalImages')
   myInputVariable: ElementRef;
 
+  masterid:any;
   url:any;
   urls:any;
   htmlContent:any;
   required:boolean = false;
 
   vehicalDetails:any = [{id:0,company:null,model:null,passingno:null,cpacity:null,color:null,price:null,discounted_price:null,createdby:null}];
-  vehicalDocs:any[] = [{id:0,vehicalid:0,docname:null,docimg:null,createdby:null,required:false}];
+  vehicalDocs:any[] = [{id:0,vehicalid:0,docname:null,docimg:null,createdby:null,required:false,tempfilename:null}];
   constructor(private _CabsNBusesService:CabsNBusesService,private activatedRoute: ActivatedRoute) { }
 
   isCollapsedGeneraldetails:boolean = false;
@@ -29,6 +30,7 @@ export class DetailsComponent implements OnInit {
   isCollapsedDocDetails:boolean = false;
   ngOnInit() {
     var vehicalid = this.activatedRoute.snapshot.paramMap.get('id');
+    this.masterid = vehicalid;
     this.getVehicalDetails(vehicalid);
   }
 
@@ -160,9 +162,9 @@ RemoveDocument(vehicaldoc,index)
           type: res.type,
         }).then((result) => {
           if (res.status === 1) {
-    
-          } else {
             this.getVehicalDetails(vehicaldoc.vehicalid);
+          } else {
+          
           }
         });
      
@@ -185,6 +187,7 @@ getVehicalDetails(vehicalid)
       this.vehicalDetails = [];
     } else {
       this.vehicalDetails = res.vehicalDetails;
+      this.url = res.vehicalDetails[0].tmpcoverpic;
       this.vehicalDocs = res.vehicalDocs;
       this.urls = res.vehicalImages;
     }
@@ -195,6 +198,7 @@ addDocFile(vehicaldocs)
 {
     var i = this.vehicalDocs.length - 1;
       var docobjkeys = "docname"+i;
+      var docid = "docid"+i;
       for(var key in vehicaldocs.value)
       {
         if(String(key) == docobjkeys)
@@ -209,7 +213,19 @@ addDocFile(vehicaldocs)
             }
             else
             {
-              this.vehicalDocs[i].required = true;
+              if(vehicaldocs.value[docid] > 0)
+              {
+                console.log(vehicaldocs.value[key] != null && vehicaldocs.value[key] != '')
+                if(vehicaldocs.value[key] != null && vehicaldocs.value[key] != '')
+                {
+                  this.vehicalDocs.push({id:0,vehicalid:0,docname:null,docimg:null,createdby:null});
+                  this.vehicalDocs[i].required = false;
+                  this.VerifyDocForm();
+                }
+                else{
+                  this.vehicalDocs[i].required = true;
+                }
+              }  
             }
           }
           else
@@ -227,28 +243,31 @@ VerifyDocForm()
 
 saveVehicalDocDetails(vehicalDocsDetails)
 {
-  if(this.uploader.queue.length > 0)
- {
-    for (let j = 0; j < this.uploader.queue.length; j++) {
-      let data = new FormData();
-      let fileItem = this.uploader.queue[j]._file;
-      data.append('file', fileItem);
-
-      var vehicaldocDetails = {docname:vehicalDocsDetails.value["docname"+j],vehicalid:this.vehicalDetails[0].id,createdby:null}
-
-      data.append('vehicalDocDetails', JSON.stringify(vehicaldocDetails));
-      this.uploadVehicalDocs(data,j);
-    } 
-  }
-  else
+  for(var i = 0 ; i < this.vehicalDocs.length ;i++)
   {
-    for(var i = 0 ; i < this.vehicalDocs.length;i++)
+    if(eval('vehicalDocsDetails.value.docfilename'+i) != undefined)
     {
-      this.uploadDocsWithoutpic(this.vehicalDocs[i],this.vehicalDocs.length);
+      for (let j = 0; j < this.uploader.queue.length; j++) 
+      {
+          if(eval('vehicalDocsDetails.value.docfilename'+i) === this.uploader.queue[j]._file.name)
+          {
+            let data = new FormData();
+            let fileItem = this.uploader.queue[j]._file;
+            data.append('file', fileItem);
+      
+            var vehicaldocDetails = {docname:eval('vehicalDocsDetails.value.docname'+i),vehicalid:this.vehicalDetails[0].id,id:eval('vehicalDocsDetails.value.docid'+i),docfilename:eval('vehicalDocsDetails.value.docfilename'+i),createdby:null}
+      
+            data.append('vehicalDocDetails', JSON.stringify(vehicaldocDetails));
+            this.uploadVehicalDocs(data,this.vehicalDocs.length);
+          }
+      }
     }
-  
-  }
- 
+    else
+    {
+      var vehicalobj:any = {id:eval('vehicalDocsDetails.value.docid'+i),docname:eval('vehicalDocsDetails.value.docname'+i),docfilename:eval('vehicalDocsDetails.value.docfilename'+i)}
+      this.uploadDocsWithoutpic(vehicalobj,this.vehicalDocs.length);
+    }
+  } 
 }
 
 
@@ -256,7 +275,7 @@ uploadVehicalDocs(data: FormData,j) {
 
   this._CabsNBusesService.uploadVehicalDocs(data).subscribe((res: any) => {
    
-    if(j === this.uploader.queue.length - 1)
+    if(j === this.vehicalDocs.length)
     {
       Swal.fire({
         title: res.title,
@@ -265,6 +284,7 @@ uploadVehicalDocs(data: FormData,j) {
       }).then((result) => {
         if (res.status === 1) {
           this.uploader.clearQueue();
+          this.getVehicalDetails(this.masterid);
         } else {
           
         }
@@ -288,6 +308,7 @@ uploadDocsWithoutpic(data: FormData,datalength) {
       }).then((result) => {
         if (res.status === 1) {
           this.uploader.clearQueue();
+          this.getVehicalDetails(this.masterid);
         } else {
           
         }
@@ -296,6 +317,21 @@ uploadDocsWithoutpic(data: FormData,datalength) {
   });
 }
 
+
+onFileDocSelected(event,index) {
+  if (event.target.files && event.target.files[0]) {
+    var reader = new FileReader();
+    console.log(event.target.files[0]);
+    this.vehicalDocs[index].tempfilename = event.target.files[0].name;
+
+    reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+    reader.onload = (event: Event) => { // called once readAsDataURL is completed
+      this.vehicalDocs[index].docimgtemp = event.currentTarget;
+      this.vehicalDocs[index].docimgtemp = this.vehicalDocs[index].docimgtemp.result;
+    }
+  }
+}
 
 public onFileSelected(event: EventEmitter<File[]>) {
   this.urls = [];
@@ -314,6 +350,7 @@ public onFileSelected(event: EventEmitter<File[]>) {
 
 uploadVehicalImages(imagesupload)
 {
+ 
   if (this.uploader.queue.length > 0) {
     for (let j = 0; j < this.uploader.queue.length; j++) {
       let data = new FormData();
@@ -351,7 +388,7 @@ previewDocument(document,index)
 {
   Swal.fire({
     title: '',
-    imageUrl: document.docimg,
+    imageUrl: document.docimgtemp,
     imageWidth: 500,
     imageHeight: 500,
   

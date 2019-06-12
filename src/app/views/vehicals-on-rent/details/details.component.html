@@ -152,11 +152,13 @@
                 <tbody>
                   <tr *ngFor="let docs of vehicalDocs;let i = index">
                     <td>{{i+1}}</td>
+                    <td class="d-none"><input name="docid{{i}}" [(ngModel)]="docs.id"></td>
+                    <td class="d-none"><input name="docfilename{{i}}" [(ngModel)]="docs.tempfilename"></td>
                     <td><input type="text" class="form-control" name="docname{{i}}" placeholder="Document Name"
                         [ngModel]="docs.docname"><sup *ngIf="docs.required" class="text-danger">Required</sup></td>
-                    <td><input type="file" ng2FileSelect name="coverImage{{i}}" [uploader]="uploader" /><sup
+                    <td><input type="file" ng2FileSelect name="coverImage{{i}}" [uploader]="uploader" (change)="onFileDocSelected($event,i)" /><sup
                         *ngIf="!uploader.queue[i] && docs.required" class="text-danger">Required</sup></td>
-                    <td><img class="img-fluid" [src]="docs.docimg" (click)="previewDocument(docs,i)" style="height: 75px;"> </td>
+                    <td><img class="img-fluid" [src]="docs.docimgtemp" (click)="previewDocument(docs,i)" style="height: 75px;"> </td>
                     <td><i (click)="RemoveDocument(docs,i)" class="material-icons text-danger pointer">delete</i></td>
                   </tr>
                 </tbody>
@@ -199,7 +201,7 @@
                 *ngFor="let _img of urls;let i =index">
                 <div class="row">
                   <div class="col-12 col-md-12 col-lg-12">
-                    <img [src]="_img.coverpic" class="img-fluid img-thumbnail" style="height: 175px;width:auto;" />
+                    <img [src]="_img.coverpictemp" class="img-fluid img-thumbnail" style="height: 175px;width:auto;" />
                   </div>
                   <div class="col-12 col-md-12 col-lg-12 mb-1">
                     <textarea class="form-control" name="description{{i}}" [(ngModel)]="_img.description"
