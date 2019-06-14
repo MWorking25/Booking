@@ -5,6 +5,10 @@ import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
 import { BookingComponent } from './booking/booking.component';
 
+import { CruzedeailsComponent } from './cruzedeails/cruzedeails.component';
+import { CruzeListComponent } from './cruze-list/cruze-list.component';
+import { CruzeBookingComponent } from './cruze-booking/cruze-booking.component';
+
 const routes: Routes = [
   {path:'list',component:ListComponent, data: {
     title: 'Experiences'
@@ -14,6 +18,15 @@ const routes: Routes = [
   }},
   {path:'details',component:DetailsComponent,data: {
     title: 'Experiences Details'
+  }},
+  {path:'cruzelist',component:CruzeListComponent, data: {
+    title: 'Cruze'
+  }},
+  {path:'cruzebooking',component:CruzeBookingComponent,data: {
+    title: 'Cruze Bookings'
+  }},
+  {path:'cruzedetails/:id',component:CruzedeailsComponent,data: {
+    title: 'Cruze Details'
   }}
 ];
 

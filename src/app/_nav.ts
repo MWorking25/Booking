@@ -105,6 +105,16 @@ export const navItems: NavData[] = [
     icon: 'fa fa-ticket'
   },
   {
+    name: 'Cruz`s Details',
+    url: '/experiences/cruzelist',
+    icon: 'fa fa-list'
+  },
+  {
+    name: 'Cruz Bookings',
+    url: '/experiences/cruzebooking',
+    icon: 'fa fa-ticket'
+  },
+  {
     title: true,
     name: 'Buses'
   },
