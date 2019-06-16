@@ -1,3 +1,240 @@
-<p>
-  cruzedeails works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+      <div class="card">
+        <div class="card-header" (click)="isCollapsedGeneraldetails = !isCollapsedGeneraldetails">Cruz Details</div>
+        <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
+          [collapse]="isCollapsedGeneraldetails">
+          <form #cruz="ngForm">
+            <div class="row">
+              <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+                <div class="form-group d-none">
+                  <label for="id">id:</label>
+                  <input type="text" class="form-control" id="id" name="id" placeholder="id"
+                    [(ngModel)]="cruzDetails[0].id">
+                </div>
+              </div>
+
+              <div class="col-md-12 col-12 col-lg-6 col-xl-6">
+                <div class="form-group">
+                  <label for="name"><sup class="text-danger">*</sup> Name:</label>
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Name"
+                    [(ngModel)]="cruzDetails[0].name" required>
+                </div>
+              </div>
+              <div class="col-md-12 col-12 col-lg-6 col-xl-6">
+                <div class="form-group">
+                  <label for="capacity"><sup class="text-danger">*</sup>Cruz Capacity<sub>(Persons)</sub>:</label>
+                  <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Cruz Capacity"
+                    [(ngModel)]="cruzDetails[0].capacity">
+                </div>
+              </div>
+              <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+                <div class="form-group">
+                  <div class="form-group">
+                    <label for="description">Description:</label>
+
+                    <angular-editor id="description" name="description" placeholder="Enter text here..."
+                      [(ngModel)]="cruzDetails[0].description"></angular-editor>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-6 col-lg-3 col-xl-3">
+                <div class="form-group">
+                  <label for="price"><sup class="text-danger">*</sup> Price:</label>
+                  <input type="number" class="form-control" id="price" name="price" placeholder="Price"
+                    [(ngModel)]="cruzDetails[0].price" required>
+                </div>
+              </div>
+              <div class="col-md-6 col-6 col-lg-3 col-xl-3">
+                <div class="form-group">
+                  <label for="discounted_price">Discounted Price:</label>
+                  <input type="number" class="form-control" id="discounted_price" name="discounted_price"
+                    placeholder="Discounted Price" [(ngModel)]="cruzDetails[0].discounted_price">
+                </div>
+              </div>
+              <div class="col-md-12 col-12 col-lg-6 col-xl-6">
+                <div class="row">
+                  <div class="col-md-12 col-12 col-lg-4 col-xl-4">
+                    <div class="form-group">
+                      <label for="igst">IGST:</label>
+                      <input type="number" class="form-control" id="igst" name="igst" placeholder="IGST"
+                        [(ngModel)]="cruzDetails[0].igst">
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-12 col-lg-4 col-xl-4">
+                    <div class="form-group">
+                      <label for="sgst">SGST:</label>
+                      <input type="number" class="form-control" id="sgst" name="sgst" placeholder="SGST"
+                        [(ngModel)]="cruzDetails[0].sgst">
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-12 col-lg-4 col-xl-4">
+                    <div class="form-group">
+                      <label for="cgst">CGST:</label>
+                      <input type="number" class="form-control" id="cgst" name="cgst" placeholder="CGST"
+                        [(ngModel)]="cruzDetails[0].cgst">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+                  <div class="row">
+                      <div class="col-md-12 col-12 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                            <label for="userProfile">Profile Pic:</label>
+                            <input type="file" #bannerImage ng2FileSelect name="bannerimg" [uploader]="uploader" (change)="onSelectFile($event)"/>
+                            <br>
+                            <small class="text-warning">*Image size should be 280X190(width/height) in pixels</small>
+                          </div>
+                      </div>
+                      <div class="col-md-12 col-12 col-lg-6 col-xl-6">
+                        <div class="card">
+                          <img [src]="url" class="img-fluid">
+                       </div>
+                       <button class="btn btn-warning" (click)="resetImage()">Remove</button>
+                      </div>
+                      </div>
+              </div>
+              <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+                  <div class="col-md-4 col-4 col-lg-2 col-xl-2 ml-auto">
+                     <button class="btn btn-primary" [disabled]="VerifyCruzForm()" (click)="saveCruzDetails(cruz)">Submit</button>
+                  </div>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+      <div class="card">
+        <div class="card-header" (click)="isCollapsedServices = !isCollapsedServices">Cruz Services</div>
+        <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
+          [collapse]="isCollapsedServices">
+            <div class="row">
+              <div class="col-12">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                          <th>#</th>
+                          <th><sup class="text-danger">*</sup>Service</th>
+                          <th>Description</th>
+                          <th></th>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let _cruzServices of cruzServices;let i = index">
+                              <td>{{i +1}}</td>
+                              <td  style="width: 280px;"><input type="text" class="form-control" placeholder="Service" [(ngModel)]="_cruzServices.servicename" autofocus required></td>
+                              <td>
+                                <angular-editor id="description" name="description" placeholder="Enter text here..."
+                                [(ngModel)]="_cruzServices.description"></angular-editor>
+                              </td> 
+                              <td><i (click)="RemoveService(_cruzServices,i)" class="material-icons text-danger pointer">delete</i></td>
+                            </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+              <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                  <div class="col-4 col-md-4 col-lg-2 col-xl-2">
+                    <button class="btn btn-info" *ngIf="cruzDetails[0].id != 0" (click)="addNewService()">Add New</button>
+                  </div>
+
+                  <div class="col-4 col-md-4 col-lg-2 col-xl-2 ml-auto">
+                    <button class="btn btn-primary" *ngIf="cruzDetails[0].id != 0" [disabled]="VerifyCruzServices()" (click)="SaveCruzServicesDetails()">Submit</button>
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+      <div class="card">
+        <div class="card-header" (click)="isCollapsedTimeSlots = !isCollapsedTimeSlots">Cruz Time Slots</div>
+        <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
+          [collapse]="isCollapsedTimeSlots">
+            <div class="row">
+              <div class="col-12">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                          <th>#</th>
+                          <th><sup class="text-danger">*</sup>Time Slot</th>
+                          <th><sup class="text-danger">*</sup>Closing Time</th>
+                          <th></th>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let _cruzTimeslots of cruzTimeslots;let i = index">
+                              <td>{{i +1}}</td>
+                              <td><input type="time" class="form-control" placeholder="Time Slot" [(ngModel)]="_cruzTimeslots.timeslot" autofocus required></td>
+                              <td>
+                                <input type="time" class="form-control" placeholder="Closing Time" [(ngModel)]="_cruzTimeslots.closingtime">
+                              </td> 
+                              <td><i (click)="RemoveTimeSlot(_cruzTimeslots,i)" class="material-icons text-danger pointer">delete</i></td>
+                            </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+              <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                  <div class="col-4 col-md-4 col-lg-2 col-xl-2">
+                    <button class="btn btn-info" *ngIf="cruzDetails[0].id != 0" (click)="addNewTimeSlot()">Add New</button>
+                  </div>
+
+                  <div class="col-4 col-md-4 col-lg-2 col-xl-2 ml-auto">
+                    <button class="btn btn-primary" *ngIf="cruzDetails[0].id != 0" [disabled]="VerifyCruzTimeSlots()" (click)="SaveCruzTimeSlotsDetails()">Submit</button>
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 col-12 col-lg-12 col-xl-12" *ngIf="cruzDetails[0].id > 0">
+      <div class="card">
+        <div class="card-header" (click)="isCollapsedGallery = !isCollapsedGallery">Gallery</div>
+        <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
+          [collapse]="isCollapsedGallery">
+          <form #cruzImages="ngForm">
+            <div class="col-12">
+              <div class="form-group">
+                <label>Select images for Cruz:</label>
+  
+                <input type="file" ng2FileSelect [uploader]="uploader" multiple
+                  (onFileSelected)="onFileSelected($event)" />
+  
+  
+              </div>
+            </div>
+            <div class="col-12">
+              <ul class="row">
+                <li class="list col-4 col-md-4 col-xl-4 col-lg-4" style="float:left"
+                  *ngFor="let _img of urls;let i =index">
+                  <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                      <img [src]="_img.tmpfilename" class="img-fluid img-thumbnail" style="height: 175px;width:auto;" />
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-12 mb-1">
+                      <textarea class="form-control" name="description{{i}}" [(ngModel)]="_img.description"
+                        placeholder="Decription for this image"></textarea>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+                <div class="col-md-4 col-4 col-lg-2 col-xl-2 ml-auto">
+                  <button class="btn btn-primary"                     (click)="uploadCruzImages(cruzImages)">Submit</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

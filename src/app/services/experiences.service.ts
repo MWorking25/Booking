@@ -22,4 +22,54 @@ export class ExperiencesService {
         }));
   }
 
+  deleteCruzServiceDetails(serviceid): Observable<any>
+  {
+        return this.http.get<any>(this.serveruri+'/api/unity/deleteCruzServiceDetails/'+serviceid,{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
+
+  getCruzDetails(cruzid): Observable<any>
+  {
+        return this.http.get<any>(this.serveruri+'/api/unity/getCruzDetails/'+cruzid,{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
+
+  deleteCruzTimeSlotsDetails(timeslotid): Observable<any>
+  {
+        return this.http.get<any>(this.serveruri+'/api/unity/deleteCruzTimeSlotsDetails/'+timeslotid,{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
+
+  SaveCruzDetails(cruzDetails): Observable<any>
+  {
+    return this.http.post(this.serveruri+'/api/unity/SaveCruzDetails/',cruzDetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
+
+  SaveCruzServicesDetails(cruzserviceDetails): Observable<any>
+  {
+    return this.http.post(this.serveruri+'/api/unity/SaveCruzServicesDetails/',cruzserviceDetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
+
+  SaveCruzTimeSlotsDetails(cruzTimeSlotDetails): Observable<any>
+  {
+    return this.http.post(this.serveruri+'/api/unity/SaveCruzTimeSlotsDetails/',cruzTimeSlotDetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
+
+  uploadCruzImages(cruzTimeSlotDetails): Observable<any>
+  {
+    return this.http.post(this.serveruri+'/api/unity/uploadCruzImages/',cruzTimeSlotDetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
+
+
 }

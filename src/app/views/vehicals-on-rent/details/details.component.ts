@@ -341,7 +341,7 @@ public onFileSelected(event: EventEmitter<File[]>) {
       for (let file in files) {
         let reader = new FileReader();
         reader.onload = (e: any) => {
-          this.urls.push({coverpic:e.target.result});
+          this.urls.push({coverpictemp:e.target.result});
         }
         reader.readAsDataURL(files[file]);
       }
