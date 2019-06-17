@@ -106,6 +106,54 @@ export class CruzeListComponent implements OnInit {
   }
 
 
+  
+  DeleteCruzDetails()
+  {
+    
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Want to delete these records',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+
+    var cruzeids = [];
+    this.selectedRows.map((value,index)=>{
+
+      cruzeids.push(value.id);
+
+      if(index === this.selectedRows.length - 1)
+      {
+        this._ExperiencesService.DeleteCruzDetails(cruzeids).subscribe((res: any) => {
+          Swal.fire({
+            title: res.title,
+            text: res.message,
+            type: res.type,
+          }).then((result) => {
+            if (res.status === 1) {
+      
+            } else {
+              this.getCruzList();
+            }
+          });
+        });
+      }
+    });
+  } else if (result.dismiss === Swal.DismissReason.cancel) {
+    Swal.fire(
+      'Cancelled',
+      'Your imaginary file is safe :)',
+      'error'
+    )
+  }
+  })
+  }
+
+
+
 
   VerifySelectedRows() {
     if (this.selectedRows) {

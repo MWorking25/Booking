@@ -43,9 +43,23 @@ export class ExperiencesService {
         }));
   }
 
+  RemoveGalleryImage(imgid): Observable<any>
+  {
+        return this.http.get<any>(this.serveruri+'/api/unity/RemoveGalleryImage/'+imgid,{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
+
   SaveCruzDetails(cruzDetails): Observable<any>
   {
     return this.http.post(this.serveruri+'/api/unity/SaveCruzDetails/',cruzDetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
+
+  DeleteCruzDetails(cruzDetails): Observable<any>
+  {
+    return this.http.post(this.serveruri+'/api/unity/DeleteCruzDetails/',cruzDetails,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));
   }

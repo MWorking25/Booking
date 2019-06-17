@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/observable';
 import Swal from 'sweetalert2';
 import { FileUploader } from "ng2-file-upload";
@@ -22,11 +22,14 @@ export class CruzedeailsComponent implements OnInit {
   cruzServices:any =[{id:0,cruzid:this.cruzid,servicename:null,description:null}];
   cruzGallery:any =[{id:0,cruzeid:this.cruzid,tmpfilename:null,description:null}];
 
-  constructor(private activatedRoute: ActivatedRoute, private _ExperiencesService : ExperiencesService) { }
+  constructor(private activatedRoute: ActivatedRoute, private _ExperiencesService : ExperiencesService, private router: Router) { }
 
   ngOnInit() {
     this.cruzid = this.activatedRoute.snapshot.paramMap.get('id');
-    this.getCruzDetails(this.cruzid);
+    if(this.cruzid > 0)
+      {
+        this.getCruzDetails(this.cruzid);
+      }
   }
 
 
@@ -68,6 +71,7 @@ export class CruzedeailsComponent implements OnInit {
       if(res.cruzid > 0) 
       {
         this.cruzDetails[0].id = res.cruzid;
+        this.router.navigate(['/experiences/cruzedetails', res.cruzid]);
       }
   
       Swal.fire({
@@ -92,6 +96,7 @@ export class CruzedeailsComponent implements OnInit {
     if(res.cruzid > 0) 
     {
       this.cruzDetails[0].id = res.cruzid;
+      this.router.navigate(['/experiences/cruzedetails', res.cruzid]);
     }
 
     Swal.fire({
@@ -256,7 +261,7 @@ SaveCruzTimeSlotsDetails()
       if (res.status === 1) {
         
       } else {
-
+        
         this.cruzDetails = res.cruzDetails;
         this.cruzServices = res.cruzServices;
         this.cruzTimeslots = res.cruzTimeslot;
@@ -299,8 +304,6 @@ SaveCruzTimeSlotsDetails()
   
         } else {
           this.getCruzDetails(this.cruzid);
-          this.cruzTimeslots[0].cruzid = this.cruzid;
-          this.cruzServices[0].cruzeid = this.cruzid;
         }
       });
     });
@@ -351,15 +354,21 @@ SaveCruzTimeSlotsDetails()
 
   public onFileSelected(event: EventEmitter<File[]>) {
     
-    this.urls = [];
+    this.cruzGallery = [];
       let files = event;
       if (files) {
         for (let file in files) {
           let reader = new FileReader();
           reader.onload = (e: any) => {
-            this.urls.push({tmpfilename:e.target.result});
+            this.cruzGallery.push({id:0,cruzeid:this.cruzid,tmpfilename:e.target.result,description:null});
           }
-          reader.readAsDataURL(files[file]);
+          if(file != 'length')
+            {
+              if(file != 'item')
+              {
+                reader.readAsDataURL(files[file]);
+              }
+            } 
         }
       }
   }
@@ -373,7 +382,7 @@ SaveCruzTimeSlotsDetails()
       let data = new FormData();
       let fileItem = this.uploader.queue[j]._file;
       data.append('file', fileItem);
-      data.append('description',JSON.stringify({description:eval('imagesupload.value.description'+j) || null,cruzid:this.cruzid}));
+      data.append('description',JSON.stringify({description:eval('imagesupload.value.description'+j) || null,id:eval('imagesupload.value.imgid'+j) || 0,cruzeid:this.cruzid}));
       this.uploadImages(data,this.uploader.queue.length);
     }
   }
@@ -384,7 +393,7 @@ uploadImages(formdata : FormData,imgslength)
 
     this._ExperiencesService.uploadCruzImages(formdata).subscribe((res: any) => {
         this.counter = this.counter + 1; 
-        if(imgslength == this.counter)
+        if(imgslength -1 == this.counter)
         {
           Swal.fire({
             title: res.title,
@@ -401,4 +410,41 @@ uploadImages(formdata : FormData,imgslength)
     }); 
 }
 
+RemoveGalleryImage(imgdetails,index)
+{
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'Want to delete these item',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, keep it'
+  }).then((result) => {
+    if (result.value) {
+ 
+    this._ExperiencesService.RemoveGalleryImage(imgdetails.id).subscribe((res:any)=>{
+        Swal.fire({
+          title: res.title,
+          text: res.message,
+          type: res.type,
+        }).then((result) => {
+          if (res.status === 1) {
+    
+          } else {
+            this.getCruzDetails(this.cruzid);
+           
+          }
+        });
+     
+    });	
+  
+} else if (result.dismiss === Swal.DismissReason.cancel) {
+  Swal.fire(
+    'Cancelled',
+    'Your imaginary file is safe :)',
+    'error'
+  )
+}
+})
+}
 }

@@ -343,7 +343,13 @@ public onFileSelected(event: EventEmitter<File[]>) {
         reader.onload = (e: any) => {
           this.urls.push({coverpictemp:e.target.result});
         }
-        reader.readAsDataURL(files[file]);
+        if(file != 'length')
+        {
+          if(file != 'item')
+          {
+            reader.readAsDataURL(files[file]);
+          }
+        } 
       }
     }
 }
