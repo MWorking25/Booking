@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http ,Response , Headers} from '@angular/http';
 import { HttpClient, HttpHeaders , HttpParams } from '@angular/common/http';
+import { AppGlobals } from './credencials';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/observable';
 import "rxjs/add/operator/map";
@@ -9,11 +10,10 @@ import "rxjs/add/operator/map";
 })
 export class ExperiencesService {
 
-  
-  // serveruri = 'http://103.252.7.5:3800';
-  serveruri = 'http://localhost:3800';
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private _global: AppGlobals) { }
+
+  serveruri = this._global.ApiLink;
 
   getCruzList(): Observable<any>
   {

@@ -11,6 +11,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 import { CookieService } from 'ngx-cookie-service';
 
+import { AppGlobals } from './services/credencials';
+
 import { AppComponent } from './app.component';
 
 // Import containers
@@ -71,7 +73,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  },CookieService],
+  },CookieService,AppGlobals],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
