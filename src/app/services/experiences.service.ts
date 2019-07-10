@@ -57,6 +57,13 @@ export class ExperiencesService {
 					}));
   }
 
+  SaveCruzAminities(cruzAmintiesDetails): Observable<any>
+  {
+    return this.http.post(this.serveruri+'/api/unity/SaveCruzAminities/',cruzAmintiesDetails,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
+
   DeleteCruzDetails(cruzDetails): Observable<any>
   {
     return this.http.post(this.serveruri+'/api/unity/DeleteCruzDetails/',cruzDetails,{ withCredentials: true }).pipe(map(data => {

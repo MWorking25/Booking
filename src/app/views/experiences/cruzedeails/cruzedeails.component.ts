@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/observable';
 import Swal from 'sweetalert2';
 import { FileUploader } from "ng2-file-upload";
 import { ExperiencesService } from '../../../services/experiences.service';
+import * as $ from 'jquery';
 @Component({
   selector: 'app-cruzedeails',
   templateUrl: './cruzedeails.component.html',
@@ -17,10 +18,40 @@ export class CruzedeailsComponent implements OnInit {
   cruzid:any = 0;
   url:any = '';
   urls:any;
+  aminityIndex= null;
+  
+  icons:any= [
+    {display:"<h2 title='Room Service' class='icon icon-room-service'></h2>",value:"icon-room-service"},
+    {display:"<h2 title='Hotel Service' class='icon icon-hotel-service'></h2>",value:"icon-hotel-service"},
+    {display:"<h2 title='Receptionist' class='icon icon-girl'></h2>",value:"icon-girl"},
+    {display:"<h2 title='Maid' class='icon icon-maid'></h2>",value:"icon-maid"},
+    {display:"<h2 title='Valet' class='icon icon-valet'></h2>",value:"icon-valet"},
+    {display:"<h2 title='Laundry Service' class='icon icon-laundry-service'></h2>",value:"icon-laundry-service"},
+    {display:"<h2 title='TV' class='icon icon-television'></h2>",value:"icon-television"},
+    {display:"<h2 title='Bar' class='icon icon-cocktail'></h2>",value:"icon-cocktail"},
+    {display:"<h2 title='Restraurent' class='icon icon-fast-food'></h2>",value:"icon-fast-food"},
+    {display:"<h2 title='Wifi' class='icon icon-wifi'></h2>",value:"icon-wifi"},
+    {display:"<h2 title='Bed' class='icon icon-bed'></h2>",value:"icon-bed"},
+    {display:"<h2 title='Bathrobe' class='icon icon-bathrobe'></h2>",value:"icon-bathrobe"},
+    {display:"<h2 title='Elevator' class='icon icon-elevator'></h2>",value:"icon-elevator"},
+    {display:"<h2 title='Boat' class='icon icon-boat'></h2>",value:"icon-boat"},
+    {display:"<h2 title='DJ' class='icon icon-dj'></h2>",value:"icon-dj"},
+    {display:"<h2 title='Park' class='icon icon-park-1'></h2>",value:"icon-park-1"},
+    {display:"<h2 title='Garden' class='icon icon-park'></h2>",value:"icon-park"},
+    {display:"<h2 title='Library' class='icon icon-book'></h2>",value:"icon-book"},
+    {display:"<h2 title='Air Conditioner' class='icon icon-air-conditioner'></h2>",value:"icon-air-conditioner"},
+    {display:"<h2 title='Gym' class='icon icon-gym'></h2>",value:"icon-gym"},
+    {display:"<h2 title='Parking' class='icon icon-parking'></h2>",value:"icon-parking"},
+    {display:"<h2 title='Menu' class='icon icon-menu'></h2>",value:"icon-menu"},
+    {display:"<h2 title='Location' class='icon icon-location'></h2>",value:"icon-location"},
+    {display:"<h2 title='CCTV' class='icon icon-cctv'></h2>",value:"icon-cctv"},
+    {display:"<h2 title='Dry Cleaning' class='icon icon-hanger'></h2>",value:"icon-hanger"},];
+
   cruzDetails:any = [{id:0,name:null,description:null,price:null,discounted_price:null,igst:null,cgst:null,sgst:null,capacity:null,createdby:null}];
-  cruzTimeslots:any =[{id:0,cruzeid:this.cruzid,timeslot:null,closingtime:null}];
-  cruzServices:any =[{id:0,cruzid:this.cruzid,servicename:null,description:null}];
-  cruzGallery:any =[{id:0,cruzeid:this.cruzid,tmpfilename:null,description:null}];
+  cruzTimeslots:any;
+  cruzServices:any ;
+  cruzAminities:any;
+  cruzGallery:any;
 
   constructor(private activatedRoute: ActivatedRoute, private _ExperiencesService : ExperiencesService, private router: Router) { }
 
@@ -30,6 +61,10 @@ export class CruzedeailsComponent implements OnInit {
       {
         this.getCruzDetails(this.cruzid);
       }
+      this.cruzTimeslots =[{id:0,cruzeid:this.cruzid,timeslot:null,closingtime:null}];
+      this.cruzServices =[{id:0,cruzid:this.cruzid,servicename:null,description:null}];
+      this.cruzAminities=[{titlename:null,cruzid:this.cruzid,description:null,icon:this.icons[0].value}];
+      this.cruzGallery =[{id:0,cruzeid:this.cruzid,tmpfilename:null,description:null}];
   }
 
 
@@ -38,6 +73,7 @@ export class CruzedeailsComponent implements OnInit {
   isCollapsedServices: boolean = false;
   isCollapsedTimeSlots: boolean = false;
   isCollapsedGallery: boolean = false;
+  isCollapsedAminities: boolean = false;
 
   collapsed(event: any): void {
     // console.log(event);
@@ -133,6 +169,26 @@ addNewService()
   }
 }
 
+addNewAminity()
+{
+  if(this.cruzAminities.length > 0)
+  {
+     if(this.cruzAminities[this.cruzAminities.length -1].titlename != null && this.cruzAminities[this.cruzAminities.length -1].titlename != '') 
+      {
+        this.cruzAminities.push({id:0,cruzid:this.cruzid,titlename:null,description:null,icon:this.icons[0].value});
+      }
+  }
+  else
+  {
+    this.cruzAminities.push({id:0,cruzid:this.cruzid,titlename:null,description:null,icon:this.icons[0].value});
+  }
+}
+
+setIconForAminity(selectedIcon)
+{
+  this.cruzAminities[this.aminityIndex].icon = selectedIcon.value;
+  console.log(this.aminityIndex);
+}
 
 addNewTimeSlot()
 {
@@ -253,6 +309,24 @@ SaveCruzTimeSlotsDetails()
   });
 }
 
+SaveCruzAminities()
+{
+  this._ExperiencesService.SaveCruzAminities(this.cruzAminities).subscribe((res: any) => {
+      
+    Swal.fire({
+      title: res.title,
+      text: res.message,
+      type: res.type,
+    }).then((result) => {
+      if (res.status === 1) {
+
+      } else {
+        this.getCruzDetails(this.cruzid);
+      }
+    });
+  });
+}
+
 
 
   getCruzDetails(cruzid)
@@ -327,6 +401,20 @@ SaveCruzTimeSlotsDetails()
   {
        var emptyfields = this.cruzTimeslots.filter((value,index)=>{
             return ((value.timeslot == null || value.timeslot == '') && (value.closingtime == null || value.closingtime == ''))
+       });
+       if(emptyfields.length > 0)
+       {
+          return true
+       }
+       else{
+         return false;
+       }
+  } 
+
+  VerifyCruzAminities()
+  {
+       var emptyfields = this.cruzAminities.filter((value,index)=>{
+            return ((value.titlename == null || value.titlename == ''))
        });
        if(emptyfields.length > 0)
        {
