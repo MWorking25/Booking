@@ -145,7 +145,7 @@
 
     <div class="col-md-12 col-12 col-lg-12 col-xl-12">
       <div class="card">
-        <div class="card-header" (click)="isCollapsedAminities = !isCollapsedAminities">Cruz Services</div>
+        <div class="card-header" (click)="isCollapsedAminities = !isCollapsedAminities">Cruz Aminities</div>
         <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
           [collapse]="isCollapsedAminities">
             <div class="row">
@@ -173,7 +173,7 @@
                                     <input class="d-none" [(ngModel)]="_cruzAminities.icon">
                                  </div>
                                 </td>
-                                <td><i (click)="RemoveAminity(_cruzAminities,i)" class="material-icons text-danger pointer">delete</i></td>
+                                <td><i (click)="RemoveAminity(i)" class="material-icons text-danger pointer">delete</i></td>
                               </tr>
                         </tbody>
                       </table>

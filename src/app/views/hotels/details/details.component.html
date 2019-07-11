@@ -1,4 +1,11 @@
 <div class="row">
+  
+    <div class="col-md-12 col-12 col-lg-12 col-xl-12 mb-1">
+        <div class="col-md-3 col-3 col-lg-3 col-xl-3 text-left">
+            <button class="btn btn-warning" [routerLink]="['/hotels/hotels']"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+        </div>  
+      </div>
+
     <div class="col-md-12 col-12 col-lg-12 col-xl-12">
         <div class="card">
             <div class="card-header" (click)="isCollapsedGeneraldetails = !isCollapsedGeneraldetails">Address Details</div>
@@ -157,6 +164,85 @@
             </div>
         </div>
     </div>
+
+    <!-- The Modal -->
+<div bsModal #modalAminityDetails="bs-modal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Aminities Details</h4>
+          <button type="button" class="close" (click)="modalAminityDetails.hide()"><span
+              aria-hidden="true">&times;</span></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+          
+            <div class="row">
+              <div class="col-12">
+                <h5 class="medium-text">Icons</h5><sup>Select icon for Aminity</sup>
+              </div>
+              <div class="col-3 text-center aminities-icons" *ngFor="let _icon of icons" (click)="setIconForAminity(_icon);modalAminityDetails.hide()" [innerHTML]="_icon.display">
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+      <div class="card">
+        <div class="card-header" (click)="isCollapsedAminities = !isCollapsedAminities">Aminities</div>
+        <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
+          [collapse]="isCollapsedAminities">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                            <th>#</th>
+                            <th><sup class="text-danger">*</sup>Tital</th>
+                            <th>Description</th>
+                            <th>Icon</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let _hotelAminities of hotelAminities;let i = index">
+                                <td>{{i +1}}</td>
+                                <td  style="width: 280px;"><input type="text" class="form-control" placeholder="title" [(ngModel)]="_hotelAminities.titlename" autofocus required></td>
+                                <td>
+                                  <textarea id="description" class="form-control" name="description" placeholder="Enter text here..."
+                                  [(ngModel)]="_hotelAminities.description"></textarea>
+                                </td> 
+                                <td class="text-left" >
+                                 <div>
+                                    <button  (click)="aminityIndex = i;modalAminityDetails.show()"><h1 class="icon {{_hotelAminities.icon}}"></h1></button>
+                                    <input class="d-none" [(ngModel)]="_hotelAminities.icon">
+                                 </div>
+                                </td>
+                                <td><i (click)="RemoveAminity(i)" class="material-icons text-danger pointer">delete</i></td>
+                              </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="col-4 col-md-4 col-lg-2 col-xl-2">
+                      <button class="btn btn-info" (click)="addNewAminity()">Add New</button>
+                    </div>
+                    </div>
+
+                  <div class="col-4 col-md-4 col-lg-2 col-xl-2 ml-auto">
+                    <button class="btn btn-primary" *ngIf="hotelDetails[0].id != 0" [disabled]="VerifyHotelAminities()" (click)="SavehotelAminities()">Submit</button>
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
+
    
     <div class="col-md-12 col-12 col-lg-12 col-xl-12">
         <div class="card">

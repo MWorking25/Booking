@@ -61,10 +61,7 @@ export class CruzedeailsComponent implements OnInit {
       {
         this.getCruzDetails(this.cruzid);
       }
-      this.cruzTimeslots =[{id:0,cruzeid:this.cruzid,timeslot:null,closingtime:null}];
-      this.cruzServices =[{id:0,cruzid:this.cruzid,servicename:null,description:null}];
-      this.cruzAminities=[{titlename:null,cruzid:this.cruzid,description:null,icon:this.icons[0].value}];
-      this.cruzGallery =[{id:0,cruzeid:this.cruzid,tmpfilename:null,description:null}];
+      
   }
 
 
@@ -187,7 +184,6 @@ addNewAminity()
 setIconForAminity(selectedIcon)
 {
   this.cruzAminities[this.aminityIndex].icon = selectedIcon.value;
-  console.log(this.aminityIndex);
 }
 
 addNewTimeSlot()
@@ -247,6 +243,35 @@ RemoveService(servicesdetails,index)
 }
 })
 }
+
+
+
+
+RemoveAminity(index)
+{
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'Want to delete these item',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, keep it'
+  }).then((result) => {
+    if (result.value) {
+
+    this.cruzAminities.splice(index,1);
+
+
+} else if (result.dismiss === Swal.DismissReason.cancel) {
+  Swal.fire(
+    'Cancelled',
+    'Your imaginary file is safe :)',
+    'error'
+  )
+}
+})
+}
+
 
 RemoveTimeSlot(timeSlots,index)
 {
@@ -331,6 +356,13 @@ SaveCruzAminities()
 
   getCruzDetails(cruzid)
   {
+
+
+    this.cruzTimeslots =[{id:0,cruzeid:cruzid,timeslot:null,closingtime:null}];
+      this.cruzServices =[{id:0,cruzid:cruzid,servicename:null,description:null}];
+      this.cruzAminities=[{titlename:null,cruzid:cruzid,description:null,icon:this.icons[0].value}];
+      this.cruzGallery =[{id:0,cruzeid:cruzid,tmpfilename:null,description:null}];
+
     this._ExperiencesService.getCruzDetails(cruzid).subscribe((res: any) => {
       if (res.status === 1) {
         
@@ -341,6 +373,8 @@ SaveCruzAminities()
         this.cruzTimeslots = res.cruzTimeslot;
         this.cruzGallery = res.cruzGalley;
         this.urls = res.cruzGalley;
+        if(res.cruzDetails[0].aminities && res.cruzDetails[0].aminities != '' && res.cruzDetails[0].aminities != null)
+           this.cruzAminities= JSON.parse(res.cruzDetails[0].aminities);
       }
     });
   }
@@ -535,4 +569,8 @@ RemoveGalleryImage(imgdetails,index)
 }
 })
 }
+
+
+
+
 }

@@ -28,6 +28,13 @@ export class HotelsService {
 					}));
   }
 
+  SavehotelAminities(hotelAminities): Observable<any>
+  {
+    return this.http.post(this.serveruri+'/api/unity/SavehotelAminities/',hotelAminities,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
+
   DeleteHotelDetails(hotelids): Observable<any>
   {
     return this.http.post(this.serveruri+'/api/unity/DeleteHotelDetails/',hotelids,{ withCredentials: true }).pipe(map(data => {
