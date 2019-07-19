@@ -85,9 +85,9 @@ export class ExperiencesService {
 					}));
   }
 
-  uploadCruzImages(cruzTimeSlotDetails): Observable<any>
+  uploadCruzImages(cruzGalleryImages): Observable<any>
   {
-    return this.http.post(this.serveruri+'/api/unity/uploadCruzImages/',cruzTimeSlotDetails,{ withCredentials: true }).pipe(map(data => {
+    return this.http.post(this.serveruri+'/api/unity/uploadCruzImages/',cruzGalleryImages,{ withCredentials: true }).pipe(map(data => {
 							return data;
 					}));
   }

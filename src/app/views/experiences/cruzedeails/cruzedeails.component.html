@@ -286,24 +286,48 @@
         <div class="card-header" (click)="isCollapsedGallery = !isCollapsedGallery">Gallery</div>
         <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
           [collapse]="isCollapsedGallery">
-          <form #cruzImages="ngForm">
-            <div class="col-12">
-              <div class="form-group">
-                <label>Select images for Cruz:</label>
-  
-                <input type="file" ng2FileSelect [uploader]="uploader" multiple
-                  (onFileSelected)="onFileSelected($event)" />
-  
-  
-              </div>
-            </div>
+          
+             <!--  <input type="file" #fileLoader ng2FileSelect [uploader]="uploader" multiple
+              (onFileSelected)="onFileSelected($event)" />          --> 
             <div class="col-12">
               <ul class="row">
-                <li class="list col-4 col-md-4 col-xl-4 col-lg-4" style="float:left;list-style-type:none;"
+                <li class="list col-3 col-md-3 col-xl-3 col-lg-3" style="float:left;list-style-type:none;"
                   *ngFor="let _img of cruzGallery;let i =index">
                   <div class="row">
+                      <form #cruzImages="ngForm">
 
-                      <div class="imgcontainer">
+                      <div class="card row">
+                          <div class="card-header">
+                            <div class="text-right">
+                                <button (click)="enlargeImage(_img)" class="btn btn-sm btn-warning rounded-circle">&#10063;</button>
+                                &nbsp;
+                                <button (click)="uploadGalleryImage(cruzImages)" class="btn btn-sm btn-success rounded-circle">&#10004;</button>
+                                &nbsp;
+                              <button *ngIf="_img.id != 0" (click)="RemoveGalleryImage(_img,i)" class="btn btn-sm float-right btn-danger rounded-circle">&#10008;</button>
+                            </div>
+                          </div>
+                          <div class="card-body">
+                            <div class="ml-auto mr-auto">
+
+                                <input type="file" id="GalaryPic{{i}}" ng2FileSelect [uploader]="uploader"                                (change)="onSelectGalleryFile($event,_img)" class="d-none " />
+
+                                <img [src]="_img.tmpfilename" class="img-fluid" onError="this.src= '../../../../assets/img/add-photo-album.png'" style="height: 175px;width:auto;" (click)="OpenfileChooser(i)" />
+                            </div>
+                          </div> 
+                          <div class="card-footer">
+                              <input class="d-none" name="id" [(ngModel)]="_img.id">
+                              <input class="d-none" name="cruzeid" [(ngModel)]="cruzDetails[0].id"
+                              >
+                              <div class="ml-auto mr-auto">
+                                  <textarea class="form-control" name="description" [(ngModel)]="_img.description"
+                              placeholder="Decription for this image"></textarea>
+                              </div>
+
+                              
+                          </div>
+                        </div>
+                      </form>
+                     <!--  <div class="imgcontainer">
                                         <button *ngIf="_img.id != 0" class="btn imgremove" (click)="RemoveGalleryImage(_img,i)">
                                             X
                                         </button>
@@ -312,24 +336,24 @@
                                 placeholder="id">
                             </div>
                           <div class="col-12 col-md-12 col-lg-12">
-                              <img [src]="_img.tmpfilename" class="img-fluid img-thumbnail" style="height: 175px;width:auto;" />
+                              <img [src]="_img.tmpfilename" class="img-fluid img-thumbnail ml-4" onError="this.src= '../../../../assets/img/add-photo-album.png'" />
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 mb-1">
                                 <textarea class="form-control" name="description{{i}}" [(ngModel)]="_img.description"
                                   placeholder="Decription for this image"></textarea>
                               </div>
-                  </div>
+                  </div> -->
 
                   </div>
                 </li>
               </ul>
-              <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+             <!--  <div class="col-md-12 col-12 col-lg-12 col-xl-12">
                 <div class="col-md-4 col-4 col-lg-2 col-xl-2 ml-auto">
                   <button class="btn btn-primary" (click)="uploadCruzImages(cruzImages)">Submit</button>
                 </div>
-              </div>
+              </div> -->
             </div>
-          </form>
+        
         </div>
       </div>
     </div>

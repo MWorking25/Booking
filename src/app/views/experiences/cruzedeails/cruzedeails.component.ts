@@ -20,6 +20,7 @@ export class CruzedeailsComponent implements OnInit {
   urls:any;
   aminityIndex= null;
   
+
   icons:any= [
     {display:"<h2 title='Room Service' class='icon icon-room-service'></h2>",value:"icon-room-service"},
     {display:"<h2 title='Hotel Service' class='icon icon-hotel-service'></h2>",value:"icon-hotel-service"},
@@ -47,7 +48,7 @@ export class CruzedeailsComponent implements OnInit {
     {display:"<h2 title='CCTV' class='icon icon-cctv'></h2>",value:"icon-cctv"},
     {display:"<h2 title='Dry Cleaning' class='icon icon-hanger'></h2>",value:"icon-hanger"},];
 
-  cruzDetails:any = [{id:0,name:null,description:null,price:null,discounted_price:null,igst:null,cgst:null,sgst:null,capacity:null,createdby:null}];
+  cruzDetails:any;
   cruzTimeslots:any;
   cruzServices:any ;
   cruzAminities:any;
@@ -56,7 +57,13 @@ export class CruzedeailsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private _ExperiencesService : ExperiencesService, private router: Router) { }
 
   ngOnInit() {
+
+    this.cruzDetails = [{id:0,name:null,description:null,price:null,discounted_price:null,igst:null,cgst:null,sgst:null,capacity:null,createdby:null}];
+
     this.cruzid = this.activatedRoute.snapshot.paramMap.get('id');
+
+    this.cruzGallery =[{id:0,cruzeid:this.cruzDetails[0].id,tmpfilename:null,description:null}];
+
     if(this.cruzid > 0)
       {
         this.getCruzDetails(this.cruzid);
@@ -78,6 +85,28 @@ export class CruzedeailsComponent implements OnInit {
 
   expanded(event: any): void {
     // console.log(event);
+  }
+
+
+  
+  uploadGalleryImage(cuzeDetails)
+  {
+ 
+      for (let j = 0; j < this.uploader.queue.length; j++) {
+        let data = new FormData();
+        let fileItem = this.uploader.queue[j]._file;
+        data.append('file', fileItem);
+        data.append('cruzDetails', JSON.stringify(cuzeDetails.value));
+        this.SaveGalleryImages(data);
+      }
+   
+  }
+
+  SaveGalleryImages(data: FormData) {
+    this._ExperiencesService.uploadCruzImages(data).subscribe((res: any) => {
+      this.getCruzDetails(this.cruzDetails[0].id);
+      this.uploader.clearQueue();
+    });
   }
 
 
@@ -358,7 +387,7 @@ SaveCruzAminities()
   {
 
 
-    this.cruzTimeslots =[{id:0,cruzeid:cruzid,timeslot:null,closingtime:null}];
+      this.cruzTimeslots =[{id:0,cruzeid:cruzid,timeslot:null,closingtime:null}];
       this.cruzServices =[{id:0,cruzid:cruzid,servicename:null,description:null}];
       this.cruzAminities=[{titlename:null,cruzid:cruzid,description:null,icon:this.icons[0].value}];
       this.cruzGallery =[{id:0,cruzeid:cruzid,tmpfilename:null,description:null}];
@@ -372,9 +401,11 @@ SaveCruzAminities()
         this.cruzServices = res.cruzServices;
         this.cruzTimeslots = res.cruzTimeslot;
         this.cruzGallery = res.cruzGalley;
-        this.urls = res.cruzGalley;
+        this.url = res.cruzDetails[0].tempcoverpic;
         if(res.cruzDetails[0].aminities && res.cruzDetails[0].aminities != '' && res.cruzDetails[0].aminities != null)
            this.cruzAminities= JSON.parse(res.cruzDetails[0].aminities);
+
+           this.cruzGallery.push({id:0,cruzeid:cruzid,tmpfilename:null,description:null});
       }
     });
   }
@@ -496,42 +527,6 @@ SaveCruzAminities()
   }
 
 
-  uploadCruzImages(imagesupload)
-{
- 
-  if (this.uploader.queue.length > 0) {
-    for (let j = 0; j < this.uploader.queue.length; j++) {
-      let data = new FormData();
-      let fileItem = this.uploader.queue[j]._file;
-      data.append('file', fileItem);
-      data.append('description',JSON.stringify({description:eval('imagesupload.value.description'+j) || null,id:eval('imagesupload.value.imgid'+j) || 0,cruzeid:this.cruzid}));
-      this.uploadImages(data,this.uploader.queue.length);
-    }
-  }
-}
-counter : number = 0;
-uploadImages(formdata : FormData,imgslength)
-{
-
-    this._ExperiencesService.uploadCruzImages(formdata).subscribe((res: any) => {
-        this.counter = this.counter + 1; 
-        if(imgslength -1 == this.counter)
-        {
-          Swal.fire({
-            title: res.title,
-            text: res.message,
-            type: res.type,
-          }).then((result) => {
-            if (res.status === 1) {
-              this.uploader.clearQueue();
-            } else {
-            
-            }
-           });
-        }
-    }); 
-}
-
 RemoveGalleryImage(imgdetails,index)
 {
   Swal.fire({
@@ -572,5 +567,22 @@ RemoveGalleryImage(imgdetails,index)
 
 
 
+OpenfileChooser(index)
+{
+  $("#GalaryPic"+index).click();
+}
+
+onSelectGalleryFile(event,imgobj) {
+  if (event.target.files && event.target.files[0]) {
+    var reader = new FileReader();
+
+    reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+    reader.onload = (event: Event) => { // called once readAsDataURL is completed
+      imgobj.tmpfilename= event.currentTarget;
+      imgobj.tmpfilename = imgobj.tmpfilename.result;
+    }
+  }
+}
 
 }
