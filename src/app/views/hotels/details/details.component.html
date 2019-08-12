@@ -8,7 +8,7 @@
 
     <div class="col-md-12 col-12 col-lg-12 col-xl-12">
         <div class="card">
-            <div class="card-header" (click)="isCollapsedGeneraldetails = !isCollapsedGeneraldetails">Address Details</div>
+            <div class="card-header" (click)="isCollapsedGeneraldetails = !isCollapsedGeneraldetails">General Details</div>
             <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)" [collapse]="isCollapsedGeneraldetails">
               <form #hotel="ngForm">
                 <div class="row">
@@ -288,6 +288,65 @@
             </div>
         </div>
     </div>
+
+
+    <div class="col-md-12 col-12 col-lg-12 col-xl-12" *ngIf="hotelDetails[0].id != 0">
+        <div class="card">
+          <div class="card-header" (click)="isCollapsedGallery = !isCollapsedGallery">Gallery</div>
+          <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
+            [collapse]="isCollapsedGallery">
+            
+               <!--  <input type="file" #fileLoader ng2FileSelect [uploader]="uploader" multiple
+                (onFileSelected)="onFileSelected($event)" />          --> 
+                <div class="row">
+                <div class="card-columns">
+                  <div class="card" *ngFor="let _img of hotelGallery;let i =index">
+                      <span class="badge badge-danger notify-badge"  *ngIf="_img.id == 0">Click to add new image</span>
+                      <form #hotelImages="ngForm">
+                          <div class="card-header">
+                              <div class="text-right">
+                                  <button (click)="enlargeImage(_img)" class="btn btn-sm btn-warning rounded-circle">&#10063;</button>
+                                  &nbsp;
+                                  <button (click)="uploadHotelGalleryImage(hotelImages)" class="btn btn-sm btn-success rounded-circle">&#10004;</button>
+                                  &nbsp;
+                                <button *ngIf="_img.id != 0" (click)="RemoveGalleryImage(_img,i)" class="btn btn-sm float-right btn-danger rounded-circle">&#10008;</button>
+                              </div>
+                            </div>
+                            <div class="card-body" (click)="OpenfileChooser(i)">
+                                <div class="ml-auto mr-auto">
+    
+                                    <input type="file" id="GalaryPic{{i}}" ng2FileSelect [uploader]="uploader"                                (change)="onSelectGalleryFile($event,_img)" class="d-none " />
+    
+                                    <img [src]="_img.tmpfilename" class="img-fluid" onError="this.src= '../../../assets/img/add-photo-album.png'" style="height: 175px;width:auto;"  />
+                                </div>
+                              </div> 
+                              <div class="card-footer">
+                                  <input class="d-none" name="id" [(ngModel)]="_img.id">
+                                  <input class="d-none" name="hotelid" [(ngModel)]="hotelDetails[0].id"
+                                  >
+                                  <div class="ml-auto mr-auto">
+                                      <textarea class="form-control" name="description" [(ngModel)]="_img.description"
+                                  placeholder="Decription for this image"></textarea>
+                                  </div>
+    
+                                  <div class="ml-auto mr-auto">
+                                     <select class="form-control" id="roomid" name="roomid" [(ngModel)]="_img.roomid">
+                                         <option selected disabled value="0">Select Room If Require</option>
+                                  <option *ngFor="let roomObj of hotelRooms" value="{{roomObj.id}}">{{roomObj.room_type}}</option>
+                                     </select>
+                                  </div>
+    
+                                  
+                              </div>
+                    </form>
+                  </div>
+      
+                </div>
+                </div>
+          
+          </div>
+        </div>
+      </div>
 
 
     <div bsModal #modalRoomDescription="bs-modal" class="modal fade">

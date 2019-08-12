@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/observable';
 import Swal from 'sweetalert2';
@@ -65,6 +65,7 @@ export class DetailsComponent implements OnInit {
   states:Observable<any>;
   cities:Observable<any>;
   areas:Observable<any>;
+  hotelGallery:any[]; 
 
   constructor(private _MastersService : MastersService,private _hotelsService:HotelsService,private activatedRoute: ActivatedRoute, private router: Router) { }
 
@@ -74,7 +75,7 @@ export class DetailsComponent implements OnInit {
     this.hotelid = parseInt(hotelid);
     this.getHotelDetails(hotelid);
     this.getCountriesList();
-    
+  
   }
 
   public uploader: FileUploader = new FileUploader({
@@ -105,7 +106,7 @@ export class DetailsComponent implements OnInit {
   isCollapsedGeneraldetails: boolean = false;
   isCollapsedrooms: boolean = false;
   isCollapsedAminities: boolean = false;
-
+  isCollapsedGallery: boolean = false;
   collapsed(event: any): void {
     // console.log(event);
   }
@@ -406,6 +407,7 @@ RevertEditedText()
 getHotelDetails(hotelid)
 { 
   this.hotelAminities = [{id:0,hotelid:hotelid,titlename:null,description:null,icon:this.icons[0].value}];
+  this.hotelGallery = [{id:0,hotelid:hotelid,roomid:0,tmpfilename:null,description:null}];
   this._hotelsService.getHotelDetails(hotelid).subscribe((res:any)=>{
     if(res.hoteldetails.length > 0)
     {
@@ -415,10 +417,116 @@ getHotelDetails(hotelid)
       this.getAreasOnCity(res.hoteldetails[0].city);
       this.hotelDetails = res.hoteldetails;
       this.hotelRooms = res.roomsdetails;
+      this.hotelGallery = res.hotelPics;
       if(res.hoteldetails[0].aminities && res.hoteldetails[0].aminities!= '' && res.hoteldetails[0].aminities != null)
         this.hotelAminities = JSON.parse(res.hoteldetails[0].aminities);
+
+        this.hotelGallery.push({id:0,hotelid:hotelid,roomid:0,tmpfilename:null,description:null});
+
     }
   });	
+}
+
+
+uploadHotelGalleryImage(hotelDetails)
+{
+
+    for (let j = 0; j < this.uploader.queue.length; j++) {
+      let data = new FormData();
+      let fileItem = this.uploader.queue[j]._file;
+      data.append('file', fileItem);
+      data.append('hotelDetails', JSON.stringify(hotelDetails.value));
+      this.SaveHotelGalleryImages(data);
+    }
+ 
+}
+
+SaveHotelGalleryImages(data: FormData) {
+  this._hotelsService.uploadHotelImages(data).subscribe((res: any) => {
+    this.getHotelDetails(this.hotelDetails[0].id);
+    this.uploader.clearQueue();
+  });
+}
+
+
+public onFileSelected(event: EventEmitter<File[]>) {
+    
+  this.hotelGallery = [];
+    let files = event;
+    if (files) {
+      for (let file in files) {
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.hotelGallery.push({id:0,hotelid:this.hotelid,roomid:0,tmpfilename:e.target.result,description:null});
+        }
+        if(file != 'length')
+          {
+            if(file != 'item')
+            {
+              reader.readAsDataURL(files[file]);
+            }
+          } 
+      }
+    }
+}
+
+
+RemoveGalleryImage(imgdetails,index)
+{
+Swal.fire({
+  title: 'Are you sure?',
+  text: 'Want to delete these item',
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes, delete it!',
+  cancelButtonText: 'No, keep it'
+}).then((result) => {
+  if (result.value) {
+
+  this._hotelsService.RemoveHotelGalleryImage(imgdetails.id).subscribe((res:any)=>{
+      Swal.fire({
+        title: res.title,
+        text: res.message,
+        type: res.type,
+      }).then((result) => {
+        if (res.status === 1) {
+  
+        } else {
+          this.getHotelDetails(this.hotelid);
+         
+        }
+      });
+   
+  });	
+
+} else if (result.dismiss === Swal.DismissReason.cancel) {
+Swal.fire(
+  'Cancelled',
+  'Your imaginary file is safe :)',
+  'error'
+)
+}
+})
+}
+
+
+
+OpenfileChooser(index)
+{
+$("#GalaryPic"+index).click();
+}
+
+onSelectGalleryFile(event,imgobj) {
+if (event.target.files && event.target.files[0]) {
+  var reader = new FileReader();
+
+  reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+  reader.onload = (event: Event) => { // called once readAsDataURL is completed
+    imgobj.tmpfilename= event.currentTarget;
+    imgobj.tmpfilename = imgobj.tmpfilename.result;
+  }
+}
 }
 
 

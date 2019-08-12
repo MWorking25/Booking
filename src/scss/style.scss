@@ -20,3 +20,12 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
+
+
+.notify-badge{
+  position: absolute;
+  left:-10px;
+  top:10px;
+  text-align: center;
+}
+

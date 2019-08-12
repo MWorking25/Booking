@@ -62,4 +62,21 @@ export class HotelsService {
           return data;
         }));
   }
+
+
+
+  RemoveHotelGalleryImage(imgid): Observable<any>
+  {
+        return this.http.get<any>(this.serveruri+'/api/unity/RemoveHotelGalleryImage/'+imgid,{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
+ 
+
+  uploadHotelImages(hotelGalleryImages): Observable<any>
+  {
+    return this.http.post(this.serveruri+'/api/unity/uploadHotelImages/',hotelGalleryImages,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
 }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder} from '@angular/forms';
 import {Router} from "@angular/router"
 import Swal from 'sweetalert2';
+import { interval, Subscription } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthenticationService } from '../../services/authentication.service';
 @Component({
@@ -11,13 +12,16 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 export class LoginComponent implements OnInit{ 
 
+  subscription: Subscription;
   authentication_form : FormGroup;
   email:String;
   password:String;
 
   constructor(private http: HttpClient,private fb: FormBuilder, private _AuthenticationService : AuthenticationService, private cookieService: CookieService,private router: Router)
   {
-
+    const source = interval(10000);
+    const text = 'Your Text Here';
+    this.subscription = source.subscribe(val => this.opensnack(text));
   }
  
   ngOnInit()
@@ -56,5 +60,12 @@ export class LoginComponent implements OnInit{
       }
     });	 
   }
+
+  opensnack(txtx)
+  {
+    const cookieExists: boolean = this.cookieService.check('token');
+    console.log(cookieExists)
+  }
+
 
 }
