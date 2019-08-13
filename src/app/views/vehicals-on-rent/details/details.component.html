@@ -1,4 +1,5 @@
 <div class="row">
+  
   <div class="col-md-12 col-12 col-lg-12 col-xl-12">
     <div class="card">
       <div class="card-header" (click)="isCollapsedGeneraldetails = !isCollapsedGeneraldetails">General Details</div>
@@ -158,7 +159,7 @@
                         [ngModel]="docs.docname"><sup *ngIf="docs.required" class="text-danger">Required</sup></td>
                     <td><input type="file" ng2FileSelect name="coverImage{{i}}" [uploader]="uploader" (change)="onFileDocSelected($event,i)" /><sup
                         *ngIf="!uploader.queue[i] && docs.required" class="text-danger">Required</sup></td>
-                    <td><img class="img-fluid" [src]="docs.docimgtemp" (click)="previewDocument(docs,i)" style="height: 75px;"> </td>
+                    <td><img class="img-fluid" [src]="docs.docimgtemp" (click)="previewDocument(docs.docimgtemp,i)" style="height: 75px;"> </td>
                     <td><i (click)="RemoveDocument(docs,i)" class="material-icons text-danger pointer">delete</i></td>
                   </tr>
                 </tbody>
@@ -184,7 +185,49 @@
       <div class="card-header" (click)="isCollapsedvehicalImages = !isCollapsedvehicalImages">Documents Details</div>
       <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
         [collapse]="isCollapsedvehicalImages">
-        <form #vehicalImages="ngForm">
+
+
+
+        <div class="row">
+          <div class="card-columns">
+            <div class="card" *ngFor="let _img of vehicalGallery;let i =index">
+                <span class="badge badge-danger notify-badge"  *ngIf="_img.id == 0">Click to add new image</span>
+                <form #vehicalImages="ngForm">
+                    <div class="card-header">
+                        <div class="text-right">
+                            <button *ngIf="_img.id != 0" (click)="previewDocument(_img.coverpictemp)" class="btn btn-sm btn-warning rounded-circle">&#10063;</button>
+                            &nbsp;
+                            <button (click)="uploadvahicalGalleryImage(vehicalImages)" class="btn btn-sm btn-success rounded-circle">&#10004;</button>
+                            &nbsp;
+                          <button *ngIf="_img.id != 0" (click)="RemoveGalleryImage(_img,i)" class="btn btn-sm float-right btn-danger rounded-circle">&#10008;</button>
+                        </div>
+                      </div>
+                      <div class="card-body" (click)="OpenfileChooser(i)">
+                          <div class="ml-auto mr-auto">
+
+                              <input type="file" id="GalaryPic{{i}}" ng2FileSelect [uploader]="uploader" (change)="onSelectGalleryFile($event,_img)" class="d-none " />
+
+                              <img [src]="_img.coverpictemp" class="img-fluid" onError="this.src= '../../../assets/img/add-photo-album.png'" style="height: 175px;width:auto;"  />
+                          </div>
+                        </div> 
+                        <div class="card-footer">
+                            <input class="d-none" name="id" [(ngModel)]="_img.id">
+                            <input class="d-none" name="vehicalid" [(ngModel)]="vehicalDetails[0].id"
+                            >
+                            <div class="ml-auto mr-auto">
+                                <textarea class="form-control" name="description" [(ngModel)]="_img.description"
+                            placeholder="Decription for this image"></textarea>
+                            </div>
+                        </div>
+              </form>
+            </div>
+
+          </div>
+          </div>
+
+
+
+       <!--  <form #vehicalImages="ngForm">
           <div class="col-12">
             <div class="form-group">
               <label>Select images for vehical:</label>
@@ -217,8 +260,10 @@
               </div>
             </div>
           </div>
-        </form>
+        </form> -->
       </div>
     </div>
   </div>
 </div>
+
+

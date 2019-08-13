@@ -7,6 +7,7 @@ import { MastersService } from '../../../services/masters.service';
 import { HotelDetails } from '../../../interfaces/hotel-details';
 import { HotelAminityTitle } from '../../../interfaces/hotel-aminity-title';
 import { HotelSubaminities } from '../../../interfaces/hotel-subaminities';
+import { ToastrService } from 'ngx-toastr';
 import { HotelRooms } from '../../../interfaces/hotel-rooms';
 import { HotelsService } from '../../../services/hotels.service';
 import $ from 'jquery';
@@ -67,7 +68,7 @@ export class DetailsComponent implements OnInit {
   areas:Observable<any>;
   hotelGallery:any[]; 
 
-  constructor(private _MastersService : MastersService,private _hotelsService:HotelsService,private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private _MastersService : MastersService,private _hotelsService:HotelsService,private activatedRoute: ActivatedRoute, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -430,21 +431,37 @@ getHotelDetails(hotelid)
 
 uploadHotelGalleryImage(hotelDetails)
 {
-
-    for (let j = 0; j < this.uploader.queue.length; j++) {
+  if(this.uploader.queue.length > 0 || (hotelDetails.value.id != 0))
+  {
+  
+    // for (let j = 0; j < this.uploader.queue.length; j++) {
       let data = new FormData();
-      let fileItem = this.uploader.queue[j]._file;
+      if(this.uploader.queue[this.uploader.queue.length -1])
+      var fileItem = this.uploader.queue[this.uploader.queue.length -1]._file;
       data.append('file', fileItem);
       data.append('hotelDetails', JSON.stringify(hotelDetails.value));
+      if(this.uploader.queue[this.uploader.queue.length -1])
       this.SaveHotelGalleryImages(data);
-    }
- 
+      else
+      this.SaveHotelGalleryDetails(hotelDetails.value);
+    // }
+  }
+  else
+  {
+    this.toastr.warning('Warning', 'Please choose image before upload');
+  }
 }
 
 SaveHotelGalleryImages(data: FormData) {
   this._hotelsService.uploadHotelImages(data).subscribe((res: any) => {
     this.getHotelDetails(this.hotelDetails[0].id);
     this.uploader.clearQueue();
+  });
+}
+
+SaveHotelGalleryDetails(data) {
+  this._hotelsService.uploadHotelImages(data).subscribe((res: any) => {
+    this.getHotelDetails(this.hotelDetails[0].id);
   });
 }
 
@@ -529,5 +546,19 @@ if (event.target.files && event.target.files[0]) {
 }
 }
 
+
+previewDocument(imgforPreview)
+{
+  Swal.fire({
+    title: '',
+    imageUrl: imgforPreview,
+    imageWidth: 500,
+    imageHeight: 500,
+    showCloseButton: true,
+    showConfirmButton:false
+  }).then((result) => {
+    
+  });
+}
 
 }

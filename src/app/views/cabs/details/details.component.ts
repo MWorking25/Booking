@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 export class DetailsComponent implements OnInit {
 
   @ViewChild('coverImage')
-  @ViewChild('vehicalImages')
+  @ViewChild('cabImages')
   myInputVariable: ElementRef;
 
   masterid:any;
@@ -22,18 +22,18 @@ export class DetailsComponent implements OnInit {
   urls:any;
   htmlContent:any;
   required:boolean = false;
-  vehicalGallery:any[];
-  vehicalDetails:any = [{id:0,company:null,model:null,passingno:null,cpacity:null,color:null,price:null,discounted_price:null,createdby:null}];
-  vehicalDocs:any[] = [{id:0,vehicalid:0,docname:null,docimg:null,createdby:null,required:false,tempfilename:null}];
+  cabGallery:any[];
+  cabDetails:any = [{id:0,company:null,model:null,passingno:null,cpacity:null,color:null,price:null,discounted_price:null,createdby:null}];
+  cabDocs:any[] = [{id:0,cabid:0,docname:null,docimg:null,createdby:null,required:false,tempfilename:null}];
   constructor(private _CabsNBusesService:CabsNBusesService,private activatedRoute: ActivatedRoute, private toastr: ToastrService) { }
 
   isCollapsedGeneraldetails:boolean = false;
-  isCollapsedvehicalImages:boolean = false;
+  isCollapsedcabImages:boolean = false;
   isCollapsedDocDetails:boolean = false;
   ngOnInit() {
-    var vehicalid = this.activatedRoute.snapshot.paramMap.get('id');
-    this.masterid = vehicalid;
-    this.getVehicalDetails(vehicalid);
+    var cabid = this.activatedRoute.snapshot.paramMap.get('id');
+    this.masterid = cabid;
+    this.getcabDetails(cabid);
   }
 
   
@@ -71,7 +71,7 @@ export class DetailsComponent implements OnInit {
 
   VerifyForm()
 {
-  if(this.vehicalDetails[0].company != null && this.vehicalDetails[0].model != null && this.vehicalDetails[0].passingno != null && this.vehicalDetails[0].cpacity != null && this.vehicalDetails[0].price != null)
+  if(this.cabDetails[0].company != null && this.cabDetails[0].model != null && this.cabDetails[0].passingno != null && this.cabDetails[0].cpacity != null && this.cabDetails[0].price != null)
   {
     return false;
   }
@@ -80,27 +80,27 @@ export class DetailsComponent implements OnInit {
   }
 }
 
-saveVehicalDetails(vehicalDetails)
+savecabDetails(cabDetails)
 {
   if (this.uploader.queue.length > 0) {
     for (let j = 0; j < this.uploader.queue.length; j++) {
       let data = new FormData();
       let fileItem = this.uploader.queue[j]._file;
       data.append('file', fileItem);
-      data.append('vehicalDetails', JSON.stringify(vehicalDetails.value));
+      data.append('cabDetails', JSON.stringify(cabDetails.value));
       this.uploadFile(data);
     }
   } else {
-    this.saveVehicalDetailasWithoutPic(vehicalDetails.value);
+    this.savecabDetailasWithoutPic(cabDetails.value);
   }
 }
 
 uploadFile(data: FormData) {
 
-  this._CabsNBusesService.saveVehicalDetails(data).subscribe((res: any) => {
-    if(res.vehicalid > 0) 
+  this._CabsNBusesService.savecabDetails(data).subscribe((res: any) => {
+    if(res.cabid > 0) 
     {
-      this.vehicalDetails[0].id = res.vehicalid;
+      this.cabDetails[0].id = res.cabid;
     }
 
     Swal.fire({
@@ -118,12 +118,12 @@ uploadFile(data: FormData) {
 }
 
 
-saveVehicalDetailasWithoutPic(vahicaldetails)
+savecabDetailasWithoutPic(vahicaldetails)
 {
-  this._CabsNBusesService.saveVehicalDetails(vahicaldetails).subscribe((res: any) => {
-    if(res.vehicalid > 0) 
+  this._CabsNBusesService.savecabDetails(vahicaldetails).subscribe((res: any) => {
+    if(res.cabid > 0) 
     {
-      this.vehicalDetails[0].id = res.vehicalid;
+      this.cabDetails[0].id = res.cabid;
     }
 
     Swal.fire({
@@ -140,7 +140,7 @@ saveVehicalDetailasWithoutPic(vahicaldetails)
 }
 
 
-RemoveDocument(vehicaldoc,index)
+RemoveDocument(cabdoc,index)
 {
   Swal.fire({
     title: 'Are you sure?',
@@ -151,20 +151,20 @@ RemoveDocument(vehicaldoc,index)
     cancelButtonText: 'No, keep it'
   }).then((result) => {
     if (result.value) {
-  if(vehicaldoc.id === 0)
+  if(cabdoc.id === 0)
   {
-    this.vehicalDocs.splice(index,1);
+    this.cabDocs.splice(index,1);
   }
   else
   {
-    this._CabsNBusesService.deleteVehicalDocDetails(vehicaldoc.id).subscribe((res:any)=>{
+    this._CabsNBusesService.deletecabDocDetails(cabdoc.id).subscribe((res:any)=>{
         Swal.fire({
           title: res.title,
           text: res.message,
           type: res.type,
         }).then((result) => {
           if (res.status === 1) {
-            this.getVehicalDetails(vehicaldoc.vehicalid);
+            this.getcabDetails(cabdoc.cabid);
           } else {
           
           }
@@ -182,59 +182,59 @@ RemoveDocument(vehicaldoc,index)
 })
 }
 
-getVehicalDetails(vehicalid)
+getcabDetails(cabid)
 {
-  this._CabsNBusesService.getVehicalDetails(vehicalid).subscribe((res:any)=>{
+  this._CabsNBusesService.getcabDetails(cabid).subscribe((res:any)=>{
     if (res.status === 0) {
-      this.vehicalDetails = [];
+      this.cabDetails = [];
     } else {
-      this.vehicalDetails = res.vehicalDetails;
-      this.url = res.vehicalDetails[0].tmpcoverpic;
-      this.vehicalDocs = res.vehicalDocs;
-      this.vehicalGallery = res.vehicalImages;
-      this.vehicalGallery.push({id:0,vehicalid:vehicalid,coverpictemp:null,description:null});
+      this.cabDetails = res.cabDetails;
+      this.url = res.cabDetails[0].tmpcoverpic;
+      this.cabDocs = res.cabDocs;
+      this.cabGallery = res.cabImages;
+      this.cabGallery.push({id:0,cabid:cabid,coverpictemp:null,description:null});
 
     }
   });
 }
 
-addDocFile(vehicaldocs)
+addDocFile(cabdocs)
 {
-    var i = this.vehicalDocs.length - 1;
+    var i = this.cabDocs.length - 1;
       var docobjkeys = "docname"+i;
       var docid = "docid"+i;
-      for(var key in vehicaldocs.value)
+      for(var key in cabdocs.value)
       {
         if(String(key) == docobjkeys)
         {
-          if(vehicaldocs.value[key] != null && vehicaldocs.value[key] != '')
+          if(cabdocs.value[key] != null && cabdocs.value[key] != '')
           {
             if(this.uploader.queue[i])
             {
-               this.vehicalDocs.push({id:0,vehicalid:0,docname:null,docimg:null,createdby:null});
-               this.vehicalDocs[i].required = false;
+               this.cabDocs.push({id:0,cabid:0,docname:null,docimg:null,createdby:null});
+               this.cabDocs[i].required = false;
                this.VerifyDocForm();
             }
             else
             {
-              if(vehicaldocs.value[docid] > 0)
+              if(cabdocs.value[docid] > 0)
               {
-                console.log(vehicaldocs.value[key] != null && vehicaldocs.value[key] != '')
-                if(vehicaldocs.value[key] != null && vehicaldocs.value[key] != '')
+                console.log(cabdocs.value[key] != null && cabdocs.value[key] != '')
+                if(cabdocs.value[key] != null && cabdocs.value[key] != '')
                 {
-                  this.vehicalDocs.push({id:0,vehicalid:0,docname:null,docimg:null,createdby:null});
-                  this.vehicalDocs[i].required = false;
+                  this.cabDocs.push({id:0,cabid:0,docname:null,docimg:null,createdby:null});
+                  this.cabDocs[i].required = false;
                   this.VerifyDocForm();
                 }
                 else{
-                  this.vehicalDocs[i].required = true;
+                  this.cabDocs[i].required = true;
                 }
               }  
             }
           }
           else
           {
-            this.vehicalDocs[i].required = true;
+            this.cabDocs[i].required = true;
           }
         }
       }
@@ -245,41 +245,41 @@ VerifyDocForm()
   
 }
 
-saveVehicalDocDetails(vehicalDocsDetails)
+savecabDocDetails(cabDocsDetails)
 {
-  for(var i = 0 ; i < this.vehicalDocs.length ;i++)
+  for(var i = 0 ; i < this.cabDocs.length ;i++)
   {
-    if(eval('vehicalDocsDetails.value.docfilename'+i) != undefined)
+    if(eval('cabDocsDetails.value.docfilename'+i) != undefined)
     {
       for (let j = 0; j < this.uploader.queue.length; j++) 
       {
-          if(eval('vehicalDocsDetails.value.docfilename'+i) === this.uploader.queue[j]._file.name)
+          if(eval('cabDocsDetails.value.docfilename'+i) === this.uploader.queue[j]._file.name)
           {
             let data = new FormData();
             let fileItem = this.uploader.queue[j]._file;
             data.append('file', fileItem);
       
-            var vehicaldocDetails = {docname:eval('vehicalDocsDetails.value.docname'+i),vehicalid:this.vehicalDetails[0].id,id:eval('vehicalDocsDetails.value.docid'+i),docfilename:eval('vehicalDocsDetails.value.docfilename'+i),createdby:null}
+            var cabdocDetails = {docname:eval('cabDocsDetails.value.docname'+i),cabid:this.cabDetails[0].id,id:eval('cabDocsDetails.value.docid'+i),docfilename:eval('cabDocsDetails.value.docfilename'+i),createdby:null}
       
-            data.append('vehicalDocDetails', JSON.stringify(vehicaldocDetails));
-            this.uploadVehicalDocs(data,this.vehicalDocs.length);
+            data.append('cabDocDetails', JSON.stringify(cabdocDetails));
+            this.uploadcabDocs(data,this.cabDocs.length);
           }
       }
     }
     else
     {
-      var vehicalobj:any = {id:eval('vehicalDocsDetails.value.docid'+i),docname:eval('vehicalDocsDetails.value.docname'+i),docfilename:eval('vehicalDocsDetails.value.docfilename'+i)}
-      this.uploadDocsWithoutpic(vehicalobj,this.vehicalDocs.length);
+      var cabobj:any = {id:eval('cabDocsDetails.value.docid'+i),docname:eval('cabDocsDetails.value.docname'+i),docfilename:eval('cabDocsDetails.value.docfilename'+i)}
+      this.uploadDocsWithoutpic(cabobj,this.cabDocs.length);
     }
   } 
 }
 
 
-uploadVehicalDocs(data: FormData,j) {
+uploadcabDocs(data: FormData,j) {
 
-  this._CabsNBusesService.uploadVehicalDocs(data).subscribe((res: any) => {
+  this._CabsNBusesService.uploadcabDocs(data).subscribe((res: any) => {
    
-    if(j === this.vehicalDocs.length)
+    if(j === this.cabDocs.length)
     {
       Swal.fire({
         title: res.title,
@@ -288,7 +288,7 @@ uploadVehicalDocs(data: FormData,j) {
       }).then((result) => {
         if (res.status === 1) {
           this.uploader.clearQueue();
-          this.getVehicalDetails(this.masterid);
+          this.getcabDetails(this.masterid);
         } else {
           
         }
@@ -312,7 +312,7 @@ uploadDocsWithoutpic(data: FormData,datalength) {
       }).then((result) => {
         if (res.status === 1) {
           this.uploader.clearQueue();
-          this.getVehicalDetails(this.masterid);
+          this.getcabDetails(this.masterid);
         } else {
           
         }
@@ -326,13 +326,13 @@ onFileDocSelected(event,index) {
   if (event.target.files && event.target.files[0]) {
     var reader = new FileReader();
     console.log(event.target.files[0]);
-    this.vehicalDocs[index].tempfilename = event.target.files[0].name;
+    this.cabDocs[index].tempfilename = event.target.files[0].name;
 
     reader.readAsDataURL(event.target.files[0]); // read file as data url
 
     reader.onload = (event: Event) => { // called once readAsDataURL is completed
-      this.vehicalDocs[index].docimgtemp = event.currentTarget;
-      this.vehicalDocs[index].docimgtemp = this.vehicalDocs[index].docimgtemp.result;
+      this.cabDocs[index].docimgtemp = event.currentTarget;
+      this.cabDocs[index].docimgtemp = this.cabDocs[index].docimgtemp.result;
     }
   }
 }
@@ -357,7 +357,7 @@ onFileDocSelected(event,index) {
     }
 } */
 
-/* uploadVehicalImages(imagesupload)
+/* uploadcabImages(imagesupload)
 {
  
   if (this.uploader.queue.length > 0) {
@@ -365,7 +365,7 @@ onFileDocSelected(event,index) {
       let data = new FormData();
       let fileItem = this.uploader.queue[j]._file;
       data.append('file', fileItem);
-      data.append('description',JSON.stringify({description:eval('imagesupload.value.description'+j) || null,vehicalid:this.vehicalDetails[0].id}));
+      data.append('description',JSON.stringify({description:eval('imagesupload.value.description'+j) || null,cabid:this.cabDetails[0].id}));
       this.uploadImages(data,this.uploader.queue.length);
     }
   }
@@ -374,7 +374,7 @@ counter : number = 0;
 uploadImages(formdata : FormData,imgslength)
 {
 
-    this._CabsNBusesService.uploadvehicalImages(formdata).subscribe((res: any) => {
+    this._CabsNBusesService.uploadcabImages(formdata).subscribe((res: any) => {
         this.counter = this.counter + 1; 
         if(imgslength == this.counter)
         {
@@ -421,14 +421,14 @@ if(this.uploader.queue.length > 0 || (vahicalDetails.value.id != 0))
 
 SavevahicalGalleryImages(data: FormData) {
   this._CabsNBusesService.uploadvahicalImages(data).subscribe((res: any) => {
-    this.getVehicalDetails(this.masterid);
+    this.getcabDetails(this.masterid);
     this.uploader.clearQueue();
   });
 }
 
 SavevahicalGalleryDetails(data) {
   this._CabsNBusesService.uploadvahicalImages(data).subscribe((res: any) => {
-    this.getVehicalDetails(this.masterid);
+    this.getcabDetails(this.masterid);
   });
 }
 
@@ -440,7 +440,7 @@ public onFileSelected(event: EventEmitter<File[]>) {
       for (let file in files) {
         let reader = new FileReader();
         reader.onload = (e: any) => {
-          this.vehicalGallery.push({id:0,vehicalid:this.masterid,coverpictemp:null,description:null});
+          this.cabGallery.push({id:0,cabid:this.masterid,coverpictemp:null,description:null});
         }
         if(file != 'length')
           {
@@ -475,7 +475,7 @@ Swal.fire({
         if (res.status === 1) {
   
         } else {
-          this.getVehicalDetails(this.masterid);
+          this.getcabDetails(this.masterid);
          
         }
       });
@@ -526,5 +526,6 @@ previewDocument(imgforPreview,index)
     
   });
 }
+
 
 }

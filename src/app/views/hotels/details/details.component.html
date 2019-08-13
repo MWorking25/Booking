@@ -305,7 +305,7 @@
                       <form #hotelImages="ngForm">
                           <div class="card-header">
                               <div class="text-right">
-                                  <button (click)="enlargeImage(_img)" class="btn btn-sm btn-warning rounded-circle">&#10063;</button>
+                                  <button *ngIf="_img.id != 0" (click)="previewDocument(_img.tmpfilename)" class="btn btn-sm btn-warning rounded-circle">&#10063;</button>
                                   &nbsp;
                                   <button (click)="uploadHotelGalleryImage(hotelImages)" class="btn btn-sm btn-success rounded-circle">&#10004;</button>
                                   &nbsp;

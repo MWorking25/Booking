@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/observable';
 import Swal from 'sweetalert2';
 import { FileUploader } from "ng2-file-upload";
+import { ToastrService } from 'ngx-toastr';
 import { ExperiencesService } from '../../../services/experiences.service';
 import * as $ from 'jquery';
 @Component({
@@ -54,7 +55,7 @@ export class CruzedeailsComponent implements OnInit {
   cruzAminities:any;
   cruzGallery:any;
 
-  constructor(private activatedRoute: ActivatedRoute, private _ExperiencesService : ExperiencesService, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private _ExperiencesService : ExperiencesService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -91,21 +92,36 @@ export class CruzedeailsComponent implements OnInit {
   
   uploadGalleryImage(cuzeDetails)
   {
- 
-      for (let j = 0; j < this.uploader.queue.length; j++) {
+    if(this.uploader.queue.length > 0 || (cuzeDetails.value.id != 0))
+    {
+      // for (let j = 0; j < this.uploader.queue.length; j++) {
         let data = new FormData();
-        let fileItem = this.uploader.queue[j]._file;
+        if(this.uploader.queue[this.uploader.queue.length -1])
+        var fileItem = this.uploader.queue[this.uploader.queue.length -1]._file;
         data.append('file', fileItem);
         data.append('cruzDetails', JSON.stringify(cuzeDetails.value));
+        if(this.uploader.queue[this.uploader.queue.length -1])
         this.SaveGalleryImages(data);
-      }
-   
+        else
+        this.SaveGallerDetails(cuzeDetails.value);
+      // }
+    }
+    else
+    {
+      this.toastr.warning('Warning', 'Please choose image before upload');
+    }
   }
 
   SaveGalleryImages(data: FormData) {
     this._ExperiencesService.uploadCruzImages(data).subscribe((res: any) => {
       this.getCruzDetails(this.cruzDetails[0].id);
       this.uploader.clearQueue();
+    });
+  }
+
+  SaveGallerDetails(data) {
+    this._ExperiencesService.uploadCruzImages(data).subscribe((res: any) => {
+      this.getCruzDetails(this.cruzDetails[0].id);
     });
   }
 
@@ -583,6 +599,20 @@ onSelectGalleryFile(event,imgobj) {
       imgobj.tmpfilename = imgobj.tmpfilename.result;
     }
   }
+}
+
+previewDocument(imgforPreview,index)
+{
+  Swal.fire({
+    title: '',
+    imageUrl: imgforPreview,
+    imageWidth: 500,
+    imageHeight: 500,
+    showCloseButton: true,
+    showConfirmButton:false
+  }).then((result) => {
+    
+  });
 }
 
 }

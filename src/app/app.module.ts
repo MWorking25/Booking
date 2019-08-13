@@ -1,10 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -60,7 +62,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     ChartsModule,
     FormsModule,
     ReactiveFormsModule,
-    
+    BrowserAnimationsModule,
+    ToastrModule.forRoot() // ToastrModule added
   ],
   declarations: [
     AppComponent,

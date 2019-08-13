@@ -65,4 +65,22 @@ export class CabsNBusesService {
       }));
   }
 
+  
+
+
+  RemovevahicalGalleryImage(imgid): Observable<any>
+  {
+        return this.http.get<any>(this.serveruri+'/api/unity/RemovevahicalGalleryImage/'+imgid,{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
+ 
+
+  uploadvahicalImages(vahicalGalleryImages): Observable<any>
+  {
+    return this.http.post(this.serveruri+'/api/unity/uploadvahicalImages/',vahicalGalleryImages,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
+
 }

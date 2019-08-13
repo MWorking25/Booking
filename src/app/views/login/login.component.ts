@@ -66,6 +66,4 @@ export class LoginComponent implements OnInit{
     const cookieExists: boolean = this.cookieService.check('token');
     console.log(cookieExists)
   }
-
-
 }
