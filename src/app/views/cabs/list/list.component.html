@@ -8,13 +8,13 @@
       </select>
     </div>
     <div class="col-md-1 col-3 text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRowsAdd()"
-        data-toggle="modal" [routerLink]="['/cabs/details',0]"><i class="fa fa-plus" aria-hidden="true"></i>
+        [routerLink]="['/cabs/details',0]"><i class="fa fa-plus" aria-hidden="true"></i>
         &nbsp;Add</button></div>
     <div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRows()"
-        data-toggle="modal" [routerLink]="['/cabs/details',vehical]"><i class="fa fa-pencil" aria-hidden="true"></i>
+        [routerLink]="['/cabs/details',cabid]"><i class="fa fa-pencil" aria-hidden="true"></i>
         &nbsp;Edit</button></div>
     <div class="col-md-1 col-3  text-nowrap"><button class="btn btn-info" [disabled]="VerifySelectedRowsDelete()"
-        (click)="DeleteAminityDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</button></div>
+        (click)="deleteCabDetails()"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp;Delete</button></div>
   </div>
   
   

@@ -19,9 +19,8 @@ export class LoginComponent implements OnInit{
 
   constructor(private http: HttpClient,private fb: FormBuilder, private _AuthenticationService : AuthenticationService, private cookieService: CookieService,private router: Router)
   {
-    const source = interval(10000);
-    const text = 'Your Text Here';
-    this.subscription = source.subscribe(val => this.opensnack(text));
+    const source = interval(5000);
+    this.subscription = source.subscribe(val => this.checkTokenValidation());
   }
  
   ngOnInit()
@@ -61,9 +60,10 @@ export class LoginComponent implements OnInit{
     });	 
   }
 
-  opensnack(txtx)
+  checkTokenValidation()
   {
-    const cookieExists: boolean = this.cookieService.check('token');
-    console.log(cookieExists)
+    this._AuthenticationService.checkTokenValidation().subscribe((res:any)=>{
+      console.log(res);
+    });
   }
 }

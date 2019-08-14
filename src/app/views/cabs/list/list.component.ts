@@ -10,7 +10,7 @@ export class ListComponent implements OnInit {
 
   
   selectedRows: any;
-  vehical: any;
+  cabid: any;
   rowData: any;
   pagesize = 10;
   gridApi: any;
@@ -38,7 +38,7 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.columnDefs =[
       {headerName: 'Conpany', field: 'company', checkboxSelection: true,pinned: 'left'},
-      {headerName: 'Driver', field: 'driver',pinned: 'left'},
+      {headerName: 'Driver', field: 'driver_name',pinned: 'left'},
       {headerName: 'Model', field: 'model' },
       {headerName: 'Passing No.', field: 'passingno' },
       {headerName: 'Cpacity', field: 'cpacity' },
@@ -53,14 +53,14 @@ export class ListComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    this.getVehicalsListList();
+    this.getcabsList();
 
     params.api.paginationGoToPage(4);
   }
 
-  getVehicalsListList()
+  getcabsList()
   {
-    this._CabsNBusesService.getVehicalsListList().subscribe((res:any)=>{
+    this._CabsNBusesService.getcabsList().subscribe((res:any)=>{
       if (res.status === 0) {
         this.rowData = [];
       } else {
@@ -69,11 +69,57 @@ export class ListComponent implements OnInit {
     });
   }
 
+  deleteCabDetails()
+  {
+    
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Want to delete these records',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+
+    var cabIds = [];
+    this.selectedRows.map((value,index)=>{
+
+      cabIds.push(value.id);
+
+      if(index === this.selectedRows.length - 1)
+      {
+        this._CabsNBusesService.deleteCabDetails(cabIds).subscribe((res: any) => {
+          Swal.fire({
+            title: res.title,
+            text: res.message,
+            type: res.type,
+          }).then((result) => {
+            if (res.status === 1) {
+      
+            } else {
+              this.getcabsList();
+              this.selectedRows =[];
+            }
+          });
+        });
+      }
+    });
+  } else if (result.dismiss === Swal.DismissReason.cancel) {
+    Swal.fire(
+      'Cancelled',
+      'Your imaginary file is safe :)',
+      'error'
+    )
+  }
+  })
+  }
+
   onSelectionChanged() {
     this.selectedRows = this.gridApi.getSelectedRows();
     if (this.selectedRows.length > 0) {
       
-      this.vehical =  this.selectedRows[0].id;
+      this.cabid =  this.selectedRows[0].id;
 
     }
   }

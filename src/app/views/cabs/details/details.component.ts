@@ -13,9 +13,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DetailsComponent implements OnInit {
 
-  @ViewChild('coverImage')
+
   @ViewChild('cabImages')
-  myInputVariable: ElementRef;
+  @ViewChild('coverImage') myInputVariable: ElementRef;
 
   masterid:any;
   url:any;
@@ -23,9 +23,14 @@ export class DetailsComponent implements OnInit {
   htmlContent:any;
   required:boolean = false;
   cabGallery:any[];
-  cabDetails:any = [{id:0,company:null,model:null,passingno:null,cpacity:null,color:null,price:null,discounted_price:null,createdby:null}];
+
+  
+
   cabDocs:any[] = [{id:0,cabid:0,docname:null,docimg:null,createdby:null,required:false,tempfilename:null}];
   constructor(private _CabsNBusesService:CabsNBusesService,private activatedRoute: ActivatedRoute, private toastr: ToastrService) { }
+
+
+  cab_Details:any = [{id:0,company:null,model:null,passingno:null,cpacity:null,color:null,price:null,discounted_price:null,cgst:0,sgst:0,igst:0,createdby:null,description:null,driver_name:null}];
 
   isCollapsedGeneraldetails:boolean = false;
   isCollapsedcabImages:boolean = false;
@@ -71,7 +76,7 @@ export class DetailsComponent implements OnInit {
 
   VerifyForm()
 {
-  if(this.cabDetails[0].company != null && this.cabDetails[0].model != null && this.cabDetails[0].passingno != null && this.cabDetails[0].cpacity != null && this.cabDetails[0].price != null)
+  if(this.cab_Details[0].company != null && this.cab_Details[0].model != null && this.cab_Details[0].passingno != null && this.cab_Details[0].cpacity != null && this.cab_Details[0].price != null)
   {
     return false;
   }
@@ -100,7 +105,7 @@ uploadFile(data: FormData) {
   this._CabsNBusesService.savecabDetails(data).subscribe((res: any) => {
     if(res.cabid > 0) 
     {
-      this.cabDetails[0].id = res.cabid;
+      this.cab_Details[0].id = res.cabid;
     }
 
     Swal.fire({
@@ -123,7 +128,7 @@ savecabDetailasWithoutPic(vahicaldetails)
   this._CabsNBusesService.savecabDetails(vahicaldetails).subscribe((res: any) => {
     if(res.cabid > 0) 
     {
-      this.cabDetails[0].id = res.cabid;
+      this.cab_Details[0].id = res.cabid;
     }
 
     Swal.fire({
@@ -186,10 +191,13 @@ getcabDetails(cabid)
 {
   this._CabsNBusesService.getcabDetails(cabid).subscribe((res:any)=>{
     if (res.status === 0) {
-      this.cabDetails = [];
     } else {
-      this.cabDetails = res.cabDetails;
-      this.url = res.cabDetails[0].tmpcoverpic;
+      this.cab_Details = res.cabDetails;
+      if(this.cab_Details.length == 0)
+      {
+        this.cab_Details = [{id:0,company:null,model:null,passingno:null,cpacity:null,color:null,price:null,discounted_price:null,cgst:0,sgst:0,igst:0,createdby:null,description:null,driver_name:null}];
+      }
+      this.url = res.cabDetails[0].tmpdriver_pic;
       this.cabDocs = res.cabDocs;
       this.cabGallery = res.cabImages;
       this.cabGallery.push({id:0,cabid:cabid,coverpictemp:null,description:null});
@@ -259,7 +267,7 @@ savecabDocDetails(cabDocsDetails)
             let fileItem = this.uploader.queue[j]._file;
             data.append('file', fileItem);
       
-            var cabdocDetails = {docname:eval('cabDocsDetails.value.docname'+i),cabid:this.cabDetails[0].id,id:eval('cabDocsDetails.value.docid'+i),docfilename:eval('cabDocsDetails.value.docfilename'+i),createdby:null}
+            var cabdocDetails = {docname:eval('cabDocsDetails.value.docname'+i),cabid:this.cab_Details[0].id,id:eval('cabDocsDetails.value.docid'+i),docfilename:eval('cabDocsDetails.value.docfilename'+i),createdby:null}
       
             data.append('cabDocDetails', JSON.stringify(cabdocDetails));
             this.uploadcabDocs(data,this.cabDocs.length);
@@ -395,10 +403,10 @@ uploadImages(formdata : FormData,imgslength)
 
 
 
-uploadvahicalGalleryImage(vahicalDetails)
+uploadCabGalleryImage(cabDetails)
 {
 
-if(this.uploader.queue.length > 0 || (vahicalDetails.value.id != 0))
+if(this.uploader.queue.length > 0 || (cabDetails.value.id != 0))
 {
 
     // for (let j = 0; j < this.uploader.queue.length - 1; j++) {
@@ -406,11 +414,11 @@ if(this.uploader.queue.length > 0 || (vahicalDetails.value.id != 0))
       if(this.uploader.queue[this.uploader.queue.length - 1])
         var fileItem = this.uploader.queue[this.uploader.queue.length - 1]._file;
       data.append('file', fileItem);
-      data.append('vahicalDetails', JSON.stringify(vahicalDetails.value));
+      data.append('cabDetails', JSON.stringify(cabDetails.value));
       if(this.uploader.queue[this.uploader.queue.length - 1])
-      this.SavevahicalGalleryImages(data);
+      this.SavecabGalleryImages(data);
       else
-      this.SavevahicalGalleryDetails(vahicalDetails.value);
+      this.SavecabGalleryDetails(cabDetails.value);
     // }
   }
   else
@@ -419,15 +427,15 @@ if(this.uploader.queue.length > 0 || (vahicalDetails.value.id != 0))
   }
 }
 
-SavevahicalGalleryImages(data: FormData) {
-  this._CabsNBusesService.uploadvahicalImages(data).subscribe((res: any) => {
+SavecabGalleryImages(data: FormData) {
+  this._CabsNBusesService.uploadcabImages(data).subscribe((res: any) => {
     this.getcabDetails(this.masterid);
     this.uploader.clearQueue();
   });
 }
 
-SavevahicalGalleryDetails(data) {
-  this._CabsNBusesService.uploadvahicalImages(data).subscribe((res: any) => {
+SavecabGalleryDetails(data) {
+  this._CabsNBusesService.uploadcabImages(data).subscribe((res: any) => {
     this.getcabDetails(this.masterid);
   });
 }
@@ -466,7 +474,7 @@ Swal.fire({
 }).then((result) => {
   if (result.value) {
 
-  this._CabsNBusesService.RemovevahicalGalleryImage(imgdetails.id).subscribe((res:any)=>{
+  this._CabsNBusesService.RemoveCabGalleryImage(imgdetails.id).subscribe((res:any)=>{
       Swal.fire({
         title: res.title,
         text: res.message,
@@ -506,8 +514,8 @@ if (event.target.files && event.target.files[0]) {
   reader.readAsDataURL(event.target.files[0]); // read file as data url
 
   reader.onload = (event: Event) => { // called once readAsDataURL is completed
-    imgobj.coverpictemp= event.currentTarget;
-    imgobj.coverpictemp = imgobj.coverpictemp.result;
+    imgobj.tempfilename= event.currentTarget;
+    imgobj.tempfilename = imgobj.tempfilename.result;
   }
 }
 }

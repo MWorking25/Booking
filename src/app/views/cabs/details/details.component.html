@@ -1,5 +1,9 @@
 <div class="row">
-  
+  <div class="col-md-12 col-12 col-lg-12 col-xl-12 mb-1">
+    <div class="col-md-3 col-3 col-lg-3 col-xl-3 text-left">
+        <button class="btn btn-warning" [routerLink]="['/cabs/list']"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+    </div>  
+  </div>
     <div class="col-md-12 col-12 col-lg-12 col-xl-12">
       <div class="card">
         <div class="card-header" (click)="isCollapsedGeneraldetails = !isCollapsedGeneraldetails">General Details</div>
@@ -9,37 +13,37 @@
             <div class="row">
               <div class="col-md-12 col-12 col-lg-12 col-xl-12">
                 <div class="form-group d-none">
-                  <label for="cabid">id:</label>
-                  <input type="text" class="form-control" id="cabid" name="id" placeholder="id"
-                    [(ngModel)]="cabDetails[0].id">
+                  <label for="id">id:</label>
+                  <input type="text" class="form-control" id="id" name="id" placeholder="id"
+                    [(ngModel)]="cab_Details[0].id">
                 </div>
               </div>
               <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                 <div class="form-group">
                   <label for="company"><sup class="text-danger">*</sup> Company:</label>
                   <input type="text" class="form-control" id="company" name="company" placeholder="Company"
-                    [(ngModel)]="cabDetails[0].company">
+                    [(ngModel)]="cab_Details[0].company">
                 </div>
               </div>
               <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                 <div class="form-group">
                   <label for="model"><sup class="text-danger">*</sup> Model:</label>
                   <input type="text" class="form-control" id="model" name="model" placeholder="Model"
-                    [(ngModel)]="cabDetails[0].model">
+                    [(ngModel)]="cab_Details[0].model">
                 </div>
               </div>
               <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                 <div class="form-group">
                   <label for="passingno"><sup class="text-danger">*</sup> Passing No.:</label>
                   <input type="text" class="form-control" id="passingno" name="passingno" placeholder="Passing No."
-                    [(ngModel)]="cabDetails[0].passingno">
+                    [(ngModel)]="cab_Details[0].passingno">
                 </div>
               </div>
               <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                 <div class="form-group">
                   <label for="color">Colour:</label>
                   <input type="text" class="form-control" id="color" name="color" placeholder="Colour"
-                    [(ngModel)]="cabDetails[0].color">
+                    [(ngModel)]="cab_Details[0].color">
                 </div>
               </div>
   
@@ -47,22 +51,22 @@
                 <div class="form-group">
                   <label for="cpacity"><sup class="text-danger">*</sup>Capacity:</label>
                   <input type="text" class="form-control" id="cpacity" name="cpacity"
-                    placeholder="Capacity (Number of seats availabel)" [(ngModel)]="cabDetails[0].cpacity">
+                    placeholder="Capacity (Number of seats availabel)" [(ngModel)]="cab_Details[0].cpacity">
                 </div>
               </div>
   
               <div class="col-md-12 col-12 col-lg-4 col-xl-4">
                 <div class="form-group">
                   <label for="driver_name">Driver`s Name:</label>
-                  <input type="text" class="form-control" id="driver_name" name="driver_name" placeholder="Time Period"
-                    [(ngModel)]="cabDetails[0].driver_name">
+                  <input type="text" class="form-control" id="driver_name" name="driver_name" placeholder="Driver`s Name"
+                    [(ngModel)]="cab_Details[0].driver_name">
                 </div>
               </div>
               <div class="col-md-12 col-12 col-lg-3 col-xl-3">
                 <div class="form-group">
                   <label for="price"><sup class="text-danger">*</sup>Price:</label>
                   <input type="number" class="form-control" id="price" name="price" placeholder="Price"
-                    [(ngModel)]="cabDetails[0].price">
+                    [(ngModel)]="cab_Details[0].price">
                 </div>
               </div>
   
@@ -70,28 +74,28 @@
                 <div class="form-group">
                   <label for="discounted_price">Discounted Price:</label>
                   <input type="number" class="form-control" id="discounted_price" name="discounted_price"
-                    placeholder="Discounted Price" [(ngModel)]="cabDetails[0].discounted_price">
+                    placeholder="Discounted Price" [(ngModel)]="cab_Details[0].discounted_price">
                 </div>
               </div>
               <div class="col-md-6 col-6 col-lg-2 col-xl-2">
                 <div class="form-group">
                   <label for="cgst">CGST:</label>
                   <input type="number" class="form-control" id="cgst" name="cgst" placeholder="CGST"
-                    [(ngModel)]="cabDetails[0].cgst">
+                    [(ngModel)]="cab_Details[0].cgst">
                 </div>
               </div>
               <div class="col-md-6 col-6 col-lg-2 col-xl-2">
                 <div class="form-group">
                   <label for="sgst">SGST:</label>
                   <input type="number" class="form-control" id="sgst" name="sgst" placeholder="SGST"
-                    [(ngModel)]="cabDetails[0].sgst">
+                    [(ngModel)]="cab_Details[0].sgst">
                 </div>
               </div>
               <div class="col-md-6 col-6 col-lg-2 col-xl-2">
                 <div class="form-group">
                   <label for="igst">IGST:</label>
                   <input type="number" class="form-control" id="igst" name="igst" placeholder="IGST"
-                    [(ngModel)]="cabDetails[0].igst">
+                    [(ngModel)]="cab_Details[0].igst">
                 </div>
               </div>
   
@@ -100,7 +104,7 @@
                   <label for="description">Description:</label>
   
                   <angular-editor id="description" name="description" placeholder="Enter text here..."
-                    [(ngModel)]="cabDetails[0].description"></angular-editor>
+                    [(ngModel)]="cab_Details[0].description"></angular-editor>
                 </div>
               </div>
   
@@ -134,7 +138,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-12 col-12 col-lg-12 col-xl-12" *ngIf="cabDetails[0].id > 0">
+    <div class="col-md-12 col-12 col-lg-12 col-xl-12" *ngIf="cab_Details[0].id > 0">
       <div class="card">
         <div class="card-header" (click)="isCollapsedDocDetails = !isCollapsedDocDetails">Documents Details</div>
         <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
@@ -180,9 +184,9 @@
       </div>
     </div>
   
-    <div class="col-md-12 col-12 col-lg-12 col-xl-12" *ngIf="cabDetails[0].id > 0">
+    <div class="col-md-12 col-12 col-lg-12 col-xl-12" *ngIf="cab_Details[0].id > 0">
       <div class="card">
-        <div class="card-header" (click)="isCollapsedcabImages = !isCollapsedcabImages">Documents Details</div>
+        <div class="card-header" (click)="isCollapsedcabImages = !isCollapsedcabImages">Cab`s Images</div>
         <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
           [collapse]="isCollapsedcabImages">
   
@@ -197,7 +201,7 @@
                           <div class="text-right">
                               <button *ngIf="_img.id != 0" (click)="previewDocument(_img.coverpictemp)" class="btn btn-sm btn-warning rounded-circle">&#10063;</button>
                               &nbsp;
-                              <button (click)="uploadvahicalGalleryImage(cabImages)" class="btn btn-sm btn-success rounded-circle">&#10004;</button>
+                              <button (click)="uploadCabGalleryImage(cabImages)" class="btn btn-sm btn-success rounded-circle">&#10004;</button>
                               &nbsp;
                             <button *ngIf="_img.id != 0" (click)="RemoveGalleryImage(_img,i)" class="btn btn-sm float-right btn-danger rounded-circle">&#10008;</button>
                           </div>
@@ -207,12 +211,12 @@
   
                                 <input type="file" id="GalaryPic{{i}}" ng2FileSelect [uploader]="uploader" (change)="onSelectGalleryFile($event,_img)" class="d-none " />
   
-                                <img [src]="_img.coverpictemp" class="img-fluid" onError="this.src= '../../../assets/img/add-photo-album.png'" style="height: 175px;width:auto;"  />
+                                <img [src]="_img.tempfilename" class="img-fluid" onError="this.src= '../../../assets/img/add-photo-album.png'" style="height: 175px;width:auto;"  />
                             </div>
                           </div> 
                           <div class="card-footer">
                               <input class="d-none" name="id" [(ngModel)]="_img.id">
-                              <input class="d-none" name="cabid" [(ngModel)]="cabDetails[0].id"
+                              <input class="d-none" name="cabid" [(ngModel)]="cab_Details[0].id"
                               >
                               <div class="ml-auto mr-auto">
                                   <textarea class="form-control" name="description" [(ngModel)]="_img.description"

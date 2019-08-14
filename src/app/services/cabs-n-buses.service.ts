@@ -83,4 +83,64 @@ export class CabsNBusesService {
 					}));
   }
 
+
+  getcabsList(): Observable<any>
+  {
+        return this.http.get<any>(this.serveruri+'/api/unity/getcabsList',{ withCredentials: true }).pipe(map(data => {
+        return data;
+      }));
+  }
+
+  deleteCabDetails(cabids): Observable<any>
+  {
+    return this.http.post(this.serveruri+'/api/unity/deleteCabDetails/',cabids,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
+
+  deletecabDocDetails(docid): Observable<any>
+  {
+        return this.http.get<any>(this.serveruri+'/api/unity/deletecabDocDetails/'+docid,{ withCredentials: true }).pipe(map(data => {
+        return data;
+      }));
+  }
+
+  getcabDetails(cabid): Observable<any>
+  {
+        return this.http.get<any>(this.serveruri+'/api/unity/getcabDetails/'+cabid,{ withCredentials: true }).pipe(map(data => {
+        return data;
+      }));
+  }
+
+
+  savecabDetails(vehicalDetails): Observable<any>
+  {
+        return this.http.post(this.serveruri+'/api/unity/savecabDetails',vehicalDetails,{ withCredentials: true }).pipe(map(data => {
+        return data;
+      }));
+  }
+
+  uploadcabDocs(vehicalDetails): Observable<any>
+  {
+        return this.http.post(this.serveruri+'/api/unity/uploadcabDocs',vehicalDetails,{ withCredentials: true }).pipe(map(data => {
+        return data;
+      }));
+  }
+
+  RemoveCabGalleryImage(imgid): Observable<any>
+  {
+        return this.http.get<any>(this.serveruri+'/api/unity/RemoveCabGalleryImage/'+imgid,{ withCredentials: true }).pipe(map(data => {
+          return data;
+        }));
+  }
+ 
+
+  uploadcabImages(cabGalleryImages): Observable<any>
+  {
+    return this.http.post(this.serveruri+'/api/unity/uploadcabImages/',cabGalleryImages,{ withCredentials: true }).pipe(map(data => {
+							return data;
+					}));
+  }
+
+
 }

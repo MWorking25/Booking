@@ -1,5 +1,9 @@
 <div class="row">
-  
+  <div class="col-md-12 col-12 col-lg-12 col-xl-12 mb-1">
+    <div class="col-md-3 col-3 col-lg-3 col-xl-3 text-left">
+        <button class="btn btn-warning" [routerLink]="['/vehicalsonrent/vehicalonrent']"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+    </div>  
+  </div>
   <div class="col-md-12 col-12 col-lg-12 col-xl-12">
     <div class="card">
       <div class="card-header" (click)="isCollapsedGeneraldetails = !isCollapsedGeneraldetails">General Details</div>
@@ -182,7 +186,7 @@
 
   <div class="col-md-12 col-12 col-lg-12 col-xl-12" *ngIf="vehicalDetails[0].id > 0">
     <div class="card">
-      <div class="card-header" (click)="isCollapsedvehicalImages = !isCollapsedvehicalImages">Documents Details</div>
+      <div class="card-header" (click)="isCollapsedvehicalImages = !isCollapsedvehicalImages">Vehical Images</div>
       <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)"
         [collapse]="isCollapsedvehicalImages">
 
